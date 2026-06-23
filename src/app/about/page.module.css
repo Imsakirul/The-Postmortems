@@ -1,0 +1,29 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  min-height: 60vh;
+}
+
+.header {
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2rem;
+}
+
+.title {
+  font-family: var(--font-ibm-plex-serif);
+  font-size: 2.5rem;
+  color: var(--foreground);
+  margin-bottom: 1rem;
+}
+
+.content {
+  color: var(--foreground-muted);
+  line-height: 1.8;
+  font-size: 1.125rem;
+}
+
+.content p {
+  margin-bottom: 1.5rem;
+}
