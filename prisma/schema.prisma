@@ -1,0 +1,141 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  REVIEWER
+  FACT_CHECKER
+  LEGAL
+}
+
+enum InvestigationStatus {
+  DRAFT
+  REVIEW
+  FACT_CHECK
+  LEGAL_REVIEW
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum VerificationStatus {
+  VERIFIED
+  PARTIALLY_VERIFIED
+  UNVERIFIED
+  DISPUTED
+}
+
+enum EvidenceVisibility {
+  PUBLIC
+  RESTRICTED
+  INTERNAL_ONLY
+}
+
+model User {
+  id             String         @id @default(uuid())
+  email          String         @unique
+  passwordHash   String
+  name           String
+  role           Role           @default(EDITOR)
+  isActive       Boolean        @default(true)
+  twoFactorSecret String?
+  resetOtp        String?
+  resetOtpExpiry  DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  investigations Investigation[] @relation("Author")
+  auditLogs      AuditLog[]
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  userId      String
+  action      String   // e.g., "CREATED_INVESTIGATION", "UPDATED_EVIDENCE"
+  entityType  String   // e.g., "INVESTIGATION", "EVIDENCE"
+  entityId    String
+  metadata    String?  // JSON stringified additional context
+  timestamp   DateTime @default(now())
+  ipAddress   String?
+
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Investigation {
+  id            String              @id @default(uuid())
+  slug          String              @unique
+  title         String
+  excerpt       String?
+  featuredImage String?
+  content       String?             // TipTap JSON or HTML content
+  status        InvestigationStatus @default(DRAFT)
+  isBreaking    Boolean             @default(false)
+  
+  // SEO Metadata
+  metaTitle     String?
+  metaDesc      String?
+  canonicalUrl  String?
+
+  authorId      String
+  author        User                @relation("Author", fields: [authorId], references: [id])
+  
+  categories    Category[]
+  tags          Tag[]
+  evidenceFiles Evidence[]
+
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  publishedAt   DateTime?
+}
+
+model Category {
+  id             String          @id @default(uuid())
+  name           String          @unique
+  slug           String          @unique
+  investigations Investigation[]
+}
+
+model Tag {
+  id             String          @id @default(uuid())
+  name           String          @unique
+  slug           String          @unique
+  investigations Investigation[]
+}
+
+model Evidence {
+  id                 String             @id @default(uuid())
+  exhibitId          String             @unique // e.g. "EXH-A01"
+  title              String
+  sourceName         String?
+  fileUrl            String
+  fileType           String             // e.g., "PDF", "JPG"
+  fileSize           Int?               // in bytes
+  verificationStatus VerificationStatus @default(UNVERIFIED)
+  visibility         EvidenceVisibility @default(INTERNAL_ONLY)
+  notes              String?
+
+  investigationId    String?
+  investigation      Investigation?     @relation(fields: [investigationId], references: [id])
+
+  uploadedAt         DateTime           @default(now())
+}
+
+model WhistleblowerSubmission {
+  id                 String             @id @default(uuid())
+  secureId           String             @unique // Tracking ID for the whistleblower
+  encryptedContent   String             // PGP encrypted submission text
+  encryptedFileUrls  String?            // JSON array of encrypted URLs
+  status             String             @default("NEW") // NEW, IN_REVIEW, ARCHIVED
+  createdAt          DateTime           @default(now())
+}

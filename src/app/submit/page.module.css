@@ -1,0 +1,123 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: 3rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 2rem;
+}
+
+.title {
+  font-family: var(--font-ibm-plex-serif), serif;
+  font-size: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.warningBox {
+  background-color: rgba(213, 0, 0, 0.1);
+  border: 1px solid var(--alert-accent);
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+  border-radius: 4px;
+}
+
+.warningBox h3 {
+  color: var(--alert-accent);
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+  text-transform: uppercase;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.warningBox p {
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.formGroup {
+  margin-bottom: 2rem;
+}
+
+.label {
+  display: block;
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 300px;
+  background-color: var(--surface-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 1rem;
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--trust-accent);
+}
+
+.fileInput {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--surface-secondary);
+  border: 1px dashed var(--border-color);
+  color: var(--text-secondary);
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+  cursor: pointer;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+.successBox {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--surface-secondary);
+  border: 1px solid var(--trust-accent);
+  border-radius: 4px;
+}
+
+.successBox h2 {
+  color: var(--trust-accent);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.secureIdBox {
+  background-color: var(--bg-color);
+  border: 1px dashed var(--trust-accent);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  font-family: monospace;
+  font-size: 1.5rem;
+  color: var(--trust-accent);
+  letter-spacing: 0.1em;
+}
