@@ -14,16 +14,23 @@ export default function Footer() {
         
         <div className={styles.links}>
           <div className={styles.linkGroup}>
-            <h3 className={styles.linkHeader}>Institutional</h3>
-            <Link href="/about" className={styles.link}>About The Postmortem</Link>
+            <h3 className={styles.linkHeader}>ABOUT</h3>
+            <Link href="/about" className={styles.link}>About</Link>
+            <Link href="/about#editorial-standards" className={styles.link}>Editorial Standards</Link>
             <Link href="/corrections-policy" className={styles.link}>Corrections Policy</Link>
-            <Link href="/funding-disclosure" className={styles.link}>Funding Disclosure</Link>
           </div>
+          
           <div className={styles.linkGroup}>
-            <h3 className={styles.linkHeader}>Security & Legal</h3>
-            <Link href="/source-protection-protocol" className={styles.link}>Source Protection Protocol</Link>
+            <h3 className={styles.linkHeader}>POLICIES</h3>
             <Link href="/privacy-policy" className={styles.link}>Privacy Policy</Link>
             <Link href="/terms-of-use" className={styles.link}>Terms of Use</Link>
+            <Link href="/funding-disclosure" className={styles.link}>Funding Disclosure</Link>
+          </div>
+
+          <div className={styles.linkGroup}>
+            <h3 className={styles.linkHeader}>SOURCE PROTECTION</h3>
+            <Link href="/source-protection-protocol" className={styles.link}>Source Protection Protocol</Link>
+            <Link href="/submit" className={styles.link}>Secure Submissions</Link>
           </div>
         </div>
 
@@ -34,20 +41,12 @@ export default function Footer() {
           <p className={styles.principleLine}>Documentation before publication.</p>
           <p className={styles.principleLine}>Accountability without fear or favor.</p>
           <p className={styles.principleLine}>The Constitution of India is our guiding framework.</p>
-          <p className={styles.principleLine}>Public trust is earned through transparency, verification, and accountability.</p>
         </div>
 
-        <div className={styles.disclaimer}>
-          <p>We are not responsible for the discomfort our journalism causes the powerful. We are responsible for ensuring it is true.</p>
-          <p>© The Postmortem. All investigations are the intellectual property of this platform. Reproduction permitted with full attribution and source linking. No reproduction for commercial use without written permission.</p>
-        </div>
-
-        <div className={styles.finalWord}>
-          <p className={styles.finalTitle}>THE POSTMORTEM.</p>
-          <p>We investigate the person. Not the position. Not the party. Not the ideology.</p>
-          <p>Only the conduct. Only the evidence. Only the truth.</p>
-          <p>India's Constitution is our only employer.</p>
-          <p>The Indian people are our only client.</p>
+        <div className={styles.copyright}>
+          <p>© The Postmortem.</p>
+          <p>Independent investigative journalism.</p>
+          <p>All rights reserved.</p>
         </div>
       </div>
     </footer>
