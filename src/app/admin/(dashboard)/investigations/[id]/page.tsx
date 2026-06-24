@@ -15,6 +15,8 @@ export default function EditInvestigation() {
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
   const [featuredImage, setFeaturedImage] = useState("");
+  const [investigationCode, setInvestigationCode] = useState("");
+  const [metaTags, setMetaTags] = useState("");
   const [status, setStatus] = useState("DRAFT");
   const [wasStatus, setWasStatus] = useState("DRAFT");
   const [loading, setLoading] = useState(false);
@@ -31,6 +33,8 @@ export default function EditInvestigation() {
           setExcerpt(data.excerpt || "");
           setContent(data.content || "");
           setFeaturedImage(data.featuredImage || "");
+          setInvestigationCode(data.investigationCode || "");
+          setMetaTags(data.metaTags || "");
           setStatus(data.status || "DRAFT");
           setWasStatus(data.status || "DRAFT");
         }
@@ -54,7 +58,7 @@ export default function EditInvestigation() {
     e.preventDefault();
     setLoading(true);
 
-    const payload = { title, slug, excerpt, content, featuredImage, status, wasStatus };
+    const payload = { title, slug, excerpt, content, featuredImage, investigationCode, metaTags, status, wasStatus };
 
     try {
       const res = await fetch(`/api/investigations/${id}`, {
@@ -133,6 +137,28 @@ export default function EditInvestigation() {
             value={slug} 
             onChange={(e) => setSlug(e.target.value)} 
             required
+            style={{ width: "100%", padding: "0.75rem", background: "var(--background-alt)", border: "1px solid var(--border)", color: "var(--foreground)", borderRadius: "4px" }} 
+          />
+        </div>
+        
+        <div>
+          <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold" }}>Investigation Code (optional)</label>
+          <input 
+            type="text" 
+            value={investigationCode} 
+            onChange={(e) => setInvestigationCode(e.target.value)} 
+            placeholder="e.g. A31D2"
+            style={{ width: "100%", padding: "0.75rem", background: "var(--background-alt)", border: "1px solid var(--border)", color: "var(--foreground)", borderRadius: "4px" }} 
+          />
+        </div>
+
+        <div>
+          <label style={{ display: "block", marginBottom: "0.5rem", fontWeight: "bold" }}>Meta Tags (comma separated)</label>
+          <input 
+            type="text" 
+            value={metaTags} 
+            onChange={(e) => setMetaTags(e.target.value)} 
+            placeholder="e.g. corruption, health, NTA"
             style={{ width: "100%", padding: "0.75rem", background: "var(--background-alt)", border: "1px solid var(--border)", color: "var(--foreground)", borderRadius: "4px" }} 
           />
         </div>

@@ -41,6 +41,8 @@ export async function POST(request: Request) {
         excerpt: data.excerpt,
         featuredImage: data.featuredImage,
         content: data.content,
+        investigationCode: data.investigationCode,
+        metaTags: data.metaTags,
         status: data.status || "DRAFT",
         authorId: session.id,
       },

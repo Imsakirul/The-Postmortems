@@ -34,6 +34,8 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       excerpt: data.excerpt,
       featuredImage: data.featuredImage,
       content: data.content,
+      investigationCode: data.investigationCode,
+      metaTags: data.metaTags,
       status: data.status,
     };
 

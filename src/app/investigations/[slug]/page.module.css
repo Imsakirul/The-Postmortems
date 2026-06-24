@@ -15,12 +15,12 @@
 
 .chapterHeader {
   font-family: var(--font-ibm-plex-serif), serif;
-  font-size: 3rem;
+  font-size: 1.5rem;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 3rem;
-  color: var(--text-primary);
+  letter-spacing: 0.15em;
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
 }
 
 .title {

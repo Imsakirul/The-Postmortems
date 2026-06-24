@@ -15,9 +15,8 @@ export default async function ArticlePage({ params }: { params: { slug: string }
     notFound();
   }
 
-  // Create a short code from the ID (e.g. 001 or using the ID suffix)
-  // Prisma IDs are usually UUID or CUID, we'll just take the last 5 characters
-  const shortCode = investigation.id.slice(-5).toUpperCase();
+  // Use the manually entered investigation code, or fallback to the last 5 chars of the ID
+  const shortCode = investigation.investigationCode || investigation.id.slice(-5).toUpperCase();
 
   return (
     <main className={styles.container}>
@@ -67,12 +66,12 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         }
         
         /* The first paragraph does not have an indent, but has the drop cap */
-        .tiptap-content p:first-of-type {
+        .tiptap-content > p:first-of-type {
           text-indent: 0;
         }
         
         /* Book style drop cap */
-        .tiptap-content p:first-of-type::first-letter {
+        .tiptap-content > p:first-of-type::first-letter {
           font-size: 4.5rem;
           font-weight: 700;
           float: left;
@@ -84,7 +83,7 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         }
         
         /* Uppercase first line of the first paragraph */
-        .tiptap-content p:first-of-type::first-line {
+        .tiptap-content > p:first-of-type::first-line {
           text-transform: uppercase;
           letter-spacing: 0.05em;
         }
@@ -116,6 +115,24 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         .tiptap-content a { 
           color: var(--text-primary); 
           text-decoration: underline; 
+        }
+
+        .tiptap-content table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 2rem 0;
+        }
+
+        .tiptap-content th, .tiptap-content td {
+          border: 1px solid var(--border-color);
+          padding: 0.75rem;
+          text-align: left;
+          text-indent: 0;
+        }
+
+        .tiptap-content th {
+          background-color: var(--background-alt);
+          font-family: var(--font-ibm-plex-sans), sans-serif;
         }
       `}</style>
     </main>

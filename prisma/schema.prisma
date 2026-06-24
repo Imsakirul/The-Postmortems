@@ -76,9 +76,11 @@ model Investigation {
   id            String              @id @default(uuid())
   slug          String              @unique
   title         String
-  excerpt       String?
+  content       String?             @db.Text
+  excerpt       String?             @db.Text
   featuredImage String?
-  content       String?             // TipTap JSON or HTML content
+  investigationCode String?
+  metaTags      String?
   status        InvestigationStatus @default(DRAFT)
   isBreaking    Boolean             @default(false)
   
