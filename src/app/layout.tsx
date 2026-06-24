@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Serif, EB_Garamond, Cinzel } from "next/font/google";
 import "./globals.css";
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -12,6 +12,19 @@ const ibmPlexSerif = IBM_Plex_Serif({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-ibm-plex-serif",
+});
+
+const ebGaramond = EB_Garamond({
+  weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  variable: "--font-eb-garamond",
+});
+
+const cinzel = Cinzel({
+  weight: ["700"],
+  subsets: ["latin"],
+  variable: "--font-cinzel",
 });
 
 export const metadata: Metadata = {
@@ -28,8 +41,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${ibmPlexSans.variable} ${ibmPlexSerif.variable}`}>
-      <body style={{ fontFamily: '"Times New Roman", Times, serif' }}>
+    <html lang="en" className={`${ibmPlexSans.variable} ${ibmPlexSerif.variable} ${ebGaramond.variable} ${cinzel.variable}`}>
+      <body style={{ fontFamily: "var(--font-eb-garamond), Georgia, 'Times New Roman', serif" }}>
         <Header />
         <main>{children}</main>
         <Footer />
@@ -37,3 +50,4 @@ export default function RootLayout({
     </html>
   );
 }
+

@@ -15,124 +15,204 @@ export default async function ArticlePage({ params }: { params: { slug: string }
     notFound();
   }
 
-  // Use the manually entered investigation code, or fallback to the last 5 chars of the ID
   const shortCode = investigation.investigationCode || investigation.id.slice(-5).toUpperCase();
 
   return (
-    <main className={styles.container}>
-      <article className={styles.article}>
-        
-        <header className={styles.header}>
-          <div className={styles.chapterHeader}>INVESTIGATION {shortCode}</div>
-          <h1 className={styles.title}>{investigation.title}</h1>
-          <div className={styles.metaRow}>
-            <span>{investigation.publishedAt?.toLocaleDateString("en-GB", { day: '2-digit', month: 'long', year: 'numeric' }) || investigation.updatedAt.toLocaleDateString("en-GB", { day: '2-digit', month: 'long', year: 'numeric' })}</span>
-            <span>|</span>
-            <span style={{ color: "var(--trust-accent)", fontWeight: "bold" }}>VERIFIED</span>
-          </div>
-        </header>
+    <main className={styles.articleWrapper}>
+      
+      <div className={styles.invCode}>INVESTIGATION {shortCode}</div>
+      <h1 className={styles.articleTitle}>{investigation.title}</h1>
+      
+      <div className={styles.articleMeta}>
+        <span className={styles.publishDate}>{investigation.publishedAt?.toLocaleDateString("en-GB", { day: '2-digit', month: 'long', year: 'numeric' }) || investigation.updatedAt.toLocaleDateString("en-GB", { day: '2-digit', month: 'long', year: 'numeric' })}</span>
+        <span className={`${styles.badge} ${styles.badgeVerified}`}>Verified</span>
+      </div>
 
-        {investigation.featuredImage && (
-          <div style={{ marginBottom: "3rem" }}>
-            <img 
-              src={investigation.featuredImage} 
-              alt={investigation.title} 
-              style={{ width: "100%", height: "auto", border: "1px solid #333" }} 
-            />
-          </div>
-        )}
+      {investigation.excerpt && (
+        <p className={styles.articleExcerpt}>
+          {investigation.excerpt}
+        </p>
+      )}
 
-        <div className={styles.content}>
-          {investigation.excerpt && (
-            <p className={styles.excerpt}>
-              {investigation.excerpt}
-            </p>
-          )}
-          
-          <div dangerouslySetInnerHTML={{ __html: investigation.content || "" }} className="tiptap-content" />
-        </div>
-      </article>
+      {investigation.featuredImage && (
+        <>
+          <img 
+            src={investigation.featuredImage} 
+            alt={investigation.title} 
+            className={styles.featuredImage}
+          />
+          <hr className={styles.rule} />
+        </>
+      )}
+
+      <div className={styles.articleBody}>
+        <div dangerouslySetInnerHTML={{ __html: investigation.content || "" }} className="tiptap-content" />
+      </div>
 
       <style>{`
-        .tiptap-content {
-          text-align: justify;
-        }
-        
         .tiptap-content p {
-          margin-bottom: 0;
-          text-indent: 2.5rem;
-          line-height: 1.8;
-          font-size: 1.15rem;
+          font-size: 20px;
+          line-height: 1.9;
+          margin-bottom: 1.5em;
+          text-align: justify;
+          hyphens: auto;
+          -webkit-hyphens: auto;
+          color: var(--white, #ffffff);
         }
-        
-        /* The first paragraph does not have an indent, but has the drop cap */
-        .tiptap-content > p:first-of-type {
-          text-indent: 0;
-        }
-        
-        /* Book style drop cap */
-        .tiptap-content > p:first-of-type::first-letter {
-          font-size: 4.5rem;
+
+        .tiptap-content h2 {
+          font-family: var(--font-cinzel), Georgia, serif;
+          font-size: 30px;
           font-weight: 700;
+          line-height: 1.25;
+          letter-spacing: 0.6px;
+          color: var(--white, #ffffff);
+          margin-top: 0;
+          margin-bottom: 28px;
+          padding-bottom: 14px;
+          border-bottom: 1px solid var(--gray-mid, #333333);
+        }
+
+        .tiptap-content h3 {
+          font-family: var(--font-eb-garamond), Georgia, serif;
+          font-size: 26px;
+          font-weight: 700;
+          line-height: 1.3;
+          letter-spacing: 0.5px;
+          color: var(--white, #ffffff);
+          margin-top: 50px;
+          margin-bottom: 16px;
+        }
+
+        .tiptap-content h4 {
+          font-family: var(--font-eb-garamond), Georgia, serif;
+          font-size: 21px;
+          font-weight: 700;
+          letter-spacing: 0.3px;
+          color: #dddddd;
+          margin-top: 36px;
+          margin-bottom: 12px;
+        }
+
+        /* Drop cap - applying to first p after h2 and very first p */
+        .tiptap-content > p:first-of-type::first-letter,
+        .tiptap-content h2 + p::first-letter {
           float: left;
-          line-height: 0.85;
-          margin-right: 0.5rem;
-          margin-top: 0.4rem;
-          font-family: var(--font-ibm-plex-serif), serif;
-          color: var(--text-primary);
+          font-family: var(--font-cinzel), Georgia, serif;
+          font-size: 110px;
+          font-weight: 700;
+          line-height: 72px;
+          padding-right: 14px;
+          padding-top: 4px;
+          margin-bottom: -8px;
+          color: var(--white, #ffffff);
         }
-        
-        /* Uppercase first line of the first paragraph */
-        .tiptap-content > p:first-of-type::first-line {
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
+
+        .tiptap-content strong { font-weight: 700; color: var(--white, #ffffff); }
+        .tiptap-content em { font-style: italic; color: #dddddd; }
+
+        .tiptap-content blockquote {
+          border-left: 4px solid var(--red, #cc0000);
+          padding: 18px 0 18px 28px;
+          margin: 36px 0;
+          font-size: 20px;
+          font-style: italic;
+          color: #cccccc;
+          line-height: 1.85;
         }
-        
-        .tiptap-content h1, .tiptap-content h2, .tiptap-content h3 { 
-          margin-top: 2.5rem; 
-          margin-bottom: 1rem; 
-          text-align: left;
-          text-indent: 0;
-          font-family: var(--font-ibm-plex-serif), serif;
+
+        .tiptap-content ul, .tiptap-content ol {
+          margin: 0 0 1.5em 2.2em;
+          padding: 0;
         }
-        
-        .tiptap-content img { 
-          max-width: 100%; 
-          height: auto; 
-          border: 1px solid var(--border-color); 
-          margin: 2rem 0; 
-          display: block;
+
+        .tiptap-content li {
+          font-size: 19px;
+          line-height: 1.8;
+          margin-bottom: 0.7em;
+          color: var(--white, #ffffff);
         }
-        
-        .tiptap-content blockquote { 
-          margin: 2rem 0; 
-          padding-left: 2rem; 
-          font-style: italic; 
-          text-indent: 0;
-          border-left: 2px solid var(--border-color);
+
+        .tiptap-content ul { list-style-type: disc; }
+        .tiptap-content ol { list-style-type: decimal; }
+
+        .tiptap-content a {
+          color: var(--red, #cc0000);
+          text-decoration: underline;
+          font-weight: 600;
+          transition: color 0.2s, background 0.2s;
         }
-        
-        .tiptap-content a { 
-          color: var(--text-primary); 
-          text-decoration: underline; 
+
+        .tiptap-content a:hover {
+          color: var(--white, #ffffff);
+          background: var(--red, #cc0000);
+          text-decoration: none;
+          padding: 0 3px;
         }
 
         .tiptap-content table {
           width: 100%;
           border-collapse: collapse;
-          margin: 2rem 0;
+          margin: 36px 0 48px;
+          font-size: 17px;
+          line-height: 1.6;
+          font-family: var(--font-eb-garamond), Georgia, serif;
         }
 
-        .tiptap-content th, .tiptap-content td {
-          border: 1px solid var(--border-color);
-          padding: 0.75rem;
-          text-align: left;
-          text-indent: 0;
+        .tiptap-content thead tr {
+          background: var(--gray-dark, #1a1a1a);
+          border-bottom: 2px solid var(--red, #cc0000);
         }
 
         .tiptap-content th {
-          background-color: var(--background-alt);
-          font-family: var(--font-ibm-plex-sans), sans-serif;
+          padding: 14px 18px;
+          text-align: left;
+          font-weight: 700;
+          font-size: 15px;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: var(--red, #cc0000);
+        }
+
+        .tiptap-content td {
+          padding: 13px 18px;
+          border-bottom: 1px solid var(--gray-mid, #333333);
+          color: var(--white, #ffffff);
+          vertical-align: top;
+        }
+
+        .tiptap-content td:first-child {
+          font-weight: 700;
+          color: #cccccc;
+          white-space: nowrap;
+          width: 38%;
+        }
+
+        .tiptap-content tbody tr:hover {
+          background: #0d0d0d;
+        }
+
+        .tiptap-content tbody tr:last-child td {
+          border-bottom: 2px solid var(--red, #cc0000);
+        }
+
+        @media (max-width: 1024px) {
+          .tiptap-content h2 { font-size: 26px; }
+          .tiptap-content h3 { font-size: 23px; }
+          .tiptap-content p { font-size: 19px; }
+          .tiptap-content > p:first-of-type::first-letter,
+          .tiptap-content h2 + p::first-letter { font-size: 90px; line-height: 60px; }
+        }
+
+        @media (max-width: 768px) {
+          .tiptap-content h2 { font-size: 22px; }
+          .tiptap-content h3 { font-size: 20px; }
+          .tiptap-content h4 { font-size: 18px; }
+          .tiptap-content p { font-size: 18px; line-height: 1.75; text-align: left; hyphens: none; }
+          .tiptap-content > p:first-of-type::first-letter,
+          .tiptap-content h2 + p::first-letter { font-size: 80px; line-height: 54px; padding-right: 10px; }
+          .tiptap-content table { font-size: 15px; }
+          .tiptap-content td:first-child { white-space: normal; width: auto; }
         }
       `}</style>
     </main>
