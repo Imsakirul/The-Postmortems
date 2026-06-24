@@ -161,12 +161,33 @@ export default function Home() {
           <div className={styles.peopleSection}>
             <h2 className={styles.peopleTitle}>TO THE PEOPLE OF INDIA</h2>
             <div className={styles.textBlock} style={{ margin: "0 auto", textAlign: "left" }}>
-              <p>You are why we exist.</p>
-              <p>Not the government. Not the opposition. Not any party that comes to power after the next election. Not any ideology that promises to fix everything if you just give them enough authority.</p>
-              <p>You.</p>
-              <p>The farmer whose land was acquired for a project that never happened — and whose compensation went into someone's offshore account. The soldier whose welfare fund was misappropriated by a general who retired into a board seat. The patient who died because a hospital inspector was paid to look away. The student who didn't get the scholarship because someone else's name was already decided. The taxpayer whose money built a road that dissolved in the first monsoon.</p>
-              <p>You are the public interest we serve. Your money, your rights, your safety, your future — these are what we protect when we investigate.</p>
-              <p>The Constitution of India gave you the right to know. We exist to exercise that right on your behalf — with evidence, without fear, and without masters.</p>
+              <p>You are the reason The Postmortem exists.</p>
+              <p>Not for governments. Not for political parties. Not for corporations. Not for institutions seeking praise. And not for any ideology seeking followers.</p>
+              <p>For the public.</p>
+              <p>For the citizen whose voice is rarely heard beyond election season. For the taxpayer who deserves to know how public money is spent. For the student, worker, entrepreneur, farmer, professional, pensioner, and family whose lives are shaped by decisions made behind closed doors.</p>
+              <p>A democracy functions best when information is available, institutions are accountable, and power is subject to scrutiny.</p>
+              <p>That is where investigative journalism serves its purpose.</p>
+              <p>The Postmortem exists to examine matters of public interest through evidence, documentation, verification, and responsible reporting.</p>
+              <p>We do not begin with conclusions.</p>
+              <p>We begin with questions.</p>
+              <p>We do not ask readers to trust us because of our name.</p>
+              <p>We ask readers to examine the evidence, review the facts, and judge our work by the standards we apply to ourselves.</p>
+              <p>Our commitment is simple:</p>
+              <p>To investigate thoroughly.</p>
+              <p>To verify rigorously.</p>
+              <p>To correct mistakes when they occur.</p>
+              <p>To publish responsibly.</p>
+              <p>To remain independent.</p>
+              <p>The Constitution of India guarantees the principles that make public accountability possible. Those principles guide our work and our responsibilities.</p>
+              <p>Every document reviewed, every record examined, every source verified, and every investigation published is undertaken with one purpose:</p>
+              <p>To contribute to a more informed public and a more accountable society.</p>
+              <p>Public trust is not something we inherit.</p>
+              <p>It is something we must earn, publication by publication, fact by fact, and investigation by investigation.</p>
+              <p>To the people of India:</p>
+              <p>Thank you for reading, questioning, challenging, and holding us accountable.</p>
+              <p>We consider that responsibility an honor.</p>
+              <p><strong>The Postmortem</strong></p>
+              <p><em>Investigate. Verify. Reveal.</em></p>
             </div>
           </div>
         </div>
