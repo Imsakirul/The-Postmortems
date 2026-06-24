@@ -101,3 +101,45 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 1.5rem;
 }
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 0;
+    margin-top: 2rem;
+  }
+
+  .grid {
+    padding: 1.5rem 0;
+    gap: 2rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+  }
+
+  .desc {
+    font-size: 0.8rem;
+  }
+
+  .columnHeader {
+    font-size: 0.8rem;
+  }
+
+  .link {
+    font-size: 0.8rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .principleLine {
+    font-size: 0.8rem;
+  }
+
+  .copyright {
+    font-size: 0.8rem;
+  }
+}

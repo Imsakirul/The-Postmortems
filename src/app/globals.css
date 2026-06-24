@@ -161,3 +161,21 @@ input:focus, textarea:focus, select:focus {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+  }
+}

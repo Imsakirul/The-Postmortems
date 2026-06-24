@@ -183,11 +183,65 @@
 }
 
 @media (max-width: 768px) {
+  .hero {
+    padding: 3rem 0;
+  }
+
   .heroTitle {
     font-size: 2rem;
   }
 
   .heroTagline {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .heroSub {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .heroSub p {
+    text-wrap: balance;
+  }
+
+  .section {
+    padding: 3rem 0;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .sectionHeader {
+    margin-bottom: 2rem;
+  }
+
+  .gridList {
+    gap: 1.5rem;
+  }
+
+  .gridItem {
+    padding: 1.5rem;
+  }
+
+  .reportBox {
+    padding: 2rem 1.5rem;
+  }
+
+  .fundingBox {
+    padding: 2rem 1.5rem;
+  }
+
+  .peopleTitle {
+    font-size: 1.5rem;
+  }
+
+  .preamble {
+    font-size: 1rem;
+  }
+
+  .preamble p:first-of-type::first-letter {
+    font-size: 3rem;
   }
 }
