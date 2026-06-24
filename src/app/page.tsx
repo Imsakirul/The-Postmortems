@@ -161,33 +161,14 @@ export default function Home() {
           <div className={styles.peopleSection}>
             <h2 className={styles.peopleTitle}>TO THE PEOPLE OF INDIA</h2>
             <div className={styles.preamble}>
-              <p>You are the reason The Postmortem exists.</p>
-              <p>Not for governments. Not for political parties. Not for corporations. Not for institutions seeking praise. And not for any ideology seeking followers.</p>
-              <p>For the public.</p>
-              <p>For the citizen whose voice is rarely heard beyond election season. For the taxpayer who deserves to know how public money is spent. For the student, worker, entrepreneur, farmer, professional, pensioner, and family whose lives are shaped by decisions made behind closed doors.</p>
-              <p>A democracy functions best when information is available, institutions are accountable, and power is subject to scrutiny.</p>
-              <p>That is where investigative journalism serves its purpose.</p>
-              <p>The Postmortem exists to examine matters of public interest through evidence, documentation, verification, and responsible reporting.</p>
-              <p>We do not begin with conclusions.</p>
-              <p>We begin with questions.</p>
-              <p>We do not ask readers to trust us because of our name.</p>
-              <p>We ask readers to examine the evidence, review the facts, and judge our work by the standards we apply to ourselves.</p>
-              <p>Our commitment is simple:</p>
-              <p>To investigate thoroughly.</p>
-              <p>To verify rigorously.</p>
-              <p>To correct mistakes when they occur.</p>
-              <p>To publish responsibly.</p>
-              <p>To remain independent.</p>
-              <p>The Constitution of India guarantees the principles that make public accountability possible. Those principles guide our work and our responsibilities.</p>
-              <p>Every document reviewed, every record examined, every source verified, and every investigation published is undertaken with one purpose:</p>
-              <p>To contribute to a more informed public and a more accountable society.</p>
-              <p>Public trust is not something we inherit.</p>
-              <p>It is something we must earn, publication by publication, fact by fact, and investigation by investigation.</p>
-              <p>To the people of India:</p>
-              <p>Thank you for reading, questioning, challenging, and holding us accountable.</p>
-              <p>We consider that responsibility an honor.</p>
-              <p><strong>The Postmortem</strong></p>
-              <p><em>Investigate. Verify. Reveal.</em></p>
+              <p>You are the reason The Postmortem exists. Not for governments. Not for political parties. Not for corporations. Not for institutions seeking praise. And not for any ideology seeking followers. For the public.</p>
+              <p>For the citizen whose voice is rarely heard beyond election season. For the taxpayer who deserves to know how public money is spent. For the student, worker, entrepreneur, farmer, professional, pensioner, and family whose lives are shaped by decisions made behind closed doors. A democracy functions best when information is available, institutions are accountable, and power is subject to scrutiny. That is where investigative journalism serves its purpose.</p>
+              <p>The Postmortem exists to examine matters of public interest through evidence, documentation, verification, and responsible reporting. We do not begin with conclusions. We begin with questions. We do not ask readers to trust us because of our name. We ask readers to examine the evidence, review the facts, and judge our work by the standards we apply to ourselves.</p>
+              <p>Our commitment is simple: To investigate thoroughly. To verify rigorously. To correct mistakes when they occur. To publish responsibly. To remain independent.</p>
+              <p>The Constitution of India guarantees the principles that make public accountability possible. Those principles guide our work and our responsibilities. Every document reviewed, every record examined, every source verified, and every investigation published is undertaken with one purpose: To contribute to a more informed public and a more accountable society.</p>
+              <p>Public trust is not something we inherit. It is something we must earn, publication by publication, fact by fact, and investigation by investigation.</p>
+              <p>To the people of India: Thank you for reading, questioning, challenging, and holding us accountable. We consider that responsibility an honor.</p>
+              <p><strong>The Postmortem</strong><br/><em>Investigate. Verify. Reveal.</em></p>
             </div>
           </div>
         </div>
