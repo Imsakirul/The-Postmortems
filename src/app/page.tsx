@@ -160,7 +160,7 @@ export default function Home() {
         <div className="container">
           <div className={styles.peopleSection}>
             <h2 className={styles.peopleTitle}>TO THE PEOPLE OF INDIA</h2>
-            <div className={styles.textBlock} style={{ margin: "0 auto", textAlign: "left" }}>
+            <div className={styles.preamble}>
               <p>You are the reason The Postmortem exists.</p>
               <p>Not for governments. Not for political parties. Not for corporations. Not for institutions seeking praise. And not for any ideology seeking followers.</p>
               <p>For the public.</p>

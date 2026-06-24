@@ -159,6 +159,29 @@
   letter-spacing: 0.1em;
 }
 
+.preamble {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.preamble p {
+  margin-bottom: 0.75rem;
+}
+
+.preamble p:first-of-type::first-letter {
+  font-size: 4rem;
+  font-weight: 700;
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.5rem;
+  margin-top: 0.2rem;
+  color: var(--text-primary);
+}
+
 @media (max-width: 768px) {
   .heroTitle {
     font-size: 2rem;
