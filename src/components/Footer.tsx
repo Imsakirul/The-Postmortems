@@ -14,18 +14,27 @@ export default function Footer() {
         
         <div className={styles.links}>
           <div className={styles.linkGroup}>
-            <Link href="/contact" className={styles.link}>For tips and secure submissions: Secure Contact Page</Link>
-            <Link href="/corrections" className={styles.link}>For corrections: Corrections Policy</Link>
-            <Link href="/legal" className={styles.link}>For legal notices: Legal Contact — All notices are published</Link>
-            <Link href="/editorial" className={styles.link}>For editorial inquiries: Editorial Contact</Link>
+            <h3 className={styles.linkHeader}>Institutional</h3>
+            <Link href="/about" className={styles.link}>About The Postmortem</Link>
+            <Link href="/corrections-policy" className={styles.link}>Corrections Policy</Link>
+            <Link href="/funding-disclosure" className={styles.link}>Funding Disclosure</Link>
+          </div>
+          <div className={styles.linkGroup}>
+            <h3 className={styles.linkHeader}>Security & Legal</h3>
+            <Link href="/source-protection-protocol" className={styles.link}>Source Protection Protocol</Link>
+            <Link href="/privacy-policy" className={styles.link}>Privacy Policy</Link>
+            <Link href="/terms-of-use" className={styles.link}>Terms of Use</Link>
           </div>
         </div>
 
-        <div className={styles.quoteBox}>
-          <p className={styles.quote}>
-            "We don't care if you are the Prime Minister, the Chief Justice, or the Defence Minister. If you are doing wrong with the power the people of India gave you — we will find it, we will verify it, and we will publish it. The chair does not protect you. The title does not protect you. The only thing that protects you is not being corrupt."
-          </p>
-          <p className={styles.quoteAuthor}>— The Editorial Desk, The Postmortem</p>
+        <div className={styles.principlesBlock}>
+          <h3 className={styles.principlesHeader}>EDITORIAL PRINCIPLES</h3>
+          <p className={styles.principleLine}>Investigate.<br/>Verify.<br/>Reveal.</p>
+          <p className={styles.principleLine}>Evidence before conclusions.</p>
+          <p className={styles.principleLine}>Documentation before publication.</p>
+          <p className={styles.principleLine}>Accountability without fear or favor.</p>
+          <p className={styles.principleLine}>The Constitution of India is our guiding framework.</p>
+          <p className={styles.principleLine}>Public trust is earned through transparency, verification, and accountability.</p>
         </div>
 
         <div className={styles.disclaimer}>
