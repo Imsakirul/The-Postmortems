@@ -12,35 +12,35 @@ export default function Footer() {
           <p className={styles.desc}>Bound by the Constitution. Answerable to no one but the truth.</p>
         </div>
         
-        <div className={styles.links}>
-          <div className={styles.linkGroup}>
-            <h3 className={styles.linkHeader}>ABOUT</h3>
+        <div className={styles.grid}>
+          <div className={styles.column}>
+            <h3 className={styles.columnHeader}>ABOUT</h3>
             <Link href="/about" className={styles.link}>About</Link>
             <Link href="/about#editorial-standards" className={styles.link}>Editorial Standards</Link>
             <Link href="/corrections-policy" className={styles.link}>Corrections Policy</Link>
           </div>
           
-          <div className={styles.linkGroup}>
-            <h3 className={styles.linkHeader}>POLICIES</h3>
+          <div className={styles.column}>
+            <h3 className={styles.columnHeader}>POLICIES</h3>
             <Link href="/privacy-policy" className={styles.link}>Privacy Policy</Link>
             <Link href="/terms-of-use" className={styles.link}>Terms of Use</Link>
             <Link href="/funding-disclosure" className={styles.link}>Funding Disclosure</Link>
           </div>
 
-          <div className={styles.linkGroup}>
-            <h3 className={styles.linkHeader}>SOURCE PROTECTION</h3>
+          <div className={styles.column}>
+            <h3 className={styles.columnHeader}>SOURCE PROTECTION</h3>
             <Link href="/source-protection-protocol" className={styles.link}>Source Protection Protocol</Link>
             <Link href="/submit" className={styles.link}>Secure Submissions</Link>
           </div>
-        </div>
 
-        <div className={styles.principlesBlock}>
-          <h3 className={styles.principlesHeader}>EDITORIAL PRINCIPLES</h3>
-          <p className={styles.principleLine}>Investigate.<br/>Verify.<br/>Reveal.</p>
-          <p className={styles.principleLine}>Evidence before conclusions.</p>
-          <p className={styles.principleLine}>Documentation before publication.</p>
-          <p className={styles.principleLine}>Accountability without fear or favor.</p>
-          <p className={styles.principleLine}>The Constitution of India is our guiding framework.</p>
+          <div className={styles.column}>
+            <h3 className={styles.columnHeader}>EDITORIAL PRINCIPLES</h3>
+            <p className={styles.principleLine}>Investigate.<br/>Verify.<br/>Reveal.</p>
+            <p className={styles.principleLine}>Evidence before conclusions.</p>
+            <p className={styles.principleLine}>Documentation before publication.</p>
+            <p className={styles.principleLine}>Accountability without fear or favor.</p>
+            <p className={styles.principleLine}>The Constitution of India is our guiding framework.</p>
+          </div>
         </div>
 
         <div className={styles.copyright}>
