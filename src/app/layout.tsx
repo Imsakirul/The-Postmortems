@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${ibmPlexSans.variable} ${ibmPlexSerif.variable}`}>
-      <body>
+      <body style={{ fontFamily: '"Times New Roman", Times, serif' }}>
         <Header />
         <main>{children}</main>
         <Footer />

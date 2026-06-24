@@ -20,13 +20,14 @@
 body {
   background-color: var(--bg-color);
   color: var(--text-primary);
-  font-family: var(--font-ibm-plex-sans), sans-serif;
+  font-family: "Times New Roman", Times, serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-ibm-plex-sans), sans-serif;
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1rem;
