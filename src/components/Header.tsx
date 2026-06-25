@@ -11,10 +11,10 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={`container ${styles.container}`}>
-        <Link href="/" className={styles.logo} onClick={() => setIsMenuOpen(false)}>
+        <a href="/" className={styles.logo} onClick={() => setIsMenuOpen(false)}>
           <span className={styles.title}>THE POSTMORTEM</span>
           <span className={styles.tagline}>Investigate. Verify. Reveal.</span>
-        </Link>
+        </a>
         
         <button 
           className={styles.mobileMenuBtn} 

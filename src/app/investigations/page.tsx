@@ -7,7 +7,7 @@ export const metadata = {
   description: "Read the latest independent investigative reports from The Postmortem.",
 };
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60; // Cache for 60 seconds (ISR) for instant load times
 
 export default async function InvestigationsFeed() {
   const investigations = await prisma.investigation.findMany({

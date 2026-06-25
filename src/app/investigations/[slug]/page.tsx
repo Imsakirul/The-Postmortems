@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60; // Cache for 60 seconds (ISR)
 
 export default async function ArticlePage({ params }: { params: { slug: string } }) {
   const investigation = await prisma.investigation.findUnique({
