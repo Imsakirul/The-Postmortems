@@ -12,7 +12,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={`container ${styles.container}`}>
         <a href="/" className={styles.logo} onClick={() => setIsMenuOpen(false)}>
-          <span className={`${styles.title} font-serif`}>THE POSTMORTEM<span className="text-alert">S.</span></span>
+          <span className={`${styles.title} brand-logo`}>THE POSTMORTEM<span className="text-alert">S.</span></span>
           <span className={styles.tagline}>Investigate. Verify. Reveal.</span>
         </a>
         

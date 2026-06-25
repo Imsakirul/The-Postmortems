@@ -47,6 +47,11 @@ a {
   font-family: var(--font-ibm-plex-serif), serif;
 }
 
+.brand-logo {
+  font-family: "Times New Roman", Times, serif !important;
+  font-weight: bold !important;
+}
+
 /* Base structural classes */
 .container {
   max-width: 1200px;
