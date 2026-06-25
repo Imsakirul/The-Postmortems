@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={`container ${styles.container}`}>
         <div className={styles.branding}>
-          <h2 className={styles.title}>THE POSTMORTEM</h2>
+          <h2 className={styles.title}>THE POSTMORTEM<span className="text-alert">S.</span></h2>
           <p className={styles.tagline}>Investigate. Verify. Reveal.</p>
           <p className={styles.desc}>Independent investigative journalism for the people of India.</p>
           <p className={styles.desc}>Bound by the Constitution. Answerable to no one but the truth.</p>
