@@ -70,6 +70,7 @@ export default function UploadHtmlPage() {
             Select HTML File
           </label>
           <input 
+            key={file ? "has-file" : "no-file"}
             type="file" 
             accept=".html" 
             onChange={handleFileChange}
@@ -84,9 +85,18 @@ export default function UploadHtmlPage() {
             }}
           />
           {file && (
-            <p style={{ marginTop: "0.5rem", color: "var(--green, #00B85A)", fontSize: "0.875rem" }}>
-              Selected: {file.name}
-            </p>
+            <div style={{ marginTop: "1rem", display: "flex", alignItems: "center", gap: "1rem", backgroundColor: "var(--background)", padding: "1rem", borderRadius: "8px", border: "1px solid var(--border)" }}>
+              <p style={{ color: "var(--green, #00B85A)", fontSize: "1rem", fontWeight: "bold", flex: 1 }}>
+                Selected: {file.name}
+              </p>
+              <button 
+                type="button" 
+                onClick={() => setFile(null)} 
+                style={{ padding: "0.5rem 1rem", backgroundColor: "var(--red-faint, #200808)", border: "1px solid var(--red, #CC2C2C)", color: "var(--red, #CC2C2C)", borderRadius: "4px", cursor: "pointer", fontSize: "0.875rem", fontWeight: "bold" }}
+              >
+                Clear File
+              </button>
+            </div>
           )}
         </div>
 
@@ -95,14 +105,14 @@ export default function UploadHtmlPage() {
             type="submit" 
             disabled={!file || loading}
             style={{ 
-              padding: "0.75rem 1.5rem", 
-              backgroundColor: "var(--accent)", 
-              color: "black", 
-              border: "none", 
+              padding: "0.75rem 2rem", 
+              backgroundColor: (!file || loading) ? "var(--background-alt)" : "var(--green, #00B85A)", 
+              color: (!file || loading) ? "var(--foreground-muted)" : "white", 
+              border: (!file || loading) ? "1px solid var(--border)" : "none", 
               borderRadius: "4px", 
               cursor: (!file || loading) ? "not-allowed" : "pointer",
               fontWeight: "bold",
-              opacity: (!file || loading) ? 0.7 : 1
+              fontSize: "1.1rem"
             }}
           >
             {loading ? "Uploading..." : "Upload & Publish"}
