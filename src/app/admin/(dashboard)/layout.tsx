@@ -7,7 +7,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className={styles.adminContainer}>
       <aside className={styles.sidebar}>
         <div className={styles.brand}>
-          <div className={styles.logo}>THE POSTMORTEM</div>
+          <div className={`${styles.logo} font-serif`}>THE POSTMORTEM<span className="text-alert">S.</span></div>
           <span className={styles.badge}>ADMIN</span>
         </div>
         

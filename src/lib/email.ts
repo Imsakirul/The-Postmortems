@@ -34,7 +34,7 @@ export async function sendEmail({ to, subject, html }: { to: string, subject: st
 export function getOtpEmailTemplate(otp: string) {
   return `
 <div style="font-family: sans-serif; color: #111; max-width: 600px; margin: 0 auto; padding: 2rem; border: 1px solid #eaeaea; border-radius: 4px;">
-  <h1 style="font-size: 1.5rem; text-transform: uppercase; font-weight: bold; margin-bottom: 0.5rem; letter-spacing: 0.1em;">THE POSTMORTEM</h1>
+  <h1 style="font-family: 'IBM Plex Serif', Times, serif; font-size: 1.5rem; text-transform: uppercase; font-weight: bold; margin-bottom: 0.5rem; letter-spacing: 0.1em; color: #FFFFFF;">THE POSTMORTEM<span style="color: #D50000;">S.</span></h1>
   <p style="font-size: 0.9rem; color: #666; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">Investigate. Verify. Reveal.</p>
   
   <p style="font-size: 1rem; margin-bottom: 1rem;">Your password reset verification code:</p>
@@ -59,7 +59,7 @@ export function getOtpEmailTemplate(otp: string) {
 export function getFailedLoginTemplate() {
   return `
 <div style="font-family: sans-serif; color: #111; max-width: 600px; margin: 0 auto; padding: 2rem; border: 1px solid #eaeaea; border-radius: 4px;">
-  <h1 style="font-size: 1.5rem; text-transform: uppercase; font-weight: bold; margin-bottom: 0.5rem; letter-spacing: 0.1em;">THE POSTMORTEM</h1>
+  <h1 style="font-family: 'IBM Plex Serif', Times, serif; font-size: 1.5rem; text-transform: uppercase; font-weight: bold; margin-bottom: 0.5rem; letter-spacing: 0.1em; color: #FFFFFF;">THE POSTMORTEM<span style="color: #D50000;">S.</span></h1>
   <p style="font-size: 0.9rem; color: #666; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">Investigate. Verify. Reveal.</p>
   
   <p style="font-size: 1rem; margin-bottom: 1rem;">We detected a failed login attempt for your Founder account.</p>
@@ -77,7 +77,7 @@ export function getFailedLoginTemplate() {
 export function getPasswordChangedTemplate() {
   return `
 <div style="font-family: sans-serif; color: #111; max-width: 600px; margin: 0 auto; padding: 2rem; border: 1px solid #eaeaea; border-radius: 4px;">
-  <h1 style="font-size: 1.5rem; text-transform: uppercase; font-weight: bold; margin-bottom: 0.5rem; letter-spacing: 0.1em;">THE POSTMORTEM</h1>
+  <h1 style="font-family: 'IBM Plex Serif', Times, serif; font-size: 1.5rem; text-transform: uppercase; font-weight: bold; margin-bottom: 0.5rem; letter-spacing: 0.1em; color: #FFFFFF;">THE POSTMORTEM<span style="color: #D50000;">S.</span></h1>
   <p style="font-size: 0.9rem; color: #666; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">Investigate. Verify. Reveal.</p>
   
   <p style="font-size: 1rem; margin-bottom: 1rem; color: #00c853;"><strong>Your password was successfully changed.</strong></p>

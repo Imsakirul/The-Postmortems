@@ -6,7 +6,7 @@ export default function Home() {
     <>
       <section className={styles.hero}>
         <div className="container">
-          <h1 className={styles.heroTitle}>THE POSTMORTEM</h1>
+          <h1 className={`${styles.heroTitle} font-serif`}>THE POSTMORTEM<span className="text-alert">S.</span></h1>
           <h2 className={styles.heroTagline}>Investigate. Verify. Reveal.</h2>
           <div className={styles.heroSub}>
             <p>India's evidence-based investigative journalism platform.</p>

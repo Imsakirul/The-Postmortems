@@ -1,38 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Chalk and the Cash: How West Bengal Sold Its Classrooms | The Postmortem</title>
-  <meta name="description" content="Complete investigation into the WBSSC teacher recruitment scam — the biggest education corruption in Bengal's history.">
-  <meta name="keywords" content="West Bengal teacher recruitment scam, WBSSC corruption, Partha Chatterjee arrest, OMR sheet manipulation, Calcutta High Court, Supreme Court verdict, education corruption, SSC investigation">
+  <meta name="description"
+    content="Complete investigation into the WBSSC teacher recruitment scam — the biggest education corruption in Bengal's history.">
+  <meta name="keywords"
+    content="West Bengal teacher recruitment scam, WBSSC corruption, Partha Chatterjee arrest, OMR sheet manipulation, Calcutta High Court, Supreme Court verdict, education corruption, SSC investigation">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cinzel:wght@700&display=swap"
+    rel="stylesheet">
   <style>
-
     /* ============================================================
        THE POSTMORTEM — MASTER ARTICLE STYLESHEET v1.0
        Book-style investigation article layout
     ============================================================ */
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
     :root {
-      --black:     #000000;
-      --white:     #ffffff;
-      --red:       #cc0000;
+      --black: #000000;
+      --white: #ffffff;
+      --red: #cc0000;
       --red-light: #ff2222;
       --gray-dark: #1a1a1a;
-      --gray-mid:  #333333;
+      --gray-mid: #333333;
       --gray-text: #999999;
-      --gray-cap:  #aaaaaa;
-      --green:     #00cc44;
-      --gold:      #c9a84c;
+      --gray-cap: #aaaaaa;
+      --green: #00cc44;
+      --gold: #c9a84c;
     }
 
     /* ── PAGE BASE ── */
@@ -106,7 +112,9 @@
       transition: color 0.2s;
     }
 
-    .nav-links a:hover { color: var(--gray-text); }
+    .nav-links a:hover {
+      color: var(--gray-text);
+    }
 
     .nav-links a.report-link {
       color: var(--red);
@@ -175,10 +183,25 @@
       border-radius: 2px;
     }
 
-    .badge-verified  { background: var(--green); color: #000; }
-    .badge-ongoing   { background: #ffaa00; color: #000; }
-    .badge-breaking  { background: var(--red); color: #fff; }
-    .badge-concluded { background: #0099ff; color: #fff; }
+    .badge-verified {
+      background: var(--green);
+      color: #000;
+    }
+
+    .badge-ongoing {
+      background: #ffaa00;
+      color: #000;
+    }
+
+    .badge-breaking {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .badge-concluded {
+      background: #0099ff;
+      color: #fff;
+    }
 
     /* ── SUBTITLE / EXCERPT ── */
     .article-excerpt {
@@ -331,8 +354,15 @@
     }
 
     /* ── BOLD & ITALIC ── */
-    strong { font-weight: 700; color: var(--white); }
-    em     { font-style: italic; color: #dddddd; }
+    strong {
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    em {
+      font-style: italic;
+      color: #dddddd;
+    }
 
     /* ── INLINE PULL-QUOTE ── */
     .pull-quote {
@@ -361,8 +391,13 @@
       color: var(--white);
     }
 
-    .article-body ul { list-style-type: disc; }
-    .article-body ol { list-style-type: decimal; }
+    .article-body ul {
+      list-style-type: disc;
+    }
+
+    .article-body ol {
+      list-style-type: decimal;
+    }
 
     /* ── LINKS ── */
     a {
@@ -526,47 +561,161 @@
 
     /* ── PRINT STYLES ── */
     @media print {
-      nav, footer.site-footer { display: none; }
-      body { background: #fff; color: #000; font-size: 12pt; }
-      .article-title { font-size: 28pt; }
-      h2 { font-size: 18pt; }
-      h3 { font-size: 15pt; }
-      .article-body p { font-size: 12pt; line-height: 1.6; text-align: justify; }
-      a { color: #000; text-decoration: underline; }
-      blockquote { border-left: 3px solid #999; }
-      .drop-cap-para::first-letter { color: #000; }
+
+      nav,
+      footer.site-footer {
+        display: none;
+      }
+
+      body {
+        background: #fff;
+        color: #000;
+        font-size: 12pt;
+      }
+
+      .article-title {
+        font-size: 28pt;
+      }
+
+      h2 {
+        font-size: 18pt;
+      }
+
+      h3 {
+        font-size: 15pt;
+      }
+
+      .article-body p {
+        font-size: 12pt;
+        line-height: 1.6;
+        text-align: justify;
+      }
+
+      a {
+        color: #000;
+        text-decoration: underline;
+      }
+
+      blockquote {
+        border-left: 3px solid #999;
+      }
+
+      .drop-cap-para::first-letter {
+        color: #000;
+      }
     }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      nav { padding: 18px 30px; }
-      .article-wrapper { padding: 40px 30px 80px; }
-      .article-title { font-size: 38px; }
-      h2 { font-size: 26px; }
-      h3 { font-size: 23px; }
-      .article-body p { font-size: 19px; }
-      .drop-cap-para::first-letter { font-size: 90px; line-height: 60px; }
+      nav {
+        padding: 18px 30px;
+      }
+
+      .article-wrapper {
+        padding: 40px 30px 80px;
+      }
+
+      .article-title {
+        font-size: 38px;
+      }
+
+      h2 {
+        font-size: 26px;
+      }
+
+      h3 {
+        font-size: 23px;
+      }
+
+      .article-body p {
+        font-size: 19px;
+      }
+
+      .drop-cap-para::first-letter {
+        font-size: 90px;
+        line-height: 60px;
+      }
     }
 
     @media (max-width: 768px) {
-      nav { padding: 14px 20px; flex-wrap: wrap; gap: 12px; }
-      .nav-links { gap: 18px; }
-      .nav-links a { font-size: 12px; }
-      .article-wrapper { padding: 30px 20px 60px; }
-      .article-title { font-size: 28px; text-align: left; }
-      .article-excerpt { text-align: left; max-width: 100%; font-size: 18px; }
-      .article-meta { justify-content: flex-start; }
-      h2 { font-size: 22px; }
-      h3 { font-size: 20px; }
-      h4 { font-size: 18px; }
-      .article-body p { font-size: 18px; line-height: 1.75; text-align: left; hyphens: none; }
-      .drop-cap-para::first-letter { font-size: 80px; line-height: 54px; padding-right: 10px; }
-      .facts-table { font-size: 15px; }
-      .facts-table td:first-child { white-space: normal; width: auto; }
-      footer.site-footer { flex-direction: column; gap: 20px; text-align: center; padding: 24px 20px; }
-      .pull-quote { font-size: 20px; }
-    }
+      nav {
+        padding: 14px 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
 
+      .nav-links {
+        gap: 18px;
+      }
+
+      .nav-links a {
+        font-size: 12px;
+      }
+
+      .article-wrapper {
+        padding: 30px 20px 60px;
+      }
+
+      .article-title {
+        font-size: 28px;
+        text-align: left;
+      }
+
+      .article-excerpt {
+        text-align: left;
+        max-width: 100%;
+        font-size: 18px;
+      }
+
+      .article-meta {
+        justify-content: flex-start;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      h3 {
+        font-size: 20px;
+      }
+
+      h4 {
+        font-size: 18px;
+      }
+
+      .article-body p {
+        font-size: 18px;
+        line-height: 1.75;
+        text-align: left;
+        hyphens: none;
+      }
+
+      .drop-cap-para::first-letter {
+        font-size: 80px;
+        line-height: 54px;
+        padding-right: 10px;
+      }
+
+      .facts-table {
+        font-size: 15px;
+      }
+
+      .facts-table td:first-child {
+        white-space: normal;
+        width: auto;
+      }
+
+      footer.site-footer {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 24px 20px;
+      }
+
+      .pull-quote {
+        font-size: 20px;
+      }
+    }
   </style>
 </head>
 
@@ -603,7 +752,10 @@
 
     <!-- Excerpt -->
     <p class="article-excerpt">
-      On April 3, 2025, the Supreme Court cancelled 25,753 teacher jobs in West Bengal, calling the entire recruitment process "vitiated and tainted beyond resolution." This is the complete anatomy of how a government systematically converted its education system into a cash-for-jobs machine — and how 26,000 innocent teachers paid the price for fraud they had nothing to do with. A full investigation into the biggest education scam in Bengal's history.
+      On April 3, 2025, the Supreme Court cancelled 25,753 teacher jobs in West Bengal, calling the entire recruitment
+      process "vitiated and tainted beyond resolution." This is the complete anatomy of how a government systematically
+      converted its education system into a cash-for-jobs machine — and how 26,000 innocent teachers paid the price for
+      fraud they had nothing to do with. A full investigation into the biggest education scam in Bengal's history.
     </p>
 
     <!-- Opening Quote -->
@@ -621,13 +773,21 @@
       <div class="part-label">The Opening Cut</div>
       <h2>The Day 26,000 Careers Ended</h2>
 
-      <p class="drop-cap-para">On the morning of April 3, 2025, Kakoli Hazra was standing in front of her students at a government school in Purba Medinipur — like she had done for nearly a decade — when her phone buzzed with the news. The Supreme Court had just cancelled her job. And the jobs of 25,752 others like her.</p>
+      <p class="drop-cap-para">On the morning of April 3, 2025, Kakoli Hazra was standing in front of her students at a
+        government school in Purba Medinipur — like she had done for nearly a decade — when her phone buzzed with the
+        news. The Supreme Court had just cancelled her job. And the jobs of 25,752 others like her.</p>
 
-      <p>She hadn't bribed anyone. She hadn't jumped any rank. She hadn't paid a single rupee to get where she was. But in the eyes of the law, she was now unemployed — because the system she trusted had been so thoroughly corrupted that even the innocent couldn't be separated from the guilty anymore.</p>
+      <p>She hadn't bribed anyone. She hadn't jumped any rank. She hadn't paid a single rupee to get where she was. But
+        in the eyes of the law, she was now unemployed — because the system she trusted had been so thoroughly corrupted
+        that even the innocent couldn't be separated from the guilty anymore.</p>
 
-      <p>That is the central tragedy of the West Bengal School Service Commission (WBSSC) recruitment scam. And it is also the most damning indictment of how deeply corruption had eaten into the state's education apparatus under the Trinamool Congress government.</p>
+      <p>That is the central tragedy of the West Bengal School Service Commission (WBSSC) recruitment scam. And it is
+        also the most damning indictment of how deeply corruption had eaten into the state's education apparatus under
+        the Trinamool Congress government.</p>
 
-      <p>This is a full investigation. No spin. No politics. Just the anatomy of a fraud that cost 26,000 teachers their livelihoods, gutted hundreds of public schools, and halved the number of students appearing for higher secondary exams in West Bengal. <em>This is the system's postmortem.</em></p>
+      <p>This is a full investigation. No spin. No politics. Just the anatomy of a fraud that cost 26,000 teachers their
+        livelihoods, gutted hundreds of public schools, and halved the number of students appearing for higher secondary
+        exams in West Bengal. <em>This is the system's postmortem.</em></p>
 
       <hr class="rule">
 
@@ -635,9 +795,15 @@
       <div class="part-label">Part 1</div>
       <h2>The Setup — What Is the WBSSC?</h2>
 
-      <p class="drop-cap-para">The West Bengal School Service Commission is the state government body responsible for recruiting teachers and non-teaching staff for all government-aided secondary and higher secondary schools in West Bengal. Classes 9 to 12 teachers, Group C clerical staff, Group D support workers — all go through the SSC.</p>
+      <p class="drop-cap-para">The West Bengal School Service Commission is the state government body responsible for
+        recruiting teachers and non-teaching staff for all government-aided secondary and higher secondary schools in
+        West Bengal. Classes 9 to 12 teachers, Group C clerical staff, Group D support workers — all go through the SSC.
+      </p>
 
-      <p>In 2016, the Commission announced the <strong>State Level Selection Test (SLST)</strong> — a recruitment drive to fill thousands of vacant teaching and non-teaching positions across the state. Written examinations were held, followed by interviews and personality tests. Hundreds of thousands of candidates appeared. Thousands were selected. And between 2016 and 2021, appointments trickled in — 25,753 of them in total.</p>
+      <p>In 2016, the Commission announced the <strong>State Level Selection Test (SLST)</strong> — a recruitment drive
+        to fill thousands of vacant teaching and non-teaching positions across the state. Written examinations were
+        held, followed by interviews and personality tests. Hundreds of thousands of candidates appeared. Thousands were
+        selected. And between 2016 and 2021, appointments trickled in — 25,753 of them in total.</p>
 
       <p>On paper, it looked like a functioning government recruitment process.</p>
 
@@ -651,39 +817,63 @@
 
       <h3>Step 1 — The OMR Sheet Racket</h3>
 
-      <p class="drop-cap-para">The first piece in this puzzle is a company called <strong>Nysa Communications (M/s NYSA)</strong> — a private firm that the WBSSC quietly handed the job of scanning and evaluating OMR (Optical Mark Recognition) answer sheets of candidates.</p>
+      <p class="drop-cap-para">The first piece in this puzzle is a company called <strong>Nysa Communications (M/s
+          NYSA)</strong> — a private firm that the WBSSC quietly handed the job of scanning and evaluating OMR (Optical
+        Mark Recognition) answer sheets of candidates.</p>
 
-      <p>There was no open tender. The contract was a two-line deal, handed over in a closed-door process. And to make matters worse, Nysa Communications then quietly <strong>outsourced the actual work</strong> to yet another company — <strong>Data Scantech</strong> — without the SSC's disclosed knowledge.</p>
+      <p>There was no open tender. The contract was a two-line deal, handed over in a closed-door process. And to make
+        matters worse, Nysa Communications then quietly <strong>outsourced the actual work</strong> to yet another
+        company — <strong>Data Scantech</strong> — without the SSC's disclosed knowledge.</p>
 
       <p>What happened next is where the fraud was born.</p>
 
-      <p>After scanning was complete, Nysa took the digital data on hard drives to their Noida office. The physical OMR sheets stayed at the WBSSC office in Kolkata. And one year after results were declared, as per SSC's own rules — the physical sheets were <strong>destroyed</strong>.</p>
+      <p>After scanning was complete, Nysa took the digital data on hard drives to their Noida office. The physical OMR
+        sheets stayed at the WBSSC office in Kolkata. And one year after results were declared, as per SSC's own rules —
+        the physical sheets were <strong>destroyed</strong>.</p>
 
       <div class="pull-quote">"This was not an accident. This was architecture."</div>
 
       <h3>Step 2 — The Manipulation</h3>
 
-      <p>In 2022, the CBI seized WBSSC's server database linked to the 2016 recruitment. Separately, investigators recovered <strong>three hard disks from the residence of a Nysa Communications employee named Pankaj Bansal</strong> in Ghaziabad, Uttar Pradesh.</p>
+      <p>In 2022, the CBI seized WBSSC's server database linked to the 2016 recruitment. Separately, investigators
+        recovered <strong>three hard disks from the residence of a Nysa Communications employee named Pankaj
+          Bansal</strong> in Ghaziabad, Uttar Pradesh.</p>
 
       <p>What they found on those hard disks was explosive.</p>
 
-      <p>The marks recorded on WBSSC's own server <strong>did not match</strong> what was on Pankaj Bansal's hard disks. Specifically — marks in the WBSSC server had been <strong>inflated</strong> for certain candidates who would not have otherwise qualified. Undeserving candidates had been made to appear deserving. And the physical evidence — the original OMR sheets — was gone, destroyed, irretrievable.</p>
+      <p>The marks recorded on WBSSC's own server <strong>did not match</strong> what was on Pankaj Bansal's hard disks.
+        Specifically — marks in the WBSSC server had been <strong>inflated</strong> for certain candidates who would not
+        have otherwise qualified. Undeserving candidates had been made to appear deserving. And the physical evidence —
+        the original OMR sheets — was gone, destroyed, irretrievable.</p>
 
-      <p>The CBI identified approximately <strong>6,000 fraudulent candidates</strong> based purely on this mismatch.</p>
+      <p>The CBI identified approximately <strong>6,000 fraudulent candidates</strong> based purely on this mismatch.
+      </p>
 
-      <p>But the deeper rot went further. The SSC had also made <strong>2,355 more appointments than available vacancies</strong> — and then, instead of correcting the error, actually sought government permission to create <strong>"supernumerary posts"</strong> to accommodate the illegal appointees. That is: the state government was willing to use taxpayers' money to give official sanction to fraud.</p>
+      <p>But the deeper rot went further. The SSC had also made <strong>2,355 more appointments than available
+          vacancies</strong> — and then, instead of correcting the error, actually sought government permission to
+        create <strong>"supernumerary posts"</strong> to accommodate the illegal appointees. That is: the state
+        government was willing to use taxpayers' money to give official sanction to fraud.</p>
 
-      <p>Appointments were continued <strong>even after the validity of the recruitment panel had legally expired</strong>. Candidates who submitted blank OMR sheets — people who literally wrote nothing — were appointed. Rank jumping was rampant: candidates lower on the merit list were placed above better-scoring candidates through political connections and payments.</p>
+      <p>Appointments were continued <strong>even after the validity of the recruitment panel had legally
+          expired</strong>. Candidates who submitted blank OMR sheets — people who literally wrote nothing — were
+        appointed. Rank jumping was rampant: candidates lower on the merit list were placed above better-scoring
+        candidates through political connections and payments.</p>
 
-      <p>The bribes, according to multiple accounts and court findings, ranged from <strong>₹15 to ₹20 lakhs per appointment</strong>.</p>
+      <p>The bribes, according to multiple accounts and court findings, ranged from <strong>₹15 to ₹20 lakhs per
+          appointment</strong>.</p>
 
       <h3>Step 3 — The Cover-Up</h3>
 
-      <p>When RTI applicants began asking for OMR sheet copies between 2018 and 2023, the WBSSC provided scanned copies — quietly. Then, when courts pressed for the originals, the SSC claimed they had been destroyed as per rules.</p>
+      <p>When RTI applicants began asking for OMR sheet copies between 2018 and 2023, the WBSSC provided scanned copies
+        — quietly. Then, when courts pressed for the originals, the SSC claimed they had been destroyed as per rules.
+      </p>
 
       <p>But what they hadn't counted on was those hard disks sitting in an apartment in Ghaziabad.</p>
 
-      <p>The government's response to mounting court scrutiny? Fight it. The state filed petition after petition, argued that the scam was limited, that not everyone was guilty, that they should be allowed to separate the innocent from the guilty themselves. All while the CBI alleged the state was actively <strong>destroying evidence rather than disclosing it</strong>.</p>
+      <p>The government's response to mounting court scrutiny? Fight it. The state filed petition after petition, argued
+        that the scam was limited, that not everyone was guilty, that they should be allowed to separate the innocent
+        from the guilty themselves. All while the CBI alleged the state was actively <strong>destroying evidence rather
+          than disclosing it</strong>.</p>
 
       <hr class="rule">
 
@@ -693,35 +883,59 @@
 
       <h3>Partha Chatterjee — The Minister Who Fell</h3>
 
-      <p class="drop-cap-para">The face of this scam is <strong>Partha Chatterjee</strong>, former Education Minister in Mamata Banerjee's cabinet, TMC MLA from Behala Paschim, and once described as one of her closest political lieutenants.</p>
+      <p class="drop-cap-para">The face of this scam is <strong>Partha Chatterjee</strong>, former Education Minister in
+        Mamata Banerjee's cabinet, TMC MLA from Behala Paschim, and once described as one of her closest political
+        lieutenants.</p>
 
-      <p>On <strong>July 23, 2022</strong>, the Enforcement Directorate arrested Chatterjee after multiple rounds of interrogation. The same day, ED raided the South Kolkata apartment of his close associate — small Tollywood actress <strong>Arpita Mukherjee</strong> — and recovered <strong>₹21 crore in cash</strong>, jewellery worth ₹50 lakh, and foreign currency worth ₹54 lakh.</p>
+      <p>On <strong>July 23, 2022</strong>, the Enforcement Directorate arrested Chatterjee after multiple rounds of
+        interrogation. The same day, ED raided the South Kolkata apartment of his close associate — small Tollywood
+        actress <strong>Arpita Mukherjee</strong> — and recovered <strong>₹21 crore in cash</strong>, jewellery worth
+        ₹50 lakh, and foreign currency worth ₹54 lakh.</p>
 
-      <p>That wasn't all. The next day, another apartment of Mukherjee's in Belghoria was raided. There they found another <strong>₹27.90 crore in cash</strong> and <strong>6 kg of gold</strong>.</p>
+      <p>That wasn't all. The next day, another apartment of Mukherjee's in Belghoria was raided. There they found
+        another <strong>₹27.90 crore in cash</strong> and <strong>6 kg of gold</strong>.</p>
 
       <blockquote>
-        In total, the ED recovered over <strong>₹49 crore in cash and gold</strong> from the premises of just one associate of the then-Education Minister.
+        In total, the ED recovered over <strong>₹49 crore in cash and gold</strong> from the premises of just one
+        associate of the then-Education Minister.
       </blockquote>
 
-      <p>Chatterjee was charged with ensuring jobs for candidates with lower marks in exchange for money, and with manipulating question papers against eligible candidates. He was suspended from the TMC and removed from the cabinet. He remained behind bars until the Calcutta High Court granted him bail in September 2024, and he was finally released on November 11, 2024.</p>
+      <p>Chatterjee was charged with ensuring jobs for candidates with lower marks in exchange for money, and with
+        manipulating question papers against eligible candidates. He was suspended from the TMC and removed from the
+        cabinet. He remained behind bars until the Calcutta High Court granted him bail in September 2024, and he was
+        finally released on November 11, 2024.</p>
 
-      <p>As recently as April 2026 — just before Bengal's Assembly elections — the ED conducted fresh raids at Chatterjee's Naktala residence after he reportedly skipped multiple summons.</p>
+      <p>As recently as April 2026 — just before Bengal's Assembly elections — the ED conducted fresh raids at
+        Chatterjee's Naktala residence after he reportedly skipped multiple summons.</p>
 
       <h3>Shanti Prasad Sinha &amp; Ashok Saha</h3>
 
-      <p>On <strong>August 10, 2022</strong>, the CBI arrested <strong>Shanti Prasad Sinha</strong>, appointed as convenor of a special advisory committee formed by Chatterjee for SSC appointments, and <strong>Ashok Saha</strong>, who served as Secretary of the WBSSC. Both were central figures in the machinery of appointments.</p>
+      <p>On <strong>August 10, 2022</strong>, the CBI arrested <strong>Shanti Prasad Sinha</strong>, appointed as
+        convenor of a special advisory committee formed by Chatterjee for SSC appointments, and <strong>Ashok
+          Saha</strong>, who served as Secretary of the WBSSC. Both were central figures in the machinery of
+        appointments.</p>
 
       <h3>The Justice Ranjit Bag Committee</h3>
 
-      <p>The Calcutta High Court appointed a judicial committee led by retired Justice Ranjit Bag to investigate the scam. This committee was the first to <strong>formally name Partha Chatterjee</strong> in connection with the fraud. Its findings stated clearly that recruitment rules had never been followed in letter or spirit, and that the total beneficiaries of the corruption could not even be fully identified.</p>
+      <p>The Calcutta High Court appointed a judicial committee led by retired Justice Ranjit Bag to investigate the
+        scam. This committee was the first to <strong>formally name Partha Chatterjee</strong> in connection with the
+        fraud. Its findings stated clearly that recruitment rules had never been followed in letter or spirit, and that
+        the total beneficiaries of the corruption could not even be fully identified.</p>
 
       <h3>Paresh Chandra Adhikari's Daughter</h3>
 
-      <p>The scam wasn't limited to bureaucrats and middlemen. Former Minister of State for Education <strong>Paresh Chandra Adhikari's daughter, Ankita</strong>, was appointed as a senior teacher despite scoring below qualifying marks in the 2016 test. The Calcutta High Court dismissed her from her position in 2022. Last year, she was appointed as district secretary of the TMC in Cooch Behar.</p>
+      <p>The scam wasn't limited to bureaucrats and middlemen. Former Minister of State for Education <strong>Paresh
+          Chandra Adhikari's daughter, Ankita</strong>, was appointed as a senior teacher despite scoring below
+        qualifying marks in the 2016 test. The Calcutta High Court dismissed her from her position in 2022. Last year,
+        she was appointed as district secretary of the TMC in Cooch Behar.</p>
 
       <h3>The Political Nexus</h3>
 
-      <p>Two senior BJP leaders — including BJP MLA Suvendu Adhikari's younger brother — are also named in the CBI chargesheet, suggesting the corruption crossed party lines. Adhikari, who was part of the Mamata Banerjee cabinet when the scam took place before defecting to the BJP, oversaw TMC organisational matters in Purba Medinipur, Murshidabad, and Uttar Dinajpur — precisely the districts with the <strong>maximum number of tainted appointments</strong>.</p>
+      <p>Two senior BJP leaders — including BJP MLA Suvendu Adhikari's younger brother — are also named in the CBI
+        chargesheet, suggesting the corruption crossed party lines. Adhikari, who was part of the Mamata Banerjee
+        cabinet when the scam took place before defecting to the BJP, oversaw TMC organisational matters in Purba
+        Medinipur, Murshidabad, and Uttar Dinajpur — precisely the districts with the <strong>maximum number of tainted
+          appointments</strong>.</p>
 
       <hr class="rule">
 
@@ -731,31 +945,44 @@
 
       <h3>The First Petition (2016)</h3>
 
-      <p class="drop-cap-para">The legal fight began in 2016 itself, when a candidate named <strong>Baishakhi Bhattacharyya</strong> became the first person to file a case against the WBSSC in the Calcutta High Court. What began as an individual grievance eventually exploded into a case involving hundreds of petitions.</p>
+      <p class="drop-cap-para">The legal fight began in 2016 itself, when a candidate named <strong>Baishakhi
+          Bhattacharyya</strong> became the first person to file a case against the WBSSC in the Calcutta High Court.
+        What began as an individual grievance eventually exploded into a case involving hundreds of petitions.</p>
 
       <h3>Justice Abhijit Gangopadhyay's Orders (2021–2024)</h3>
 
-      <p><strong>Justice Abhijit Gangopadhyay</strong> of the Calcutta High Court issued a series of directions ordering the CBI to investigate the allegations — a move that kickstarted the entire criminal investigation. His directions were controversial and contested, but they set the machinery of accountability in motion.</p>
+      <p><strong>Justice Abhijit Gangopadhyay</strong> of the Calcutta High Court issued a series of directions ordering
+        the CBI to investigate the allegations — a move that kickstarted the entire criminal investigation. His
+        directions were controversial and contested, but they set the machinery of accountability in motion.</p>
 
-      <p><em>Note: Justice Gangopadhyay later resigned from the judiciary, entered electoral politics, and won the Tamluk Lok Sabha seat on a BJP ticket in 2024. Critics allege this raised questions about his motivations. However, his court orders were subsequently upheld by a higher division bench.</em></p>
+      <p><em>Note: Justice Gangopadhyay later resigned from the judiciary, entered electoral politics, and won the
+          Tamluk Lok Sabha seat on a BJP ticket in 2024. Critics allege this raised questions about his motivations.
+          However, his court orders were subsequently upheld by a higher division bench.</em></p>
 
       <h3>The Calcutta High Court Division Bench Order — April 22, 2024</h3>
 
       <p>This is the order that changed everything.</p>
 
-      <p>A division bench comprising <strong>Justice Debangsu Basak and Justice Md. Shabbar Rashidi</strong> cancelled the <strong>entire 2016 SLST recruitment panel</strong> — all 25,753 appointments — declaring them "illegal" and "unconstitutional." The bench called the selection process "shrouded in mystery."</p>
+      <p>A division bench comprising <strong>Justice Debangsu Basak and Justice Md. Shabbar Rashidi</strong> cancelled
+        the <strong>entire 2016 SLST recruitment panel</strong> — all 25,753 appointments — declaring them "illegal" and
+        "unconstitutional." The bench called the selection process "shrouded in mystery."</p>
 
-      <p>The court directed all those whose appointments were cancelled to <strong>return their salaries with 12% interest per annum</strong> within four weeks. It gave the state 15 days to begin fresh recruitment.</p>
+      <p>The court directed all those whose appointments were cancelled to <strong>return their salaries with 12%
+          interest per annum</strong> within four weeks. It gave the state 15 days to begin fresh recruitment.</p>
 
-      <p>The case citation: <em>Baisakhi Bhattacharyya v. State of West Bengal, 2024 SCC OnLine Cal 3862, Judgment dated 22-04-2024.</em></p>
+      <p>The case citation: <em>Baisakhi Bhattacharyya v. State of West Bengal, 2024 SCC OnLine Cal 3862, Judgment dated
+          22-04-2024.</em></p>
 
       <p>The West Bengal government, refusing to accept this verdict, challenged it in the Supreme Court.</p>
 
       <h3>The Supreme Court's Final Verdict — April 3, 2025</h3>
 
-      <p>On April 3, 2025, a Supreme Court division bench comprising <strong>Chief Justice of India Sanjiv Khanna and Justice Sanjay Kumar</strong> upheld the Calcutta High Court order in its entirety.</p>
+      <p>On April 3, 2025, a Supreme Court division bench comprising <strong>Chief Justice of India Sanjiv Khanna and
+          Justice Sanjay Kumar</strong> upheld the Calcutta High Court order in its entirety.</p>
 
-      <p>The Supreme Court declared the entire recruitment process a <strong>"systemic fraud"</strong> — "vitiated and tainted beyond resolution." The court found it impossible to distinguish the innocent from the guilty because:</p>
+      <p>The Supreme Court declared the entire recruitment process a <strong>"systemic fraud"</strong> — "vitiated and
+        tainted beyond resolution." The court found it impossible to distinguish the innocent from the guilty because:
+      </p>
 
       <ul>
         <li>The OMR sheets had been destroyed</li>
@@ -769,14 +996,17 @@
         <li>A <strong>fresh recruitment process within three months</strong></li>
         <li>Candidates not implicated in misconduct could reapply</li>
         <li>Those whose appointments were revoked must <strong>return their salaries</strong></li>
-        <li>Those who had left government jobs for SSC positions could return to their previous roles within three months</li>
+        <li>Those who had left government jobs for SSC positions could return to their previous roles within three
+          months</li>
         <li>The CBI would continue its criminal probe</li>
         <li>An investigation against the state cabinet itself would proceed</li>
       </ul>
 
-      <p>The bench also upheld the HC's order for an <strong>investigation against the state cabinet</strong> — a rare and extraordinary step in Indian judicial history.</p>
+      <p>The bench also upheld the HC's order for an <strong>investigation against the state cabinet</strong> — a rare
+        and extraordinary step in Indian judicial history.</p>
 
-      <p>On August 2025, the Supreme Court dismissed review petitions by the state government, calling them an attempt to seek re-hearing on issues already decided. The verdict was final.</p>
+      <p>On August 2025, the Supreme Court dismissed review petitions by the state government, calling them an attempt
+        to seek re-hearing on issues already decided. The verdict was final.</p>
 
       <hr class="rule">
 
@@ -786,35 +1016,52 @@
 
       <h3>The Human Cost</h3>
 
-      <p class="drop-cap-para">Kakoli Hazra, who had taught for nearly a decade at Kulti Government Colony Refugee Girls High School, was in school the day the verdict arrived. Her reaction was simple: <em>"This verdict shattered us. It was inhumane. How can our government jobs just go like this when there's not a single allegation against us, no question of money or wrongdoing?"</em></p>
+      <p class="drop-cap-para">Kakoli Hazra, who had taught for nearly a decade at Kulti Government Colony Refugee Girls
+        High School, was in school the day the verdict arrived. Her reaction was simple: <em>"This verdict shattered us.
+          It was inhumane. How can our government jobs just go like this when there's not a single allegation against
+          us, no question of money or wrongdoing?"</em></p>
 
-      <p>Anurupa Banerjee had spent 10 years teaching. She was now required to sit for an examination again — at a life stage when she had already built an identity, a career, and a family around her work.</p>
+      <p>Anurupa Banerjee had spent 10 years teaching. She was now required to sit for an examination again — at a life
+        stage when she had already built an identity, a career, and a family around her work.</p>
 
-      <p>These were not rich candidates who could absorb the shock. Many had borrowed money, taken loans, built their entire adult life around a government job. The financial devastation was total.</p>
+      <p>These were not rich candidates who could absorb the shock. Many had borrowed money, taken loans, built their
+        entire adult life around a government job. The financial devastation was total.</p>
 
       <h3>The Siege of SSC Office</h3>
 
-      <p>In April 2025, over 2,000 dismissed teachers surrounded the WBSSC headquarters in Salt Lake, Kolkata — blocking entry and exit of officials, including SSC Chairman Siddhartha Majumdar, who remained inside the building for over 40 hours.</p>
+      <p>In April 2025, over 2,000 dismissed teachers surrounded the WBSSC headquarters in Salt Lake, Kolkata — blocking
+        entry and exit of officials, including SSC Chairman Siddhartha Majumdar, who remained inside the building for
+        over 40 hours.</p>
 
-      <p>Their core demand was simple: <strong>publish the list of who is tainted and who is not.</strong> Make it public. Let the innocent be separated from the guilty.</p>
+      <p>Their core demand was simple: <strong>publish the list of who is tainted and who is not.</strong> Make it
+        public. Let the innocent be separated from the guilty.</p>
 
-      <p>The government's response was evasive. The state education department, in what one media report described as a "hush-hush administrative move," circulated a list of 15,400 "not specifically found tainted" teachers to district inspectors — without making it public. Teachers were allowed back into classrooms quietly, without any public clearance of their names.</p>
+      <p>The government's response was evasive. The state education department, in what one media report described as a
+        "hush-hush administrative move," circulated a list of 15,400 "not specifically found tainted" teachers to
+        district inspectors — without making it public. Teachers were allowed back into classrooms quietly, without any
+        public clearance of their names.</p>
 
       <blockquote>
         "Why won't they publish the list online? Are they afraid?"
         <cite>— Siddhartha Mondal, teacher, Govindpur Rajnagar High School</cite>
       </blockquote>
 
-      <p>The protest continued for days under a 40°C heatwave. Police shut down public toilets. Blocked temporary shelters. Stationed guards at nearby apartment entrances. Local residents offered their homes in defiance.</p>
+      <p>The protest continued for days under a 40°C heatwave. Police shut down public toilets. Blocked temporary
+        shelters. Stationed guards at nearby apartment entrances. Local residents offered their homes in defiance.</p>
 
       <h3>The State Government's Double Game</h3>
 
-      <p>Chief Minister Mamata Banerjee asked teachers to return to work, saying: <em>"You will get your salary according to the system."</em> But the system had just been called a fraud by the Supreme Court.</p>
+      <p>Chief Minister Mamata Banerjee asked teachers to return to work, saying: <em>"You will get your salary
+          according to the system."</em> But the system had just been called a fraud by the Supreme Court.</p>
 
-      <p>Education Minister Bratya Basu initially announced the tainted/untainted list would be published within days. It wasn't. The state argued the list was sub judice. Critics argued the government was protecting the guilty.</p>
+      <p>Education Minister Bratya Basu initially announced the tainted/untainted list would be published within days.
+        It wasn't. The state argued the list was sub judice. Critics argued the government was protecting the guilty.
+      </p>
 
       <blockquote>
-        "They gave appointments to people who were not recommended by SSC, they jumped ranks, they continued to hold counselling and give appointments even after the panel had lost its legal validity. Now, in trying to cover up these irregularities they are holding the future of the valid and meritorious candidates at ransom."
+        "They gave appointments to people who were not recommended by SSC, they jumped ranks, they continued to hold
+        counselling and give appointments even after the panel had lost its legal validity. Now, in trying to cover up
+        these irregularities they are holding the future of the valid and meritorious candidates at ransom."
         <cite>— Jawahar Sircar, former Rajya Sabha MP</cite>
       </blockquote>
 
@@ -826,27 +1073,40 @@
 
       <h3>September 2025 — Fresh Exam, Old Faces</h3>
 
-      <p class="drop-cap-para">The WBSSC conducted fresh recruitment exams on September 7 and 14, 2025, under direct Supreme Court supervision. The court had been explicit: <strong>no tainted candidate would be allowed to sit</strong>.</p>
+      <p class="drop-cap-para">The WBSSC conducted fresh recruitment exams on September 7 and 14, 2025, under direct
+        Supreme Court supervision. The court had been explicit: <strong>no tainted candidate would be allowed to
+          sit</strong>.</p>
 
-      <p>Despite this, during document verification, the Commission discovered that <strong>269 tainted candidates</strong> had successfully appeared for the fresh exams — evading detection. All were barred.</p>
+      <p>Despite this, during document verification, the Commission discovered that <strong>269 tainted
+          candidates</strong> had successfully appeared for the fresh exams — evading detection. All were barred.</p>
 
-      <p>In November 2025, the Supreme Court came down hard on the West Bengal government after it filed an application in the Calcutta High Court seeking permission for tainted candidates to write the new exam. The court's reaction was scathing:</p>
+      <p>In November 2025, the Supreme Court came down hard on the West Bengal government after it filed an application
+        in the Calcutta High Court seeking permission for tainted candidates to write the new exam. The court's reaction
+        was scathing:</p>
 
       <blockquote>
-        "This is how the State of West Bengal is understanding the judgment? What kind of blue-eyed girls and boys are these that you even bring in the Advocate General to argue for them? On the face of it, it's shocking — how you ruin the lives of these candidates by manipulating OMRs and bringing in your own people. Now you want tainted candidates to be smuggled in again."
+        "This is how the State of West Bengal is understanding the judgment? What kind of blue-eyed girls and boys are
+        these that you even bring in the Advocate General to argue for them? On the face of it, it's shocking — how you
+        ruin the lives of these candidates by manipulating OMRs and bringing in your own people. Now you want tainted
+        candidates to be smuggled in again."
         <cite>— Justice Sanjay Kumar, Supreme Court of India</cite>
       </blockquote>
 
       <blockquote>
-        "We are keeping a close watch on what you're doing. Please be mindful. We will definitely interfere, if you do this kind of tinkering again."
+        "We are keeping a close watch on what you're doing. Please be mindful. We will definitely interfere, if you do
+        this kind of tinkering again."
         <cite>— Supreme Court of India</cite>
       </blockquote>
 
       <h3>November 2025 — The List Without Schools</h3>
 
-      <p>On November 28, 2025, the WBSSC released an updated list of <strong>1,806 tainted candidates</strong> — this time including parents' names, dates of birth, roll numbers, and subjects, as directed by the Calcutta High Court on November 19, 2025.</p>
+      <p>On November 28, 2025, the WBSSC released an updated list of <strong>1,806 tainted candidates</strong> — this
+        time including parents' names, dates of birth, roll numbers, and subjects, as directed by the Calcutta High
+        Court on November 19, 2025.</p>
 
-      <p>But crucially — <strong>the schools where these candidates had taught were not disclosed.</strong> Parents, students, and school administrators still don't know if their school had a fraudulently appointed teacher. The accountability loop remains open.</p>
+      <p>But crucially — <strong>the schools where these candidates had taught were not disclosed.</strong> Parents,
+        students, and school administrators still don't know if their school had a fraudulently appointed teacher. The
+        accountability loop remains open.</p>
 
       <hr class="rule">
 
@@ -856,18 +1116,28 @@
 
       <p class="drop-cap-para">The human cost of this scam is not just personal. It is generational.</p>
 
-      <p>West Bengal's public school system was already stretched. But the combination of a recruitment freeze since 2016 and then the mass cancellation of jobs in 2024–25 created a crisis that classroom numbers now make undeniable.</p>
+      <p>West Bengal's public school system was already stretched. But the combination of a recruitment freeze since
+        2016 and then the mass cancellation of jobs in 2024–25 created a crisis that classroom numbers now make
+        undeniable.</p>
 
-      <p>For 15 years, an average of <strong>over 8 lakh students</strong> appeared for the higher secondary examination in West Bengal every year. In 2025, that number fell to <strong>4,82,948</strong> — roughly half the average — the lowest on record.</p>
+      <p>For 15 years, an average of <strong>over 8 lakh students</strong> appeared for the higher secondary examination
+        in West Bengal every year. In 2025, that number fell to <strong>4,82,948</strong> — roughly half the average —
+        the lowest on record.</p>
 
       <blockquote>
-        "The last couple of years have seen a major drop in students from high schools. The SSC recruitment halt created a crisis of teachers, and the cancellation of jobs made it worse. The crisis has damaged the entire framework of public education and denied access to schooling for scheduled tribe and scheduled caste communities."
+        "The last couple of years have seen a major drop in students from high schools. The SSC recruitment halt created
+        a crisis of teachers, and the cancellation of jobs made it worse. The crisis has damaged the entire framework of
+        public education and denied access to schooling for scheduled tribe and scheduled caste communities."
         <cite>— Bikash Ranjan Bhattacharya, Senior Advocate &amp; former Mayor, Kolkata</cite>
       </blockquote>
 
-      <p>In Murshidabad's Bhangwangola High School, <strong>21 out of 62 teachers</strong> were dismissed after the verdict. In Bankura's Ranibandh region, schools visited in late 2025 showed classrooms running with skeleton teaching staff. Churapathar Junior High School in Jangalmahal's Bankura district had to shut down entirely.</p>
+      <p>In Murshidabad's Bhangwangola High School, <strong>21 out of 62 teachers</strong> were dismissed after the
+        verdict. In Bankura's Ranibandh region, schools visited in late 2025 showed classrooms running with skeleton
+        teaching staff. Churapathar Junior High School in Jangalmahal's Bankura district had to shut down entirely.</p>
 
-      <p>The students who paid the price for this corruption were not the ministers, not the middlemen, not the candidates who bribed their way in. They were the children of tribal communities, of farming families, of people who sent their children to government schools because they had no other choice.</p>
+      <p>The students who paid the price for this corruption were not the ministers, not the middlemen, not the
+        candidates who bribed their way in. They were the children of tribal communities, of farming families, of people
+        who sent their children to government schools because they had no other choice.</p>
 
       <hr class="rule">
 
@@ -877,13 +1147,19 @@
 
       <h3>Fresh Recruitment — 44,000+ Vacancies</h3>
 
-      <p class="drop-cap-para">The Supreme Court directed a fresh recruitment for <strong>35,726 vacant teaching positions</strong>, and the WBSSC has been running the SLST-2025 process. A notification for over <strong>44,203 teaching and non-teaching posts</strong> was released in 2025, with applications open from June 16 to July 14, 2025.</p>
+      <p class="drop-cap-para">The Supreme Court directed a fresh recruitment for <strong>35,726 vacant teaching
+          positions</strong>, and the WBSSC has been running the SLST-2025 process. A notification for over
+        <strong>44,203 teaching and non-teaching posts</strong> was released in 2025, with applications open from June
+        16 to July 14, 2025.</p>
 
-      <p>The Group C Clerk exam was conducted on <strong>March 1, 2026</strong>. The Group D exam was held on <strong>March 8, 2026</strong>. Tainted candidates were denied hall tickets after verification.</p>
+      <p>The Group C Clerk exam was conducted on <strong>March 1, 2026</strong>. The Group D exam was held on
+        <strong>March 8, 2026</strong>. Tainted candidates were denied hall tickets after verification.</p>
 
       <h3>CBI Probe — Ongoing</h3>
 
-      <p>The CBI's criminal investigation continues. Twelve separate cases related to recruitment corruption are still underway at the Calcutta High Court. Partha Chatterjee, while out on bail, faced fresh ED raids at his Naktala residence in April 2026.</p>
+      <p>The CBI's criminal investigation continues. Twelve separate cases related to recruitment corruption are still
+        underway at the Calcutta High Court. Partha Chatterjee, while out on bail, faced fresh ED raids at his Naktala
+        residence in April 2026.</p>
 
       <h3>What's Unresolved</h3>
 
@@ -891,10 +1167,14 @@
 
       <ul>
         <li><strong>Which schools</strong> employed the 1,806 confirmed tainted teachers — and for how long?</li>
-        <li><strong>How many students</strong> were taught by fraudulently appointed teachers, and what does that mean for their education?</li>
-        <li>Beyond the 1,806 officially identified, the CBI's figure of <strong>~6,000 fraudulent candidates</strong> suggests the state's own list is incomplete.</li>
-        <li><strong>Political accountability</strong> — beyond Partha Chatterjee's arrest, no senior TMC leader has faced conviction. The party continues to govern West Bengal.</li>
-        <li><strong>Salary recovery</strong> — the court order to return salaries has been largely symbolic. Effective enforcement has not been reported.</li>
+        <li><strong>How many students</strong> were taught by fraudulently appointed teachers, and what does that mean
+          for their education?</li>
+        <li>Beyond the 1,806 officially identified, the CBI's figure of <strong>~6,000 fraudulent candidates</strong>
+          suggests the state's own list is incomplete.</li>
+        <li><strong>Political accountability</strong> — beyond Partha Chatterjee's arrest, no senior TMC leader has
+          faced conviction. The party continues to govern West Bengal.</li>
+        <li><strong>Salary recovery</strong> — the court order to return salaries has been largely symbolic. Effective
+          enforcement has not been reported.</li>
       </ul>
 
       <hr class="rule">
@@ -903,11 +1183,19 @@
       <div class="part-label">Final Verdict</div>
       <h2>What This Investigation Concludes</h2>
 
-      <p class="drop-cap-para">The West Bengal SSC scam is not just a story of individual corruption. It is a story of <strong>institutional capture</strong> — of how a government can systematically hollow out a public body, convert it into a machine for patronage and profit, and then use taxpayers' money to fight in court to protect the fraud.</p>
+      <p class="drop-cap-para">The West Bengal SSC scam is not just a story of individual corruption. It is a story of
+        <strong>institutional capture</strong> — of how a government can systematically hollow out a public body,
+        convert it into a machine for patronage and profit, and then use taxpayers' money to fight in court to protect
+        the fraud.</p>
 
-      <p>The OMR sheets were not destroyed by accident. The data was manipulated with technical sophistication. The cover-up lasted years. Billions of rupees passed through the system. Ministers were directly involved. And when courts finally ordered accountability, the state's first instinct was to fight the order — not comply with it.</p>
+      <p>The OMR sheets were not destroyed by accident. The data was manipulated with technical sophistication. The
+        cover-up lasted years. Billions of rupees passed through the system. Ministers were directly involved. And when
+        courts finally ordered accountability, the state's first instinct was to fight the order — not comply with it.
+      </p>
 
-      <p>The innocent teachers — people like Kakoli Hazra, like Anurupa Banerjee — paid the price for a fraud they had nothing to do with. And the children of West Bengal's villages and small towns lost years of education, in classrooms that stood empty because the state had rather spend money on bribes than on teachers.</p>
+      <p>The innocent teachers — people like Kakoli Hazra, like Anurupa Banerjee — paid the price for a fraud they had
+        nothing to do with. And the children of West Bengal's villages and small towns lost years of education, in
+        classrooms that stood empty because the state had rather spend money on bribes than on teachers.</p>
 
       <div class="pull-quote">The system failed. This is its postmortem.</div>
 
@@ -925,20 +1213,62 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>Exam</td><td>2016 State Level Selection Test (SLST) — WBSSC</td></tr>
-          <tr><td>Total cancelled jobs</td><td>25,753 teaching and non-teaching staff</td></tr>
-          <tr><td>Posts affected</td><td>Classes 9–12 teachers, Group C &amp; D staff</td></tr>
-          <tr><td>Bribe amount (per job)</td><td>₹15–20 lakh (reported)</td></tr>
-          <tr><td>Cash recovered</td><td>₹49+ crore from Arpita Mukherjee's properties alone</td></tr>
-          <tr><td>Key accused</td><td>Partha Chatterjee (Ex-Education Minister)</td></tr>
-          <tr><td>OMR manipulation</td><td>~6,000 fraudulent candidates identified by CBI</td></tr>
-          <tr><td>Confirmed tainted list</td><td>1,806 (as of November 2025)</td></tr>
-          <tr><td>HC order</td><td>April 22, 2024 — Division Bench, Calcutta HC</td></tr>
-          <tr><td>SC order</td><td>April 3, 2025 — CJI Sanjiv Khanna &amp; Justice Sanjay Kumar</td></tr>
-          <tr><td>Fresh recruitment</td><td>SLST-2025, 44,203 vacancies</td></tr>
-          <tr><td>HS exam students 2025</td><td>4.82 lakh (down from 8+ lakh average)</td></tr>
-          <tr><td>Investigating agencies</td><td>CBI (criminal), ED (money laundering)</td></tr>
-          <tr><td>Cases in court</td><td>12+ ongoing at Calcutta HC</td></tr>
+          <tr>
+            <td>Exam</td>
+            <td>2016 State Level Selection Test (SLST) — WBSSC</td>
+          </tr>
+          <tr>
+            <td>Total cancelled jobs</td>
+            <td>25,753 teaching and non-teaching staff</td>
+          </tr>
+          <tr>
+            <td>Posts affected</td>
+            <td>Classes 9–12 teachers, Group C &amp; D staff</td>
+          </tr>
+          <tr>
+            <td>Bribe amount (per job)</td>
+            <td>₹15–20 lakh (reported)</td>
+          </tr>
+          <tr>
+            <td>Cash recovered</td>
+            <td>₹49+ crore from Arpita Mukherjee's properties alone</td>
+          </tr>
+          <tr>
+            <td>Key accused</td>
+            <td>Partha Chatterjee (Ex-Education Minister)</td>
+          </tr>
+          <tr>
+            <td>OMR manipulation</td>
+            <td>~6,000 fraudulent candidates identified by CBI</td>
+          </tr>
+          <tr>
+            <td>Confirmed tainted list</td>
+            <td>1,806 (as of November 2025)</td>
+          </tr>
+          <tr>
+            <td>HC order</td>
+            <td>April 22, 2024 — Division Bench, Calcutta HC</td>
+          </tr>
+          <tr>
+            <td>SC order</td>
+            <td>April 3, 2025 — CJI Sanjiv Khanna &amp; Justice Sanjay Kumar</td>
+          </tr>
+          <tr>
+            <td>Fresh recruitment</td>
+            <td>SLST-2025, 44,203 vacancies</td>
+          </tr>
+          <tr>
+            <td>HS exam students 2025</td>
+            <td>4.82 lakh (down from 8+ lakh average)</td>
+          </tr>
+          <tr>
+            <td>Investigating agencies</td>
+            <td>CBI (criminal), ED (money laundering)</td>
+          </tr>
+          <tr>
+            <td>Cases in court</td>
+            <td>12+ ongoing at Calcutta HC</td>
+          </tr>
         </tbody>
       </table>
 
@@ -948,10 +1278,13 @@
         <h2>Documentation</h2>
         <ul>
           <li>Supreme Court of India — Judgment dated April 3, 2025</li>
-          <li>Calcutta High Court — <em>Baisakhi Bhattacharyya v. State of West Bengal</em>, 2024 SCC OnLine Cal 3862, dated April 22, 2024</li>
+          <li>Calcutta High Court — <em>Baisakhi Bhattacharyya v. State of West Bengal</em>, 2024 SCC OnLine Cal 3862,
+            dated April 22, 2024</li>
           <li>CBI charge-sheets and investigation reports (as reported in court proceedings)</li>
-          <li>The Wire, The Quint, The Week, The Statesman, Business Standard, People's Democracy — reporting, April–November 2025</li>
-          <li>Wikipedia — "2022 West Bengal School Service Commission recruitment scam"; "2025 West Bengal teachers' protests"</li>
+          <li>The Wire, The Quint, The Week, The Statesman, Business Standard, People's Democracy — reporting,
+            April–November 2025</li>
+          <li>Wikipedia — "2022 West Bengal School Service Commission recruitment scam"; "2025 West Bengal teachers'
+            protests"</li>
           <li>The Reporters' Collective — field investigation, Bankura (November 2025, March 2026)</li>
           <li>Education Today, LawBeat, SCC Online — court order analyses</li>
           <li>WBPAY.in, Adda247 — SLST-2025 recruitment updates</li>
@@ -960,9 +1293,14 @@
 
       <!-- FOOTER NOTE -->
       <div class="footer-note">
-        <p>This investigation was compiled and published by <strong>The Postmortem</strong> (<a href="https://www.thepostmortems.in">thepostmortems.in</a>). We are an independent investigation agency committed to exposing systemic corruption and institutional failures. All claims in this article are sourced from public court documents, official reports, and verified media accounts. No claim is made without citation. We welcome corrections and additional evidence.</p>
+        <p>This investigation was compiled and published by <strong>The Postmortem</strong> (<a
+            href="https://www.thepostmortems.in">thepostmortems.in</a>). We are an independent investigation agency
+          committed to exposing systemic corruption and institutional failures. All claims in this article are sourced
+          from public court documents, official reports, and verified media accounts. No claim is made without citation.
+          We welcome corrections and additional evidence.</p>
         <br>
-        <p><em>If you have documents, testimonies, or insider information related to this scam — <a href="#">contact us</a>.</em></p>
+        <p><em>If you have documents, testimonies, or insider information related to this scam — <a href="#">contact
+              us</a>.</em></p>
       </div>
 
     </div>
@@ -983,4 +1321,5 @@
   </footer>
 
 </body>
+
 </html>
