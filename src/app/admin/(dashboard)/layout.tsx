@@ -22,6 +22,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <span className={styles.navLabel}>Content</span>
             <Link href="/admin/investigations" className={styles.navLink}>Investigations</Link>
             <Link href="/admin/investigations/new" className={styles.navLink}>+ New Investigation</Link>
+            <Link href="/admin/investigations/upload-html" className={styles.navLink}>Upload HTML File</Link>
             <Link href="/admin/tips" className={styles.navLink}>Secure Submissions</Link>
           </div>
         </nav>

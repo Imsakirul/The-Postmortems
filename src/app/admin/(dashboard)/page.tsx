@@ -62,6 +62,7 @@ export default async function AdminDashboard() {
           <h2 className={styles.panelTitle}>Quick Actions</h2>
           <div className={styles.actionGrid}>
             <Link href="/admin/investigations/new" className={styles.actionBtn}>+ New Investigation</Link>
+            <Link href="/admin/investigations/upload-html" className={styles.actionBtn}>Upload HTML</Link>
             <Link href="/admin/investigations" className={styles.actionBtn}>Manage Investigations</Link>
           </div>
         </section>

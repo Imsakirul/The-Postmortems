@@ -13,7 +13,10 @@ export default async function AdminInvestigations() {
     <div style={{ padding: "2rem" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
         <h1 style={{ fontSize: "2rem" }}>Investigations</h1>
-        <Link href="/admin/investigations/new" className="btn btn-primary">+ New Investigation</Link>
+        <div style={{ display: "flex", gap: "1rem" }}>
+          <Link href="/admin/investigations/upload-html" className="btn" style={{ border: "1px solid var(--border)", backgroundColor: "transparent" }}>Upload HTML</Link>
+          <Link href="/admin/investigations/new" className="btn btn-primary">+ New Investigation</Link>
+        </div>
       </div>
 
       <div style={{ backgroundColor: "var(--background-alt)", border: "1px solid var(--border)", borderRadius: "8px", overflow: "hidden" }}>

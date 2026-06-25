@@ -17,6 +17,12 @@ export default async function ArticlePage({ params }: { params: { slug: string }
 
   const shortCode = investigation.investigationCode || investigation.id.slice(-5).toUpperCase();
 
+  if (investigation.content?.startsWith('<!-- RAW_HTML_UPLOAD -->')) {
+    return (
+      <div dangerouslySetInnerHTML={{ __html: investigation.content.replace('<!-- RAW_HTML_UPLOAD -->\n', '') }} />
+    );
+  }
+
   return (
     <main className={styles.articleWrapper}>
       

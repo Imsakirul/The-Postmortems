@@ -57,7 +57,12 @@ export default function NewInvestigation() {
 
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto", padding: "2rem" }}>
-      <h1 style={{ fontSize: "2rem", marginBottom: "2rem" }}>Create Investigation</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
+        <h1 style={{ fontSize: "2rem" }}>Create Investigation</h1>
+        <button type="button" onClick={() => router.push('/admin/investigations/upload-html')} className="btn" style={{ border: "1px solid var(--border)", backgroundColor: "var(--background-alt)" }}>
+          Upload Raw HTML Instead
+        </button>
+      </div>
       
       <form onSubmit={handleSave} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
         <div>
