@@ -26,7 +26,7 @@ export default function Home() {
           </div>
           <div className={styles.textBlock}>
             <p>We are not a newspaper. We are not a news channel. We are not a digital media startup chasing clicks.</p>
-            <p>The Postmortem is an investigative unit. We take time. We build files. We verify documents. We ask hard questions in writing. We publish when the evidence is ready — not when the news cycle demands it.</p>
+            <p>The Postmortems is an investigative unit. We take time. We build files. We verify documents. We ask hard questions in writing. We publish when the evidence is ready — not when the news cycle demands it.</p>
             <p>We work slowly so the truth survives scrutiny.</p>
           </div>
         </div>
@@ -147,7 +147,7 @@ export default function Home() {
             <h2 className={styles.sectionTitle}>Who Funds Us</h2>
             <div className={styles.textBlock}>
               <p>Transparency about funding is not optional. It is foundational.</p>
-              <p>The Postmortem publishes a full funding disclosure on this page, updated quarterly. Every significant donor, grant, and revenue source is listed. Any funding that comes with editorial conditions is refused and reported.</p>
+              <p>The Postmortems publishes a full funding disclosure on this page, updated quarterly. Every significant donor, grant, and revenue source is listed. Any funding that comes with editorial conditions is refused and reported.</p>
               <p>We are not free because someone powerful funds us. We are free because we will not be owned.</p>
               <br />
               <Link href="/funding" className="btn">Read Full Funding Disclosure</Link>
@@ -161,14 +161,14 @@ export default function Home() {
           <div className={styles.peopleSection}>
             <h2 className={styles.peopleTitle}>TO THE PEOPLE OF INDIA</h2>
             <div className={styles.preamble}>
-              <p>You are the reason The Postmortem exists. Not for governments. Not for political parties. Not for corporations. Not for institutions seeking praise. And not for any ideology seeking followers. For the public.</p>
+              <p>You are the reason The Postmortems exists. Not for governments. Not for political parties. Not for corporations. Not for institutions seeking praise. And not for any ideology seeking followers. For the public.</p>
               <p>For the citizen whose voice is rarely heard beyond election season. For the taxpayer who deserves to know how public money is spent. For the student, worker, entrepreneur, farmer, professional, pensioner, and family whose lives are shaped by decisions made behind closed doors. A democracy functions best when information is available, institutions are accountable, and power is subject to scrutiny. That is where investigative journalism serves its purpose.</p>
-              <p>The Postmortem exists to examine matters of public interest through evidence, documentation, verification, and responsible reporting. We do not begin with conclusions. We begin with questions. We do not ask readers to trust us because of our name. We ask readers to examine the evidence, review the facts, and judge our work by the standards we apply to ourselves.</p>
+              <p>The Postmortems exists to examine matters of public interest through evidence, documentation, verification, and responsible reporting. We do not begin with conclusions. We begin with questions. We do not ask readers to trust us because of our name. We ask readers to examine the evidence, review the facts, and judge our work by the standards we apply to ourselves.</p>
               <p>Our commitment is simple: To investigate thoroughly. To verify rigorously. To correct mistakes when they occur. To publish responsibly. To remain independent.</p>
               <p>The Constitution of India guarantees the principles that make public accountability possible. Those principles guide our work and our responsibilities. Every document reviewed, every record examined, every source verified, and every investigation published is undertaken with one purpose: To contribute to a more informed public and a more accountable society.</p>
               <p>Public trust is not something we inherit. It is something we must earn, publication by publication, fact by fact, and investigation by investigation.</p>
               <p>To the people of India: Thank you for reading, questioning, challenging, and holding us accountable. We consider that responsibility an honor.</p>
-              <p><strong>The Postmortem</strong><br/><em>Investigate. Verify. Reveal.</em></p>
+              <p><strong>The Postmortems</strong><br/><em>Investigate. Verify. Reveal.</em></p>
             </div>
           </div>
         </div>

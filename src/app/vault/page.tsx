@@ -33,7 +33,7 @@ const mockDocuments = [
 ];
 
 export const metadata = {
-  title: "Evidence Vault | The Postmortem",
+  title: "Evidence Vault | The Postmortems",
   description: "Public repository of primary source documents used in our investigations.",
 };
 

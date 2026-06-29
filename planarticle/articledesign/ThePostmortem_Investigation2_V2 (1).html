@@ -1,0 +1,2083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Last Chance That Died — The Postmortem | Investigation #2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080808;
+    --surface: #0F0F0F;
+    --surface-2: #151515;
+    --border: #1E1E1E;
+    --border-bright: #2A2A2A;
+    --text: #E8E3D8;
+    --text-dim: #9A9590;
+    --text-faint: #4A4A47;
+    --green: #00B85A;
+    --green-dim: #005E30;
+    --green-faint: #0D2219;
+    --green-glow: rgba(0, 184, 90, 0.08);
+    --red: #CC2C2C;
+    --red-faint: #200808;
+    --amber: #B87A00;
+    --amber-faint: #1F1400;
+    --white: #F5F2EC;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'IBM Plex Sans', 'Helvetica Neue', sans-serif;
+    --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── MASTHEAD ─── */
+  .masthead {
+    border-bottom: 1px solid var(--border-bright);
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .masthead-brand {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--green);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .masthead-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.08em;
+    text-align: right;
+  }
+
+  /* ─── HEADER / HERO ─── */
+  .hero {
+    padding: 60px 40px 50px;
+    border-bottom: 1px solid var(--border);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .investigation-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .investigation-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--green);
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--green);
+  }
+
+  .hero-subtitle {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--text-dim);
+    margin-bottom: 36px;
+    line-height: 1.6;
+    max-width: 700px;
+  }
+
+  .hero-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    border: 1px solid var(--border-bright);
+    margin-top: 36px;
+  }
+
+  .hero-meta-item {
+    padding: 16px 20px;
+    border-right: 1px solid var(--border-bright);
+  }
+
+  .hero-meta-item:last-child { border-right: none; }
+
+  .hero-meta-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 6px;
+  }
+
+  .hero-meta-value {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .hero-meta-value.green { color: var(--green); }
+
+  /* ─── ARTICLE BODY ─── */
+  .article-body {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px 40px 80px;
+  }
+
+  /* ─── OPENING SECTION ─── */
+  .opening-cut {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    line-height: 1.85;
+    color: var(--white);
+    margin-bottom: 60px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .opening-cut p + p { margin-top: 1.4em; }
+
+  .opening-cut .drop-cap::first-letter {
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 0.8;
+    float: left;
+    margin-right: 10px;
+    margin-top: 8px;
+    color: var(--green);
+    font-family: var(--serif);
+  }
+
+  /* ─── SECTION HEADERS ─── */
+  .part-header {
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-bright);
+  }
+
+  .part-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .part-title {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  .part-subtitle {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  /* ─── BODY TEXT ─── */
+  .section-body {
+    margin-bottom: 50px;
+  }
+
+  .section-body p {
+    margin-bottom: 1.4em;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  .section-body h3 {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--white);
+    margin: 32px 0 14px;
+  }
+
+  .section-body h4 {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin: 28px 0 12px;
+  }
+
+  /* ─── EVIDENCE BLOCKS ─── */
+  .evidence-block {
+    background: var(--surface);
+    border-left: 3px solid var(--green);
+    border: 1px solid var(--border-bright);
+    border-left: 3px solid var(--green);
+    padding: 24px 28px;
+    margin: 28px 0;
+    position: relative;
+  }
+
+  .evidence-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .evidence-label::before {
+    content: '▶';
+    font-size: 7px;
+  }
+
+  .evidence-block blockquote {
+    font-family: var(--mono);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--white);
+    font-style: normal;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .evidence-source {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-faint);
+    margin-top: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── DISPUTED BLOCK ─── */
+  .disputed-block {
+    background: var(--amber-faint);
+    border: 1px solid #3A2A00;
+    border-left: 3px solid var(--amber);
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+
+  .disputed-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .disputed-block p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  /* ─── VERIFIED TAG ─── */
+  .verified-block {
+    background: var(--green-faint);
+    border: 1px solid var(--green-dim);
+    border-left: 3px solid var(--green);
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+
+  .verified-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .verified-block p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  /* ─── ACCUSED PROFILE CARD ─── */
+  .accused-card {
+    border: 1px solid var(--border-bright);
+    background: var(--surface);
+    margin: 32px 0;
+    overflow: hidden;
+  }
+
+  .accused-card-header {
+    background: var(--surface-2);
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-bright);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .accused-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .accused-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-faint);
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  .accused-verdict {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    border: 1px solid;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .accused-verdict.complicit {
+    color: var(--red);
+    border-color: var(--red);
+    background: var(--red-faint);
+  }
+
+  .accused-verdict.negligent {
+    color: var(--amber);
+    border-color: var(--amber);
+    background: var(--amber-faint);
+  }
+
+  .accused-card-body {
+    padding: 20px 24px;
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--text);
+  }
+
+  .accused-card-body p + p { margin-top: 0.8em; }
+
+  /* ─── PULLQUOTE ─── */
+  .pullquote {
+    margin: 40px 0;
+    padding: 32px 0;
+    border-top: 2px solid var(--border-bright);
+    border-bottom: 2px solid var(--border-bright);
+    text-align: center;
+  }
+
+  .pullquote blockquote {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--white);
+    max-width: 640px;
+    margin: 0 auto 12px;
+  }
+
+  .pullquote-source {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ─── TIMELINE ─── */
+  .timeline {
+    margin: 32px 0;
+    border: 1px solid var(--border-bright);
+    overflow: hidden;
+  }
+
+  .timeline-header {
+    background: var(--surface-2);
+    padding: 14px 20px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-bright);
+  }
+
+  .timeline-entry {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    border-bottom: 1px solid var(--border));
+    border-bottom: 1px solid #171717;
+  }
+
+  .timeline-entry:last-child { border-bottom: none; }
+
+  .timeline-date {
+    padding: 14px 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    border-right: 1px solid #171717;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+  }
+
+  .timeline-event {
+    padding: 14px 16px;
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .timeline-event strong {
+    color: var(--white);
+  }
+
+  .timeline-entry.critical .timeline-date {
+    background: var(--green-faint);
+  }
+
+  .timeline-entry.critical .timeline-event {
+    color: var(--white);
+  }
+
+  /* ─── FINDINGS BOX ─── */
+  .findings-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border-bright);
+    padding: 28px;
+    margin: 40px 0;
+  }
+
+  .findings-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-bright);
+  }
+
+  .finding-item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.6;
+    align-items: flex-start;
+  }
+
+  .finding-item:last-child { margin-bottom: 0; }
+
+  .finding-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    flex-shrink: 0;
+    margin-top: 2px;
+    min-width: 24px;
+  }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    margin: 56px 0;
+    border: none;
+    border-top: 1px solid var(--border-bright);
+    position: relative;
+  }
+
+  .section-divider::after {
+    content: '◆';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg);
+    padding: 0 12px;
+    color: var(--text-faint);
+    font-size: 10px;
+  }
+
+  /* ─── STAT CALLOUT ─── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  .stat-cell {
+    background: var(--surface);
+    padding: 20px 18px;
+  }
+
+  .stat-number {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+  }
+
+  /* ─── SECTION SEPARATOR ─── */
+  .part-separator {
+    margin: 70px 0 50px;
+    position: relative;
+  }
+
+  .part-separator-line {
+    height: 1px;
+    background: linear-gradient(to right, var(--green), transparent);
+    margin-bottom: 24px;
+  }
+
+  /* ─── FINDING: NO INQUIRY ─── */
+  .no-inquiry-box {
+    background: var(--red-faint);
+    border: 1px solid #3A1212;
+    border-left: 4px solid var(--red);
+    padding: 28px;
+    margin: 36px 0;
+  }
+
+  .no-inquiry-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .no-inquiry-box p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 0.8em;
+  }
+
+  .no-inquiry-box p:last-child { margin-bottom: 0; }
+
+  /* ─── QUICK FACTS TABLE ─── */
+  .quick-facts {
+    margin: 40px 0;
+    border: 1px solid var(--border-bright);
+    overflow: hidden;
+  }
+
+  .qf-header {
+    background: var(--surface-2);
+    padding: 16px 24px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-bright);
+  }
+
+  .qf-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    border-bottom: 1px solid #141414;
+  }
+
+  .qf-row:last-child { border-bottom: none; }
+
+  .qf-label {
+    padding: 14px 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    background: var(--surface);
+    border-right: 1px solid #141414;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+  }
+
+  .qf-value {
+    padding: 14px 20px;
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .qf-value strong { color: var(--white); }
+
+  /* ─── SOURCES ─── */
+  .sources-section {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 2px solid var(--border-bright);
+  }
+
+  .sources-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .source-category {
+    margin-bottom: 28px;
+  }
+
+  .source-category-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .source-item {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.65;
+    padding: 10px 0;
+    border-bottom: 1px solid #141414;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .source-item:last-child { border-bottom: none; }
+
+  .source-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--green-dim);
+    flex-shrink: 0;
+    margin-top: 3px;
+    min-width: 22px;
+  }
+
+  /* ─── FINAL VERDICT ─── */
+  .verdict-section {
+    background: var(--surface);
+    border: 1px solid var(--border-bright);
+    padding: 36px;
+    margin: 40px 0;
+  }
+
+  .verdict-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-bright);
+  }
+
+  .verdict-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border));
+    border-bottom: 1px solid #1A1A1A;
+  }
+
+  .verdict-item:last-child { border-bottom: none; }
+
+  .verdict-name {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .verdict-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    padding: 3px 8px;
+    border: 1px solid;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .verdict-tag.primary { color: var(--red); border-color: var(--red); }
+  .verdict-tag.secondary { color: var(--amber); border-color: var(--amber); }
+  .verdict-tag.enabler { color: var(--text-dim); border-color: var(--text-faint); }
+
+  .verdict-text {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ─── FOOTER ─── */
+  .article-footer {
+    border-top: 1px solid var(--border-bright);
+    padding: 30px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .footer-brand {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--green);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-code {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+
+  /* ─── UTILS ─── */
+  strong { color: var(--white); font-weight: 600; }
+  em { font-style: italic; color: var(--text-dim); }
+
+  @media (max-width: 680px) {
+    .hero, .article-body { padding-left: 22px; padding-right: 22px; }
+    .masthead { padding: 14px 22px; }
+    .article-footer { padding: 24px 22px; }
+    .timeline-entry { grid-template-columns: 90px 1fr; }
+    .qf-row { grid-template-columns: 130px 1fr; }
+    .hero-meta-grid { grid-template-columns: 1fr 1fr; }
+    .hero-meta-item:nth-child(2) { border-right: none; }
+    .stat-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+
+<!-- HERO -->
+<section class="hero">
+  <h1 class="hero-title">
+    The Last Chance<br>That Died
+  </h1>
+
+  <p class="hero-subtitle">
+    How Britain, Jinnah, Nehru, and Suhrawardy Together Made the Great Calcutta Killings — and Partition — Inevitable. The 80-Year Accounting No One Wanted to Hold.
+  </p>
+
+  <div class="hero-meta-grid">
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Primary Scope</div>
+      <div class="hero-meta-value">Calcutta, Aug 16–20, 1946</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Secondary Scope</div>
+      <div class="hero-meta-value">Noakhali, Oct–Dec 1946</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Estimated Dead</div>
+      <div class="hero-meta-value green">4,000–8,000+ (Calcutta)</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Prosecutions</div>
+      <div class="hero-meta-value green">Zero. Not one.</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="hero-meta-label">Judicial Inquiry</div>
+      <div class="hero-meta-value green">Never ordered.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLE BODY -->
+<main class="article-body">
+
+<!-- ════════════════════════════════════════════════
+     OPENING CUT
+════════════════════════════════════════════════ -->
+<div class="opening-cut">
+  <p class="drop-cap">Calcutta woke up on August 16, 1946 to an absence. The usual morning sounds were there — the distant call to prayer, the bark of stray dogs, the first trams grinding down Chowringhee — but the people were different. The shops were shuttered. The offices were empty. Someone in the Bengal government had declared the day a public holiday.</p>
+
+  <p>By 8 in the morning, the processions had begun. Armed men moved through the Muslim-majority neighbourhoods of Rajabazar, Maniktala, and Park Circus. League volunteers carried lathis, knives, and in some cases, firearms. The Muslim National Guard — a paramilitary force that had been assembling openly for two weeks — was mobilised and visible. In the Maidan, a rally was being organised. Tens of thousands would come.</p>
+
+  <p>At the Police Control Room at Lalbazar headquarters, the Chief Minister of Bengal, Huseyn Shaheed Suhrawardy, had arrived. Not to manage a crisis — the crisis had not begun yet — but to be present when it did.</p>
+
+  <p>At the British military barracks, a decision had already been made two days earlier: <em>when the riot begins, we will not interfere.</em></p>
+
+  <p>In Delhi, Jawaharlal Nehru was in his office. In Bombay, Muhammad Ali Jinnah was in his. Neither man had come to Calcutta. Neither man would come during the days that followed.</p>
+
+  <p>Between August 16 and 20, 1946, somewhere between 4,000 and 8,000 people were killed in the streets of Calcutta. Corpses lay in gutters. Vultures gathered in numbers that forced fire brigade crews to abandon routes. There were 900 fire brigade calls in two days. 1,200 fires documented. 11,000 injured. A city of seven million people reduced to competing armies of killing, while the men responsible for its safety watched from a distance.</p>
+
+  <p>This investigation does not ask who started it. That is the wrong question. The right question is: who created the conditions? Who made specific decisions — documented, verified, sourced — that transformed a political protest into a killing field? And why, in eight decades since, has no judicial inquiry ever been ordered, and no person ever prosecuted?</p>
+
+  <p>The answer requires naming everyone. This investigation does exactly that.</p>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     PART 1: THE LAST CHANCE
+════════════════════════════════════════════════ -->
+<div class="part-separator">
+  <div class="part-separator-line"></div>
+</div>
+
+<div class="part-header">
+  <div class="part-label">Part One</div>
+  <h2 class="part-title">The Last Chance That Died</h2>
+  <div class="part-subtitle">The Cabinet Mission Plan, Nehru's July 10 Press Conference, and the Moment India's Unity Became Impossible</div>
+</div>
+
+<div class="section-body">
+  <p>To understand why Calcutta burned in August 1946, you must understand what happened in Bombay on July 10, 1946 — because that is where the fuse was lit.</p>
+
+  <p>But you have to go back further than that. To understand how a press conference could set a city on fire, you need to understand what Britain had done to Bengal in the years before. By 1946, the ground was already soaked — in grief, in hunger, and in four decades of governance designed to keep communities at each other's throats.</p>
+
+  <h3>The Foundation: How Britain Built a Country That Could Not Stay Together</h3>
+
+  <p>The British did not invent Hindu-Muslim tensions in India. What they did was systematically convert those tensions into political architecture. The Morley-Minto reforms of 1909 introduced separate electorates for Muslims — a structural decision that made religious identity the primary fact of political life. If your vote only counted within your religious community, then your community's interests and your community's enemies became the organising principle of every election. This was expanded in 1919 and entrenched further by the Communal Award of 1932.</p>
+
+  <p>The result: by the 1940s, Indian politics had been remoulded such that a Hindu and a Muslim could not easily belong to the same political constituency. The division was not just cultural — it was constitutional. The British had built a system that required religious identity to function, then expressed surprise when religious identity became the axis of conflict.</p>
+
+  <p>The 1905 Partition of Bengal — reversed in 1911 after massive protest — was the first time this logic was applied at a provincial scale, cleaving Bengal along Hindu-Muslim lines to weaken nationalist resistance. It did not work politically. But it planted something that grew.</p>
+
+  <h3>The Bengal Famine, 1943: The Brutalisation Britain Never Acknowledged</h3>
+
+  <p>Between 1943 and 1944, somewhere between two and three million people died in Bengal. This was not a drought. A peer-reviewed study published in the journal <em>Geophysical Research Letters</em> by researchers from IIT Gandhinagar and the University of California, Los Angeles found that the 1943 Bengal famine was "the only famine in modern Indian history not linked to drought or crop failure — the result of complete policy failure."</p>
+
+  <p>Winston Churchill's wartime cabinet diverted Bengal's food to British troops in Europe and the Middle East even as warnings of starvation arrived from the province. The "Denial Policy" — implemented to prevent Japanese forces from using Bengal's resources — destroyed boats and rice stocks in coastal Bengal, removing the means of food transport from the region's own population. The Bengal governor repeatedly cabled London requesting food imports. Churchill's cabinet repeatedly refused.</p>
+
+  <p>People ate bark. People ate grass. Bodies lay in Calcutta's streets — the same streets that would host bodies again three years later, for a different reason. Mass starvation produces mass brutalisation: the social bonds that prevent communal violence were already frayed by the time political mobilisation came for them in 1946. The famine did not cause the killings. But any analysis of August 1946 that begins in July 1946 is starting too late.</p>
+
+  <h3>The Lahore Resolution, 1940: The Demand</h3>
+
+  <p>On March 23, 1940, the All-India Muslim League passed the Lahore Resolution. It formally demanded the creation of "Independent States" in the northwest and eastern zones of British India — regions where Muslims were in a majority. Pakistan was not yet named in the document, but the direction was clear: Jinnah and the League were no longer seeking minority protections within a unified India. They were seeking separation.</p>
+
+  <p>The Congress response was inadequate. Nehru dismissed the resolution as "fantastic." Gandhi called it "vivisection." Neither engaged with what had made the League's position politically viable: the legitimate fear, among Indian Muslims, that in a majoritarian democracy, they would be perpetually outvoted and that their cultural and religious identity would be marginalised by a Hindu-majority political system. Congress's consistent failure to address this fear — and its condescending treatment of the League's concerns — helped create the very crisis it claimed to oppose.</p>
+
+  <h3>The Cabinet Mission Plan: The Last Real Chance</h3>
+
+  <p>By early 1946, Britain was bankrupt and exhausted. The war had cost it its empire in any practical sense. The Labour government under Clement Attlee needed to exit India — quickly, and with minimum disruption. In March 1946, a Cabinet Mission of three senior British ministers arrived in Delhi to negotiate the terms of independence.</p>
+
+  <p>What they produced on May 16, 1946 was the most sophisticated constitutional compromise ever attempted in the subcontinent. The Cabinet Mission Plan rejected the creation of Pakistan outright. Instead, it proposed a three-tier federation: an all-India Union handling defence, foreign affairs, and communications; three groups of provinces with significant autonomy (Group A: Hindu-majority provinces; Group B: northwest Muslim-majority; Group C: northeast Muslim-majority including Bengal and Assam); and individual provinces retaining the right to opt out after ten years.</p>
+
+  <p>Crucially: the plan kept India united while giving Muslims a substantial degree of provincial and regional self-governance. Jinnah and the League accepted it in early June 1946. This was extraordinary — Jinnah, who had demanded Pakistan, was accepting a plan that did not give him Pakistan.</p>
+
+  <p>The Cabinet Mission Plan was, in retrospect, the last moment when Partition could have been avoided. And it required only one thing to survive: that both major parties accept its terms in good faith.</p>
+
+  <h3>July 10, 1946: The Press Conference That Destroyed Everything</h3>
+
+  <p>On July 10, 1946, Jawaharlal Nehru held a press conference in Bombay. He had just been elected Congress President. He was asked about the Cabinet Mission Plan — specifically about the compulsory grouping of provinces, which was the mechanism that gave Muslim-majority regions their block of autonomy.</p>
+
+  <p>What Nehru said that day has been debated for eighty years. What is not debated is its effect. He stated that the Constituent Assembly, once convened, would be "sovereign" — and that it was "not bound" by the grouping provisions of the Cabinet Mission Plan. Congress, he indicated, might decide to modify the plan.</p>
+
+  <p>This was not a private statement. It was a press conference by the President of the Indian National Congress, the party that would form the government of independent India. For the Muslim League, it was confirmation of what they had long feared: Congress would accept the plan to gain power, then use its majority in the Constituent Assembly to dismantle the protections the plan offered. Jinnah's acceptance of the plan had been premised on Congress accepting the same plan with the same understanding of its binding nature. Nehru had just publicly withdrawn that understanding.</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — Wikipedia, Cabinet Mission to India (citing academic consensus)</div>
+  <blockquote>"Nehru's speech on 10 July 1946 rejected the idea that the provinces would be obliged to join a group... In effect, Nehru's speech squashed the mission's plan and the chance to keep India united."</blockquote>
+  <div class="evidence-source">SOURCE: Wikipedia, 1946 Cabinet Mission to India — citing academic consensus from multiple historians</div>
+</div>
+
+<div class="disputed-block">
+  <div class="disputed-label">⚠ Disputed — Intent vs Effect</div>
+  <p>Nehru later argued he did not intend to destroy the plan — that he was articulating the natural sovereignty of an elected assembly, not rejecting the plan's provisions. Historians generally hold that his intent is irrelevant to the effect: regardless of what he meant, his statement gave the Muslim League justification to withdraw. The damage was the same either way. What is not disputed: his statement triggered the events that followed.</p>
+</div>
+
+<div class="section-body">
+  <p>The Muslim League's response was swift and decisive. On July 29, 1946, they formally withdrew their acceptance of the Cabinet Mission Plan. The same day, they declared Direct Action Day — to be observed on August 16, 1946.</p>
+
+  <p>The plan that might have kept India together died in a press conference, nineteen days before four thousand people died in Calcutta's streets.</p>
+
+  <p>Nehru's position is this investigation's first documented finding of accountability. Not because he intended violence — he did not — but because his July 10 statement was the immediate political trigger that ended the negotiated path. What followed was, in this sense, the consequence of his choice.</p>
+
+  <p>He did not visit Calcutta during the killings.</p>
+</div>
+
+<hr class="section-divider">
+
+<!-- ════════════════════════════════════════════════
+     PART 2: THE PISTOL COCKED
+════════════════════════════════════════════════ -->
+<div class="part-separator">
+  <div class="part-separator-line"></div>
+</div>
+
+<div class="part-header">
+  <div class="part-label">Part Two</div>
+  <h2 class="part-title">The Pistol Cocked</h2>
+  <div class="part-subtitle">Jinnah's Direct Action Declaration, the Muslim National Guard, and the Intelligence Reports Nobody Acted On</div>
+</div>
+
+<div class="section-body">
+  <p>Muhammad Ali Jinnah was a constitutional lawyer. He had spent decades arguing in courts, in legislative assemblies, in negotiating rooms. He understood the architecture of language. He knew, when he declared Direct Action, exactly what words do and do not mean — and exactly what they allow others to do in their name.</p>
+
+  <h3>The Declaration</h3>
+
+  <p>On July 29–30, 1946, the All-India Muslim League passed its Direct Action Resolution. The resolution declared August 16, 1946 as "Direct Action Day." All branches of the League across India were directed to observe the day. The Muslim National Guard — a paramilitary formation that had been assembling openly — was to mobilise.</p>
+
+  <p>The word "direct action" was chosen deliberately. Gandhi had used "direct action" to mean civil disobedience — peaceful, non-violent resistance. The League's use of the same phrase was calculated ambiguity: officially a hartal, a business strike, a peaceful protest. But the rhetoric surrounding it left significant interpretive space for those inclined toward violence.</p>
+
+  <p>Jinnah's own statements in this period are documented and damning in their framing:</p>
+</div>
+
+<div class="pullquote">
+  <blockquote>"We will either have a divided India or a destroyed India."</blockquote>
+  <div class="pullquote-source">— Muhammad Ali Jinnah, on the declaration of Direct Action Day, July 1946</div>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — Jinnah's own statements, contemporary newspapers and public record</div>
+  <blockquote>"Today we bid good-bye to constitutional methods... we have forged a pistol and are in a position to use it."</blockquote>
+  <div class="evidence-source">SOURCE: Jinnah's public statement, July 1946 — documented in multiple academic sources and Wikipedia (Direct Action Day)</div>
+</div>
+
+<div class="section-body">
+  <p>The "pistol" metaphor is not incidental. Jinnah was a man of precise language. He knew what a pistol does. The framing told the audience — in language they could not misunderstand — that the era of argument was over and the era of force had begun. His subsequent insistence that Direct Action would be "peaceful" was technically correct and practically hollow.</p>
+
+  <h3>The Muslim National Guard: Armed Mobilisation in Plain Sight</h3>
+
+  <p>On August 1, 1946 — two weeks before Direct Action Day — Khawaja Nazimuddin, the senior Muslim League Bengal leader, publicly called on Muslims to join the "Muslim National Guard." This was not a secret. It was a public announcement. The assembly of paramilitary forces in Calcutta's Muslim neighbourhoods was visible and documented.</p>
+
+  <p>On August 5, the Muslim National Guard held an assembly in Calcutta. Armed men, uniformed formations, visible mobilisation — all of this was occurring in the open, in a city the British still governed and for which they were still responsible.</p>
+
+  <p>The British colonial administration watched. It did not act.</p>
+
+  <h3>The Intelligence Reports: August 15</h3>
+
+  <p>On August 15, 1946 — one day before the killings — Governor Sir Frederick Burrows received intelligence reports warning of violence planned for August 16. Specific locations were identified. Specific risks were documented. The governor read the reports.</p>
+
+  <p>He took no preemptive action.</p>
+
+  <p>No additional troops were deployed. No curfew was imposed. No pre-emptive arrest of known agitators was ordered. No counter-mobilisation of police into the flagged areas was executed. The governor of Bengal, holding reserve powers that could have overridden the Chief Minister's management of law and order, chose not to use them.</p>
+
+  <h3>What Jinnah's Accountability Looks Like in Evidence</h3>
+
+  <p>Jinnah's accountability in this investigation is documented and also limited in specific ways. What is documented:</p>
+
+  <div class="findings-box">
+    <div class="findings-title">Jinnah — Documented Findings</div>
+    <div class="finding-item">
+      <span class="finding-num">01</span>
+      <span>He declared Direct Action Day with rhetoric that specifically invoked violence as a possibility ("divided India or destroyed India"; "forged a pistol").</span>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">02</span>
+      <span>He did not visit Calcutta during the killings. (Documented: Britannica.)</span>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">03</span>
+      <span>He later sent telegrams to Suhrawardy urging "restoration of order" — after the violence was already underway. (Documented: Grokipedia.)</span>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">04</span>
+      <span>He never publicly condemned the killings in unambiguous terms, and made no attempt to visit the bereaved communities of either faith.</span>
+    </div>
+  </div>
+
+  <div class="disputed-block">
+    <div class="disputed-label">⚠ Disputed — Intent</div>
+    <p>Whether Jinnah intended Direct Action to produce mass violence remains disputed. Most serious historians believe he wanted a general strike and economic pressure, not a massacre. His later telegrams urging order, and the fact that Direct Action Day passed peacefully in most other parts of India, support this position. But the rhetoric he used created conditions that violent actors could exploit. A leader who says "we have forged a pistol" cannot claim complete innocence when the pistol is fired.</p>
+  </div>
+
+  <h4>Khawaja Nazimuddin — The Rally Speech</h4>
+
+  <p>The Maidan rally on August 16 included a speech by Nazimuddin. Contemporary documentation shows he began by preaching "peacefulness and restraint" — then undermined both by claiming, at the rally itself, that "until 11 o'clock that morning, all the injured persons were Muslims, and the Muslim community had only retaliated in self-defence." This statement was inflammatory, unverifiable in the moment, and designed to inflame rather than calm. It belongs in the record.</p>
+
+  <h4>The Mayor's Pamphlet</h4>
+
+  <p>Perhaps the most nakedly incendiary documented act of pre-violence incitement came from Syed Mohammed Usman, the Muslim League Mayor of Calcutta. Before August 16, he issued a pamphlet to residents:</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — Pamphlet issued by Mayor of Calcutta before Aug 16, 1946</div>
+  <blockquote>"We Muslims have had the crown and have ruled. Do not lose hearts, be ready and take swords. Oh kafir! Your doom is not far."</blockquote>
+  <div class="evidence-source">SOURCE: Wikipedia, Direct Action Day (citing The Statesman, Calcutta, August 1946)</div>
+</div>
+
+<div class="section-body">
+  <p>This is the elected Mayor of Calcutta. Distributing a pamphlet calling on Muslims to take swords. To a city where armed paramilitaries were already assembling. On the eve of a day everyone knew would be explosive. No action was taken against him before August 16. No action was taken against him after.</p>
+</div>
+
+<hr class="section-divider">
+
+<!-- ════════════════════════════════════════════════
+     PART 3: THE HOLIDAY THAT KILLED
+════════════════════════════════════════════════ -->
+<div class="part-separator">
+  <div class="part-separator-line"></div>
+</div>
+
+<div class="part-header">
+  <div class="part-label">Part Three</div>
+  <h2 class="part-title">The Holiday That Killed</h2>
+  <div class="part-subtitle">Governor Burrows, the August 14 Military Decision, and Britain's Single Most Consequential Failure</div>
+</div>
+
+<div class="section-body">
+  <p>The decision to declare August 16 a public holiday appears, at first, almost absurdly mundane — a bureaucratic gesture, the kind of thing that happens routinely in Indian administrative life. It was not routine. It was, in retrospect, one of the single most consequential administrative decisions in the entire history of the subcontinent.</p>
+
+  <h3>Who Declared the Holiday and Why</h3>
+
+  <p>The sequence is documented. Huseyn Shaheed Suhrawardy, Chief Minister of Bengal, wished to declare August 16 a public holiday in order to allow maximum participation in the Direct Action Day hartal. He requested Governor Frederick Burrows to issue the declaration. The Governor's Chief Secretary, Ronald Leslie Walker — a senior British ICS officer — advised Burrows that granting the holiday would actually <em>reduce</em> tension: workers away from factories and offices meant less opportunity for picketing violence at workplaces.</p>
+
+  <p>The thinking was not unreasonable on its surface. Holiday workers were not picketing targets. But the reasoning ignored the other side of that logic: a city with closed offices and no normal economic activity is a city of unemployed men with nothing to do and nowhere to be — a city that exists in a state of suspension where normal social anchors are absent. On a day of organised political mobilisation, a public holiday did not reduce the opportunity for violence. It maximised it.</p>
+
+  <p>Burrows granted the holiday.</p>
+</div>
+
+<div class="accused-card">
+  <div class="accused-card-header">
+    <div>
+      <div class="accused-name">Sir Frederick Burrows</div>
+      <div class="accused-role">Governor of Bengal — Responsible for Law and Order Under Reserve Powers</div>
+    </div>
+    <div class="accused-verdict negligent">Documented Negligence / Possible Complicity</div>
+  </div>
+  <div class="accused-card-body">
+    <p><strong>What the evidence shows:</strong> Burrows declared the public holiday on Suhrawardy's request. He received intelligence warnings on August 15 and took no preemptive action. He did not invoke his reserve powers to override Suhrawardy's management of the police even after violence began. He did not call the army until riots had raged for days — the army arrived on August 22, six days into the carnage.</p>
+    <p><strong>His own defence:</strong> He later argued that "stepping in too hard might cause a political crisis while power was still being handed over." Britain was in the middle of transferring power. Overriding the elected Chief Minister would have created a political confrontation. This may explain his hesitation — it does not excuse it.</p>
+    <p><strong>The Viceroy's own verdict:</strong> Lord Wavell stated publicly that "more troops ought to have been called in earlier, and there is no indication that more British troops were not available." The Viceroy's admission that the troops existed and were not deployed is perhaps the most damning piece of evidence in the British administrative record.</p>
+    <p><strong>What is disputed:</strong> Whether Burrows was actively complicit in Suhrawardy's plans or simply negligent. Britannica notes he "was questioned for his complicity in Suhrawardy's plans" and that "it is believed that he had prior knowledge of the Muslim League's intentions." The evidence supports negligence at minimum. Active complicity cannot be proven from available documents.</p>
+  </div>
+</div>
+
+<div class="section-body">
+  <h3>August 14, 1946: The Decision That Sealed It</h3>
+
+  <p>Two days before Direct Action Day, British military officers held a meeting at Barrackpore. The intelligence picture was clear: violence was likely on August 16. The question before the officers was how the military would respond.</p>
+
+  <p>The decision they reached was documented. The officers decided: <strong>"When the riot begins, we will not interfere."</strong></p>
+
+  <p>Read that again. Two days before thousands of people were killed, the British military — which had the forces, the training, and the authority to prevent or contain mass killing — formally decided it would not act.</p>
+
+  <p>No British officer has ever been publicly identified by name as the author of this decision. No formal inquiry examined it. It exists in the historical record as a fact without consequence, an decision that enabled mass killing, made by men who were never named publicly and never held to account.</p>
+
+  <p>Burrows did not countermand this decision. He received intelligence warnings the following day and still did not countermand it.</p>
+
+  <h3>The Structural Reason: Britain Was Leaving</h3>
+
+  <p>The military inaction and the Governor's deference to Suhrawardy were not random failures. They followed from a structural decision made far above Burrows' level: Britain, under Attlee's Labour government, had decided to exit India as quickly as possible. Maintaining a heavy-handed security presence while simultaneously negotiating the transfer of power to elected Indian leaders created a political contradiction.</p>
+
+  <p>The British knew — or should have known — that the Direct Action hartal in the hands of Suhrawardy's Bengal government was a loaded political event. But intervention would have meant overriding an elected Muslim League Chief Minister on behalf of Hindus, at a moment when Britain was already being accused of favouring Congress. The political calculation ended in complete failure to act.</p>
+
+  <p>This is not an excuse. It is the recorded reasoning that got people killed.</p>
+</div>
+
+<div class="stat-row">
+  <div class="stat-cell">
+    <div class="stat-number">5</div>
+    <div class="stat-label">Days before Bengal placed under Viceroy's rule</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-number">6</div>
+    <div class="stat-label">Days before army battalions arrived</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-number">Aug 14</div>
+    <div class="stat-label">Date military decided "we will not interfere"</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-number">0</div>
+    <div class="stat-label">Officers charged or disciplined for this decision</div>
+  </div>
+</div>
+
+<div class="section-body">
+  <h3>Lord Wavell: The Man at the Top</h3>
+
+  <p>Viceroy Lord Wavell was the supreme British authority in India in August 1946. He received reports throughout the period. He met Gandhi on August 27 — eleven days after the violence began — and recorded the meeting in his diary. He placed Bengal under his direct rule on August 21: five days after the killing started.</p>
+
+  <p>Wavell's own admission is the key document here:</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — Wavell public statement (recorded in multiple sources)</div>
+  <blockquote>"More troops ought to have been called in earlier, and there is no indication that more British troops were not available."</blockquote>
+  <div class="evidence-source">SOURCE: Lord Wavell, Viceroy of India — public statement, 1946. Cited in Wikipedia (Direct Action Day) and multiple academic sources.</div>
+</div>
+
+<div class="section-body">
+  <p>The Viceroy of India is admitting, in his own words: the troops existed. They were available. They were not called. He does not say why they were not called. He does not identify who failed to call them. He does not offer to investigate. He simply acknowledges the failure and moves on.</p>
+
+  <p>Wavell's failure was not just personal — it was the failure of the whole system he ran. He was the Viceroy. He set the priorities. His administration's choice to keep the power transfer smooth, above all else, filtered down through every officer under him. Nobody stopped the killing because the man at the top had quietly decided that stopping it was not worth the political trouble.</p>
+
+  <p>Attlee recalled him in February 1947 and replaced him with Lord Mountbatten, who would manage the actual Partition. Neither man ever faced any formal accountability for what happened in Bengal.</p>
+</div>
+
+<hr class="section-divider">
+
+<!-- ════════════════════════════════════════════════
+     PART 4: SUHRAWARDY'S CALCUTTA
+════════════════════════════════════════════════ -->
+<div class="part-separator">
+  <div class="part-separator-line"></div>
+</div>
+
+<div class="part-header">
+  <div class="part-label">Part Four</div>
+  <h2 class="part-title">Suhrawardy's Calcutta</h2>
+  <div class="part-subtitle">The Speech, the Control Room, the Police Transfers — What Five Independent Sources All Confirm About the Chief Minister's Role</div>
+</div>
+
+<div class="section-body">
+  <p>Huseyn Shaheed Suhrawardy is a complex historical figure, and this investigation's treatment of him must be careful and precise. In Bangladesh, where he is revered as a founding father and eventually Prime Minister, his role in the Calcutta killings is softened or omitted in popular memory. In India, he has been cast as the sole architect of a planned Muslim massacre of Hindus. Both are wrong. What the documented evidence shows is specific, damning, and sufficient without embellishment.</p>
+
+  <p>Suhrawardy was Chief Minister of Bengal in August 1946. He also held the Home Portfolio, which meant he was directly in charge of the police. He was the person with the most direct power to stop what happened. What the evidence shows he did with that power is the core question of this investigation.</p>
+
+  <h3>The Police Transfer: 22 of 24</h3>
+
+  <p>Before August 16, Suhrawardy transferred the police officers controlling Calcutta's most critical posts. The documented figure: he transferred twenty-two out of twenty-four Hindu police officers from key positions in Calcutta. This is not disputed in the academic record.</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — Academic Source: Karatoya: NBU Journal of History, Vol. 11 (ISSN 2229-4880)</div>
+  <blockquote>"[Suhrawardy] transferred twenty-two Hindu police officers out of twenty-four key posts in Calcutta."</blockquote>
+  <div class="evidence-source">SOURCE: "Suhrawardy and the Great Calcutta Killing" — Karatoya: NBU Journal of History, North Bengal University Repository (ir.nbu.ac.in)</div>
+</div>
+
+<div class="section-body">
+  <p>What does this mean in practice? It means that on the day of the Direct Action hartal — a day explicitly organised by Suhrawardy's own party, the Muslim League — the police officers with the most responsibility for Calcutta's sensitive districts were, with two exceptions, replaced. Whether the replacements were less competent, less experienced, or more politically aligned with the League is a question that cannot be answered from available documents. What can be answered is that Suhrawardy used the Chief Minister's power over police postings to alter the composition of the force ahead of a day he knew would be dangerous.</p>
+
+  <p>There is no innocent explanation for this decision.</p>
+
+  <h3>The Maidan Speech: What Banglapedia Confirms</h3>
+
+  <p>At the Maidan rally on August 16, Suhrawardy addressed the crowd. The precise text of his speech is not fully preserved — this is one of the documented gaps in the historical record. But what he said is recorded through multiple independent accounts, including one from a source that has every reason to present him favourably.</p>
+
+  <p>Banglapedia — Bangladesh's national encyclopedia, a government source, a reference work compiled in a country where Suhrawardy is a revered national figure — confirms that at the rally, he told the crowd that the "police and army had been restrained."</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — Banglapedia (Bangladesh National Encyclopedia, government source)</div>
+  <blockquote>Suhrawardy told the rally that the "police and army had been restrained."</blockquote>
+  <div class="evidence-source">SOURCE: Banglapedia — en.banglapedia.org (Bangladesh government encyclopedia, where Suhrawardy is a revered national figure — making this confirmation more, not less, significant)</div>
+</div>
+
+<div class="section-body">
+  <p>The significance of this is hard to overstate. This is not an Indian nationalist account. This is not a Hindu majoritarian account. This is Bangladesh's own national encyclopedia — the scholarly reference work of the country that venerates Suhrawardy as a founding figure. When even that source confirms he told the crowd that the police and army were "restrained," it means the statement is beyond reasonable historical dispute.</p>
+
+  <p>The crowd at the Maidan numbered in the tens of thousands. They were armed men, many of them Muslim National Guard members, assembled on a day of political mobilisation in a city with a history of communal tension. Telling them the police and army were "restrained" was telling them: there are no consequences for what you do today.</p>
+
+  <p>Wikipedia's account, citing sources, goes further: Suhrawardy "appeared to indirectly promise that no action would be taken against armed Muslims."</p>
+
+  <h3>Lalbazar: The Control Room</h3>
+
+  <p>During the riots, Suhrawardy positioned himself in the Police Control Room at Lalbazar Police Headquarters — the nerve centre for coordinating police response across Calcutta. His defenders argue this shows he was trying to manage the crisis. His critics argue it allowed him to selectively manage it — choosing which calls to respond to, which areas to prioritise, and which to leave unprotected.</p>
+
+  <p>The British Army's own assessment, contained in Military Report WO 216/662, goes significantly further than simply noting his presence:</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — British Military Report WO 216/662, August 24, 1946 (National Archives, UK)</div>
+  <blockquote>"There is hardly a person in Calcutta who has a good word for Suhrawardy, respectable Muslims included. For years he has been known as 'The king of the goondas' and my own private opinion is that he fully anticipated what was going to happen, and allowed it to work itself up, and probably organised the disturbance with his goonda gangs."</blockquote>
+  <div class="evidence-source">SOURCE: British Military Report WO 216/662, August 24, 1946 — National Archives UK (discovery.nationalarchives.gov.uk)</div>
+</div>
+
+<div class="section-body">
+  <p>This is not a Congress pamphlet. This is not a Hindu nationalist polemic. This is a classified British military report written by British Army officers six days after the killings, based on their own on-the-ground intelligence. The officers had no political interest in condemning Suhrawardy — Britain was negotiating with the Muslim League, and attacking the League's Bengal Chief Minister would have complicated those negotiations.</p>
+
+  <p>They wrote it anyway. Because they were reporting what they saw.</p>
+
+  <p>The same British Army's Commander, General Bucher, reported directly to Viceroy Wavell on August 26, 1946, describing Suhrawardy's "completely communal attitude." Wavell recorded this in his own diary that day.</p>
+
+  <h3>AK Fazlul Huq: The Eyewitness Testimony</h3>
+
+  <p>A K Fazlul Huq was no BJP politician. He was a Muslim; he had been Chief Minister of Bengal from 1937 to 1943; he had signed the Lahore Resolution himself. He was one of the most respected political figures in Bengal. On September 19, 1946 — one month after the killings — he rose in the Bengal Legislative Assembly and gave the following account:</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — AK Fazlul Huq speech, Bengal Legislative Assembly, September 19, 1946</div>
+  <blockquote>"Sir, each time I tried to get in touch with police officers, I was told that I was to contact the Control Room. I do not know, Sir, who was controlling the Control Room, but whenever I wanted some kind of help the reply came that my complaint has been noted and will be attended to in proper time."</blockquote>
+  <div class="evidence-source">SOURCE: Bengal Legislative Assembly records, September 19, 1946 — cited in multiple academic papers and Wikiquote (Direct Action Day)</div>
+</div>
+
+<div class="section-body">
+  <p>Fazlul Huq is a Muslim elder statesman trying to get help during the riots. He is told to contact the Control Room. He does not know who is controlling the Control Room. He receives standard acknowledgement and no action. The Control Room was controlled by Suhrawardy.</p>
+
+  <p>The structure of his testimony is almost more damning than its content: a former Chief Minister, a senior Muslim figure with the contacts to call directly on police officers, is being filtered through a central control room that is not acting on his appeals.</p>
+
+  <p>The Statesman, Calcutta's respected English-language daily, was unambiguous in its contemporary reporting:</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — The Statesman, Calcutta, August 1946</div>
+  <blockquote>"The primary blame lies with the Muslim League cabinet and particularly CM Suhrawardy."</blockquote>
+  <div class="evidence-source">SOURCE: The Statesman (Calcutta English daily, August 1946) — cited in The Australia Today article and multiple secondary sources</div>
+</div>
+
+<div class="section-body">
+  <p>The Statesman was a British-owned newspaper, not particularly friendly to the Muslim League or to the Indian independence movement generally. Its editorial judgement that Suhrawardy bore "primary blame" was not a political alignment — it was what an informed observer in Calcutta in August 1946 concluded from what they saw.</p>
+
+  <p>Historian Joya Chatterji, whose academic work on the period is among the most cited, "allocates much of the responsibility to Suhrawardy, for setting up the confrontation and failing to stop the rioting, but points out that Hindu leaders were also culpable." That is the honest account: Suhrawardy carries the primary documented responsibility. Hindu leaders who organised counter-attacks carry responsibility for what the second phase of violence became.</p>
+
+  <h3>The Disputed Core: Engineered or Negligently Allowed?</h3>
+
+  <p>The fundamental question that the available evidence cannot definitively answer is whether Suhrawardy actively engineered the violence or negligently created conditions for it to flourish and then failed to stop it. The British military report's language — "fully anticipated... probably organised" — reflects informed opinion from officers on the ground, but does not constitute proof of deliberate organisation.</p>
+
+  <p>What is not disputed — confirmed by five independent sources (British Military Report, Banglapedia, The Statesman, AK Fazlul Huq's assembly speech, and historian Joya Chatterji's academic work), is this: Suhrawardy transferred most Hindu police officers from key posts before August 16; he told the Maidan rally that police and army were "restrained"; he occupied the Police Control Room and demonstrably did not use it to protect Hindu-majority areas from attack; and he had the constitutional power to prevent or halt the violence and did not exercise it.</p>
+</div>
+
+<div class="no-inquiry-box">
+  <div class="no-inquiry-title">⬛ Critical Finding — The Questions That Were Never Asked</div>
+  <p>Had any judicial inquiry been ordered after the Calcutta killings, Suhrawardy would have been required to testify under oath. He would have been asked: Who specifically was at the Control Room with you? What calls came in? Which were responded to and which were not? What orders did you give regarding police deployment in Hindu-majority areas? What exactly did you say at the Maidan rally?</p>
+  <p>No inquiry was ever ordered. No testimony was ever compelled. The precise facts of what Suhrawardy did and did not do in the Control Room on August 16–20, 1946 are unknown because the people responsible for ordering an inquiry chose not to order one. This is itself a documented fact about the nature of the institutional response to the killings.</p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     PART 5: FOUR DAYS IN AUGUST
+════════════════════════════════════════════════ -->
+<div class="part-separator">
+  <div class="part-separator-line"></div>
+</div>
+
+<div class="part-header">
+  <div class="part-label">Part Five</div>
+  <h2 class="part-title">Four Days in August</h2>
+  <div class="part-subtitle">What Actually Happened in Calcutta's Streets Between August 16 and 20, 1946 — The Violence, the Bodies, and the Count That Was Never Completed</div>
+</div>
+
+<div class="section-body">
+  <p>The violence in Calcutta between August 16 and August 20, 1946 passed through three distinct phases. Understanding these phases is important not just for historical accuracy, but because the question of which community "started it" has been weaponised politically for eighty years by actors on both sides. The documented evidence does not support simple one-sided narratives — but it does support a specific and important sequencing of events.</p>
+
+  <h3>Phase One: August 16 — The Opening Attacks</h3>
+
+  <p>The killings began on August 16 itself, within hours of the Maidan rally. The first violence was predominantly organised attacks by armed Muslim mobs on Hindu civilians and properties in areas including Maniktala, Rajabazar, Park Circus, Beliaghata, and the areas along Harrison Road. Armed men moved through Hindu-majority streets, looting shops, attacking pedestrians, and setting fires.</p>
+
+  <p>This phase of the violence has the strongest documentation of one-sided aggression. The British Military Report WO 216/662 notes that police were restrained from "venturing into areas where Muslims were attacking Hindus." The Muslim National Guard, visibly mobilised since early August, provided the organised core of these attacks. The Statesman's reporters documented the pattern of attacks in these early hours.</p>
+
+  <p>One critical point: Nazimuddin's speech at the Maidan claimed that "until 11 o'clock that morning, all the injured persons were Muslims." Even setting aside the question of whether this was accurate, it was delivered at a rally that had been assembling since early morning in a city where violence was already beginning. Whatever the truth of it, the effect of saying it at that moment, at that rally, was to push the crowd toward anger, not toward calm.</p>
+
+  <h3>Phase Two: August 17–18 — The Counter-Violence</h3>
+
+  <p>By August 17, the violence had become mutual — and in some areas, the balance of force had inverted. Hindu organisations, particularly the militias organised by Gopal Mukhopadhyay (known as "Gopal Patha"), mobilised counter-attacks. Gopal Patha was a butcher from north Calcutta who organised Hindu self-defence — and in some cases, Hindu offensive attacks — through the Maha Hindu Samiti and his own network.</p>
+
+  <p>The documented facts about this phase are less comfortable for any single-sided account. Hindu mobs attacked Muslim minorities in mixed neighbourhoods. Shops were burned. There are documented accounts of Muslim pedestrians being killed in Hindu-majority areas. The British military report, which cannot be accused of pro-Hindu bias, characterised the violence in its later phases as involving "both sides equally."</p>
+
+  <p>This is where the honest account has to hold two things at once. The Calcutta killings were not solely a Muslim attack on Hindus, any more than they were solely a Hindu attack on Muslims. By days two and three, they were a communal massacre in which both communities were perpetrators and victims. What distinguishes the documented responsibility is the conditions under which the violence began, who controlled the apparatus that could have stopped it, and who chose not to use that apparatus.</p>
+
+  <h3>Phase Three: August 19–20 — The Residual Killing</h3>
+
+  <p>By August 19, the intensity of organised mob violence was reducing. But the city was still dangerous. Scattered killings continued. Bodies that had been hidden, or that lay in less accessible areas, were still being discovered. Fire brigade teams reported being unable to reach certain zones due to continuing danger.</p>
+
+  <p>On August 22 — six days after the violence began — five British Army battalions were deployed in force across Calcutta. The violence substantially reduced within forty-eight hours of their arrival. This is perhaps the most damning single data point in the entire administrative record: it took less than forty-eight hours for the army to restore order once deployed. The army existed. It was available. It was not deployed for six days.</p>
+
+  <h3>What the City Looked Like</h3>
+
+  <p>The historical record on the physical reality of those five days is thin in one sense — no film cameras captured it, no television news covered it — and overwhelming in another: eyewitness accounts, newspaper reports, and official records document a city in a state of complete collapse.</p>
+
+  <p>Philip Talbot, an American journalist, was in Calcutta during the killings. His letter, preserved at the British Library in London, provides one of the most cited contemporary estimates and descriptions:</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — Philip Talbot, letter to British Library Archives, London, 1946</div>
+  <blockquote>"3,500 bodies collected; reasonable guess more than 4,000 died" — 11,000 injured. 1,200 fires documented across the city.</blockquote>
+  <div class="evidence-source">SOURCE: Philip Talbot's letter, British Library Archives, London — cited in multiple secondary sources; original at British Library reading room</div>
+</div>
+
+<div class="section-body">
+  <p>The fire brigade's own records documented 900 calls in the first two days alone. Consider what this means: 900 fires reported in 48 hours across a single city. The fire service could not respond to all of them. Petrol — obtained through channels that suggested organised supply, not opportunistic looting — was used to accelerate fires on buildings where people were sheltering. The Statesman reported trucks being used to bring armed men into target areas.</p>
+
+  <p>Margaret Bourke-White, the American photographer who would become famous for her documentation of Gandhi in his final years, was in Calcutta during the killings. Her photographs — preserved at Syracuse University Archives and the LIFE Picture Collection — show corpses in gutters, cremation pyres alight in public spaces, and vultures gathered in such numbers on certain streets that fire brigade crews could not advance. These images were published in LIFE magazine and constitute photographic primary-source documentation of what the city looked like.</p>
+
+  <h3>The Death Toll: What We Can and Cannot Say</h3>
+
+  <p>The casualty figures from the Calcutta killings are disputed — and the dispute itself is a political act. Every figure carries an ideological charge. This investigation presents the available documented figures with their sources and states clearly which it uses and why.</p>
+</div>
+
+<div class="quick-facts">
+  <div class="qf-header">Death Toll — Calcutta, August 16–20, 1946 — Source Comparison</div>
+  <div class="qf-row">
+    <div class="qf-label">Bengal Provincial Govt</div>
+    <div class="qf-value"><strong>750 dead</strong> — Widely regarded as a gross undercount. The government had clear political incentives to minimise the figure.</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">British Military (early)</div>
+    <div class="qf-value"><strong>2,000–3,000</strong> — Early estimates before full body recovery. British military sources, no partisan motivation.</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Philip Talbot (British Library)</div>
+    <div class="qf-value"><strong>4,000+</strong> — Contemporary eyewitness; "3,500 bodies collected; reasonable guess more than 4,000 died." 11,000 injured. This investigation's primary figure.</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Independent sources</div>
+    <div class="qf-value"><strong>~8,000</strong> — Widely cited range from independent documentation.</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Military upper estimates</div>
+    <div class="qf-value"><strong>7,000–10,000</strong> — Upper range, used by some academic sources.</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">This investigation's position</div>
+    <div class="qf-value"><strong>4,000–8,000 dead</strong> — Using Talbot (British Library) as the most credible contemporary documented estimate for the lower bound; noting the range. Citing 11,000 injured as separately documented.</div>
+  </div>
+</div>
+
+<div class="section-body">
+  <p>The absence of a precise, verified death toll is itself a consequence of the absence of any judicial inquiry. An inquiry would have required an official count, community-by-community, street by street. No inquiry was ordered. The number of dead in the Great Calcutta Killings remains, eighty years later, a matter of estimation — because the people who could have established it chose not to.</p>
+</div>
+
+<hr class="section-divider">
+
+<!-- ════════════════════════════════════════════════
+     PART 6: THE LEADERS WHO DIDN'T COME
+════════════════════════════════════════════════ -->
+<div class="part-separator">
+  <div class="part-separator-line"></div>
+</div>
+
+<div class="part-header">
+  <div class="part-label">Part Six</div>
+  <h2 class="part-title">The Leaders Who Didn't Come</h2>
+  <div class="part-subtitle">Neither Jinnah, Nor Nehru. And Who Did Come Instead.</div>
+</div>
+
+<div class="section-body">
+  <p>On August 16, 1946, as the city burned, Jawaharlal Nehru was in Delhi. Muhammad Ali Jinnah was in Bombay. Neither came to Calcutta.</p>
+
+  <p>None of them came to Calcutta.</p>
+
+  <p>This fact is documented by Britannica: "neither Jinnah nor Nehru visited the city during the carnage." It has no adequate defence from either man's supporters, because there is no adequate defence of it. The men whose political decisions had made the violence possible, whose rhetoric had shaped the conditions under which people killed each other, chose to remain at a comfortable distance while their decisions played out in blood in the streets of Bengal.</p>
+
+  <h3>What Nehru Said From a Distance</h3>
+
+  <p>Nehru's most quoted statement about the Calcutta killings came from outside the city. He described what was happening in words that are harrowing precisely because they come from a man who chose not to witness what he was describing:</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — Nehru's statement on the Calcutta killings, 1946</div>
+  <blockquote>"Murder stalks the street and the most amazing cruelties are indulged in by both the individuals and the mob. Riot is not the word for it — it is just the sadistic desire to kill."</blockquote>
+  <div class="evidence-source">SOURCE: Jawaharlal Nehru, contemporary statement — documented in multiple historical sources</div>
+</div>
+
+<div class="section-body">
+  <p>"The sadistic desire to kill." He identified it accurately. He described it with moral clarity. He remained in Delhi while it continued.</p>
+
+  <p>His absence is not merely a personal moral failure — though it is that. It is also a political failure of significant consequence. Nehru had enormous moral authority. His presence in Calcutta — moving through the streets, refusing to leave, speaking to both communities — might have shortened the violence, as Gandhi's eventual presence in Noakhali shortened the violence there. We cannot know. What we can know is that he chose not to try.</p>
+
+  <h3>What Jinnah Said From a Distance</h3>
+
+  <p>Jinnah sent telegrams to Suhrawardy urging "restoration of order." This is documented. The telegrams were sent after the violence had begun — not before, when a public statement from Jinnah denouncing violence before August 16 might have had some restraining effect. He did not visit Calcutta. He did not publicly, unambiguously, and repeatedly denounce what was being done in his political movement's name until the momentum of the violence had already built.</p>
+
+  <p>This is what political responsibility looks like when exercised too late: the leader who built the pistol sends a telegram asking someone else to put it down.</p>
+
+  <h3>Who Did Come</h3>
+
+  <p>The leaders who came to the killing ground were not the ones who started it. They were the ones who came to profit from what others had started.</p>
+
+  <p>On the Hindu side: Gopal Mukhopadhyay — "Gopal Patha" — the butcher of north Calcutta who organised a network of Hindu self-defence and counter-attacks. Gopal Patha has been variously described as a community protector and as an organiser of retaliatory violence against Muslim civilians. Both characterisations have documentary support, and both may be true simultaneously. He was present when the leaders were not, which is why his name is remembered when theirs are mostly not, in Calcutta's local memory of those days.</p>
+
+  <p>On the Muslim side: the Muslim National Guard, the local League leadership, and the goonda networks that the British Military Report identifies as connected to Suhrawardy's political machinery. The organised violence in the first phase came through these networks, not through spontaneous community rage — though spontaneous rage followed quickly enough.</p>
+
+  <p>Both sets of actors filled a vacuum created by the absence of the people who should have been there. Nehru's absence meant there was no Congress voice on the ground calling for calm. Jinnah's absence meant the League's only face in Calcutta was Suhrawardy — and Suhrawardy was in the Police Control Room.</p>
+
+  <h3>Gandhi: The One Leader Who Would Eventually Come</h3>
+
+  <p>Gandhi did not come to Calcutta in August 1946. His meeting with Wavell on August 27 — documented in Wavell's diary — produced a statement of grim philosophical honesty rather than practical intervention:</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — Gandhi to Wavell, August 27, 1946 (recorded in Wavell's diary)</div>
+  <blockquote>"If India wants bloodbath she shall have it... if a bloodbath was necessary, it would come about in spite of non-violence."</blockquote>
+  <div class="evidence-source">SOURCE: Viceroy Wavell's diary, August 27, 1946 — cited in Wikipedia (Direct Action Day) and Grokipedia</div>
+</div>
+
+<div class="section-body">
+  <p>This is a complicated statement. Gandhi is not endorsing violence. He is expressing a kind of fatalistic acknowledgement that the forces unleashed by the political situation might be beyond his power to stop. It is an unusually despairing statement from a man known for his insistence on the power of moral force.</p>
+
+  <p>But Gandhi, unlike Nehru and Jinnah, eventually did come — to Noakhali, in November, when the second wave of violence struck. He came alone, on foot, at 77 years old, and walked through burned villages barefoot. We will return to his walk. It deserves its own section.</p>
+</div>
+
+<hr class="section-divider">
+
+<!-- ════════════════════════════════════════════════
+     PART 7: NOAKHALI
+════════════════════════════════════════════════ -->
+<div class="part-separator">
+  <div class="part-separator-line"></div>
+</div>
+
+<div class="part-header">
+  <div class="part-label">Part Seven</div>
+  <h2 class="part-title">Noakhali — The Revenge That Wasn't Only Revenge</h2>
+  <div class="part-subtitle">October 10, 1946. Gholam Sarwar Husseini. The Miyar Fauz. 50,000 Hindus Marooned. The Event That the Calcutta Narrative Absorbed but Did Not Explain.</div>
+</div>
+
+<div class="section-body">
+  <p>The Noakhali massacres of October–December 1946 are typically presented as the revenge for Calcutta — the eastern Bengali Muslim community exacting retribution on Hindus for what had happened to Muslims in Calcutta in August. This framing is partly true and mostly incomplete. It is true that the Calcutta killings inflamed communal tensions across Bengal and provided the immediate political context. It is misleading because the violence in Noakhali had causes that preceded August 1946 and a specific human architect whose motivations were at least as much personal and political as communal.</p>
+
+  <h3>Gholam Sarwar Husseini: Who He Was</h3>
+
+  <p>Gholam Sarwar Husseini was a Muslim politician from Noakhali district in eastern Bengal (now Bangladesh). He was a hereditary Pir — a religious leader — of Diara Sharif, giving him a combination of political and spiritual authority in his community. He had been a Member of the Bengal Legislative Assembly.</p>
+
+  <p>On September 6, 1946 — one month before the Noakhali massacres began — Husseini lost an election. He was defeated not by a Hindu candidate but by a Muslim League candidate. He was, in the terminology of the period, a political independent who had been outmanoeuvred by the League machine.</p>
+
+  <p>What followed his electoral defeat, in the context of the post-Calcutta communal atmosphere, was documented by multiple sources — including, most significantly, the Governor of Bengal himself.</p>
+
+  <h3>The Build-Up: Provocative Speeches</h3>
+
+  <p>After his election loss, Husseini began delivering what Governor Burrows described as "provocative speeches inciting Muslim masses to seek revenge" for the Calcutta killings. He organised the Miyar Fauz — a private militia. He assembled the conditions for directed violence.</p>
+
+  <p>The multiple motivations here deserve honest examination:</p>
+
+  <div class="findings-box">
+    <div class="findings-title">Noakhali — Multiple Documented Causes</div>
+    <div class="finding-item">
+      <span class="finding-num">01</span>
+      <span><strong>Political revenge:</strong> Communal anger over Calcutta killings provided the popular fuel for mobilisation.</span>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">02</span>
+      <span><strong>Electoral loss:</strong> Husseini had just lost an election. Communal mobilisation is a time-honoured strategy for rebuilding political relevance after defeat.</span>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">03</span>
+      <span><strong>Land and economic grievance:</strong> Academic analysis (Cambridge University Press, 2018, "Making Peace, Making Riots") identifies pre-existing land disputes between Hindu zamindars and Muslim peasants in the Noakhali region as a structural background cause independent of communal politics.</span>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">04</span>
+      <span><strong>The 1943 Famine:</strong> Muslim peasant communities in eastern Bengal had suffered disproportionately in the 1943 famine. Three years of destitution, resentment toward Hindu moneylenders and zamindars who had sometimes benefited from famine conditions (or were perceived to have), created a powder keg.</span>
+    </div>
+  </div>
+
+  <p>None of this changes what happened. It needs to be understood this way, so the events are not flattened into "Muslims attacked Hindus because of religion" — which is a politically weaponisable oversimplification — or dismissed as "just politics" — which dishonours the victims.</p>
+
+  <h3>October 10, 1946: The Beginning</h3>
+
+  <p>The violence began on October 10, 1946 — Kojagari Lakshmi Puja, the full moon festival of Lakshmi, one of the most sacred days in the Bengali Hindu calendar. The choice of date — whether deliberate or incidental — meant that Hindu families were gathered together in their homes for religious observance when the mobs came.</p>
+
+  <p>The violence started in Ramganj police station area, following a mass meeting addressed by Husseini. Governor Burrows documented what happened:</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — Governor Frederick Burrows' Report on Noakhali (cited in Transfer of Power 1942-7, ed. Mansergh, p.98)</div>
+  <blockquote>"The immediate occasion for the outbreak of the disturbances was the looting of a Bazar in Ramganj police station following the holding of a mass meeting and a provocative speech by the person now arrested — Gholam Sarwar Husseini."</blockquote>
+  <div class="evidence-source">SOURCE: Governor Burrows, cited in "Communalism in Bengal: From Famine To Noakhali, 1943-47" by Rakesh Batabyal, p.277; and The Transfer of Power 1942-7, ed. Nicholas Mansergh, p.98</div>
+</div>
+
+<div class="section-body">
+  <p>The man responsible for Calcutta's failure of law enforcement is here documenting the Noakhali massacre's origin with precision: a mass meeting, a provocative speech, by an identified individual. The British were still governing Bengal. Husseini was "arrested" — this document implies eventual arrest — but the violence had already begun.</p>
+
+  <h3>October 11: The Attack on the Roychowdhury Family</h3>
+
+  <p>On October 11, the day after the massacres began, the Miyar Fauz — Gholam Sarwar Husseini's private militia — attacked the residence of Rajendralal Roychowdhury, the president of the Noakhali Bar Association. Roychowdhury was a prominent Hindu Mahasabha leader and a figure of significance in the local Hindu community.</p>
+
+  <p>Roychowdhury was killed. His daughters were abducted. The targeted killing of a prominent Hindu community leader by a named private militia on the second day of violence indicates the level of organisation involved. This was not spontaneous riot. This was directed operation.</p>
+
+  <h3>Forced Conversions: Judge Simpson's Report</h3>
+
+  <p>In the weeks that followed, the violence in Noakhali took a form that distinguished it from the Calcutta killings: large-scale forced conversion of Hindus to Islam, village by village. This is documented in the report of Judge Simpson, appointed to investigate the Noakhali violence:</p>
+</div>
+
+<div class="evidence-block">
+  <div class="evidence-label">Documented — Judge Simpson's Report on Noakhali Riots</div>
+  <blockquote>"Large-scale conversion of Hindus to Islam by application of force in village after village."</blockquote>
+  <div class="evidence-source">SOURCE: Judge Simpson's Report on the Noakhali riots — cited in Wikipedia (Noakhali riots); referenced in Dharmapedia and academic sources</div>
+</div>
+
+<div class="section-body">
+  <p>Approximately 50,000 Hindus were documented as "marooned" — cut off in villages, unable to leave, in the weeks following the initial violence. Ashoka Gupta, a social worker who documented conditions in the region, recorded more than 2,000 forced conversions. The numbers are disputed — the total death toll for Noakhali ranges from 200 in the official count to 5,000 in other accounts — but the pattern of forced conversion is confirmed by a judicial report, not a community claim.</p>
+
+  <p>Suhrawardy's name appears in this episode as well, in a different way: he pressed Gandhi, who had gone to Noakhali in November to walk through the devastated villages, to leave and go to Bihar — where Hindu mobs had retaliated against Muslims following news of the Noakhali killings. Gandhi refused to be redirected from the people who were suffering in front of him. Even in Noakhali, Suhrawardy was trying to manage the political narrative.</p>
+
+  <h3>Bihar: The Retaliatory Killings</h3>
+
+  <p>The violence did not stay in Bengal. News of the Noakhali killings reached Bihar, where the Muslim minority was significantly smaller and more vulnerable. Hindu mobs in Bihar attacked Muslims in what contemporaries described as revenge killings. Estimates of Bihar's deaths vary, but they were substantial.</p>
+
+  <p>The chain of causation — Calcutta → Noakhali → Bihar — shows exactly why the political leaders' decisions in 1946 were not local events. Every community had partisans who used each previous episode as justification for the next. The violence was self-sustaining. What Nehru's press conference, Jinnah's Direct Action rhetoric, Suhrawardy's management of Calcutta, and Britain's military non-interference had set in motion did not stop in Calcutta. It ran through Noakhali, Bihar, and eventually through the entire subcontinent in 1947.</p>
+</div>
+
+<hr class="section-divider">
+
+<!-- ════════════════════════════════════════════════
+     PART 8: GANDHI'S WALK
+════════════════════════════════════════════════ -->
+<div class="part-separator">
+  <div class="part-separator-line"></div>
+</div>
+
+<div class="part-header">
+  <div class="part-label">Part Eight</div>
+  <h2 class="part-title">Gandhi's Walk</h2>
+  <div class="part-subtitle">77 Years Old, Barefoot, Through Burned Villages — While the Men Who Caused It All Negotiated Power in Delhi</div>
+</div>
+
+<div class="section-body">
+  <p>On November 7, 1946, Mahatma Gandhi arrived in Noakhali district. He was 77 years old. He was in poor health. He arrived without a security detail adequate to the danger, into a region where armed mobs had been killing, looting, and burning for nearly a month.</p>
+
+  <p>He walked. Barefoot, through the villages where the violence had been worst. He walked for four months. Village to village, sometimes a dozen miles a day, through mud and across the flooded terrain of eastern Bengal's winter. He met Hindu families who had survived. He met Muslim families who had perpetrated, or who had neighbours who had perpetrated, and who were now ashamed. He prayed. He fasted. He organised camp residents to rebuild.</p>
+
+  <p>The contrast with what was happening simultaneously in Delhi is the moral centre of this investigation's assessment of Gandhi.</p>
+
+  <p>While Gandhi was walking barefoot through villages of the dead, in Delhi: Nehru was heading the Interim Government. Muslim League ministers, who had joined the government in October 1946 explicitly as an "obstructive force" from within — as Jinnah had framed it — were in cabinet. The men who had made the violence possible were negotiating the terms of power over a country they had set on fire.</p>
+
+  <p>Gandhi's walk was not politically naive. He understood that what was happening in Noakhali required a physical, moral witness — not a statement from Delhi. He understood that the people who had been driven from their homes and forcibly converted and had their relatives killed needed to see someone who would not abandon them for a more comfortable assignment. He showed up.</p>
+
+  <h3>The Pressure to Leave</h3>
+
+  <p>Even in Noakhali, Gandhi was subjected to political pressure. Suhrawardy pressed him to go to Bihar, where Hindu mobs were retaliating against Muslims. The political logic was that Gandhi's moral authority should be used to stop Hindu communal violence, not to witness Muslim communal violence in Bengal — a reframing that, if successful, would have removed the most prominent moral witness from the scene of the primary crime.</p>
+
+  <p>Gandhi refused to be redirected. He stayed in Noakhali. This is a documented fact about his character that is as significant as his absence from Calcutta in August.</p>
+
+  <h3>Gandhi's Own Accountability</h3>
+
+  <p>Gandhi does not escape this investigation's accounting, because honest accounting requires examining everyone. He was not in Calcutta in August 1946. His presence might have shortened the killing. That absence is a fact in the record. His August 27 statement to Wavell — "If India wants bloodbath she shall have it" — was a statement of philosophical resignation rather than practical action.</p>
+
+  <p>But his Noakhali walk represents something that Nehru and Jinnah never attempted: the willingness to physically occupy the space of consequence, to put his own body in the geography of the failure, and to refuse the comfortable distance that power always offers.</p>
+
+  <p>It did not bring back the dead. It did not prevent Partition. But it was the only act by any major leader of 1946 India that was equal to the size of the suffering — and it came from a man who was 77 years old, walking barefoot, while younger and healthier men signed documents in air-conditioned offices in Delhi.</p>
+
+  <p>He was assassinated fourteen months later. The man who walked through burned villages barefoot to be present for suffering was killed. The men who had been present for power survived and governed.</p>
+</div>
+
+<hr class="section-divider">
+
+<!-- ════════════════════════════════════════════════
+     PART 9: THE PARTITION THAT FOLLOWED
+════════════════════════════════════════════════ -->
+<div class="part-separator">
+  <div class="part-separator-line"></div>
+</div>
+
+<div class="part-header">
+  <div class="part-label">Part Nine</div>
+  <h2 class="part-title">The Partition That Followed</h2>
+  <div class="part-subtitle">How Calcutta and Noakhali Together Made 1947 Inevitable — and What That Cost</div>
+</div>
+
+<div class="section-body">
+  <p>After August 16, 1946, the Cabinet Mission Plan was dead. Not formally — there were still negotiations, still attempts to revive some version of a united transfer of power. But the practical basis for agreement had been destroyed.</p>
+
+  <p>Jinnah had spent the summer of 1946 accepting a plan that rejected Pakistan. He had made the most significant political concession of his career. And it had produced — from his perspective — exactly what he had always feared: Nehru's announcement that Congress would not be bound by its terms, followed by violence that, whatever its origins, had demonstrated that Muslims in Congress-governed states (Calcutta was under the League, but the Interim Government was Congress-led) could not count on their safety.</p>
+
+  <p>The political logic for Pakistan, after August 1946, was no longer about abstract constitutional design. It was about physical safety. The League's argument — that Muslims needed a separate state to protect them — had been given documentary evidence by the bodies in Calcutta's streets, by the 50,000 Hindus marooned in Noakhali, by the retaliatory killings in Bihar. Each community now had its evidence. Each community now had its dead.</p>
+
+  <h3>The Chain of Decisions That Led to Attlee's Announcement</h3>
+
+  <p>On February 20, 1947, Clement Attlee announced in the House of Commons that Britain would leave India by June 1948. The announcement confirmed what Calcutta had made politically inevitable: there was no longer any realistic path to a united transfer of power. The violence had made both communities' positions incompatible with a shared constitutional arrangement.</p>
+
+  <p>Attlee's announcement was not the cause of Partition — it was the formal acknowledgement of a partition that had already happened in the minds and bodies of the people who lived through August 1946. The idea of a united India had already been killed on Calcutta's streets.</p>
+
+  <p>Lord Mountbatten replaced Wavell in March 1947. The instruction was simple: get out fast. The Mountbatten Plan, announced June 3, 1947, divided British India into India and Pakistan. The boundary — Cyril Radcliffe's rushed lines on a map, drawn by a man who had never visited India before — was announced two days after independence itself, so that communities did not have advance notice of which side of the border they would be on.</p>
+
+  <p>The migration that followed was the largest forced population transfer in human history: approximately 14 million people moving across the new borders. Somewhere between 200,000 and 2 million people died in the violence of Partition itself — massacres, train attacks, rapes, kidnappings, mass murders carried out by communities whose members had, in some cases, lived as neighbours for generations.</p>
+
+  <h3>What Calcutta Started</h3>
+
+  <p>This is the chain of causation that runs from a press conference in Bombay on July 10, 1946, through a public holiday declaration and a military non-interference decision in Calcutta, through four days of killing and twenty-five days of massacres in Noakhali, to the borders of two nations drawn in blood:</p>
+</div>
+
+<div class="timeline">
+  <div class="timeline-header">Causation Chain — The Road From July 1946 to August 1947</div>
+  <div class="timeline-entry critical">
+    <div class="timeline-date">Jul 10, 1946</div>
+    <div class="timeline-event"><strong>Nehru's press conference destroys Cabinet Mission Plan</strong> — the last realistic path to a united India</div>
+  </div>
+  <div class="timeline-entry critical">
+    <div class="timeline-date">Jul 29–30</div>
+    <div class="timeline-event"><strong>Muslim League declares Direct Action Day</strong> — Jinnah's "divided India or destroyed India" rhetoric; Direct Action Day called for August 16</div>
+  </div>
+  <div class="timeline-entry critical">
+    <div class="timeline-date">Aug 14</div>
+    <div class="timeline-event"><strong>British military: "We will not interfere"</strong> — the decision that removes all consequence from violence</div>
+  </div>
+  <div class="timeline-entry critical">
+    <div class="timeline-date">Aug 16</div>
+    <div class="timeline-event"><strong>The Great Calcutta Killings begin</strong> — public holiday declared, Suhrawardy in Police Control Room, mobs mobilise across the city</div>
+  </div>
+  <div class="timeline-entry">
+    <div class="timeline-date">Aug 20</div>
+    <div class="timeline-event">Violence begins to subside — 4,000–8,000 dead, 11,000 injured, 1,200 fires</div>
+  </div>
+  <div class="timeline-entry">
+    <div class="timeline-date">Aug 21</div>
+    <div class="timeline-event">Bengal placed under Viceroy's rule — five days after the killing started</div>
+  </div>
+  <div class="timeline-entry">
+    <div class="timeline-date">Aug 22</div>
+    <div class="timeline-event">Five army battalions deployed — violence reduces within 48 hours. The army that was never "not available" finally arrives.</div>
+  </div>
+  <div class="timeline-entry critical">
+    <div class="timeline-date">Oct 10</div>
+    <div class="timeline-event"><strong>Noakhali massacres begin</strong> — Gholam Sarwar Husseini's Miyar Fauz, forced conversions, 50,000 Hindus marooned</div>
+  </div>
+  <div class="timeline-entry">
+    <div class="timeline-date">Oct–Nov</div>
+    <div class="timeline-event">Bihar retaliatory killings — the chain of violence spreads beyond Bengal</div>
+  </div>
+  <div class="timeline-entry">
+    <div class="timeline-date">Nov 7</div>
+    <div class="timeline-event">Gandhi arrives in Noakhali — walks barefoot through burned villages for four months</div>
+  </div>
+  <div class="timeline-entry critical">
+    <div class="timeline-date">Feb 20, 1947</div>
+    <div class="timeline-event"><strong>Attlee announces British departure by June 1948</strong> — Partition now formally confirmed</div>
+  </div>
+  <div class="timeline-entry critical">
+    <div class="timeline-date">Jun 3, 1947</div>
+    <div class="timeline-event"><strong>Mountbatten Plan announced</strong> — India and Pakistan to be created; Radcliffe draws borders in five weeks</div>
+  </div>
+  <div class="timeline-entry critical">
+    <div class="timeline-date">Aug 14–15</div>
+    <div class="timeline-event"><strong>Partition</strong> — 14 million displaced, 200,000–2 million killed. The bill for 1946 comes due.</div>
+  </div>
+</div>
+
+<div class="section-body">
+  <p>Every step in this chain was a choice. Made by real people, with names, with power, and with options they did not take. The chain did not have to be this chain. At multiple points, different decisions could have produced different outcomes. Nehru could have worded his July 10 statement differently. Jinnah could have chosen less violent rhetoric. Burrows could have deployed troops before the killing started. The British military could have not decided, formally, to not interfere. Suhrawardy could have exercised his power as Chief Minister and Home Minister to protect Calcutta rather than to manage the violence for his party's benefit.</p>
+
+  <p>None of them made those different decisions. This is the documented record of why.</p>
+</div>
+
+<hr class="section-divider">
+
+<!-- ════════════════════════════════════════════════
+     THE NO-INQUIRY FINDING
+════════════════════════════════════════════════ -->
+<div class="part-separator">
+  <div class="part-separator-line"></div>
+</div>
+
+<div class="part-header">
+  <div class="part-label">Critical Finding</div>
+  <h2 class="part-title">The Inquiry That Was Never Ordered</h2>
+  <div class="part-subtitle">The Most Damning Single Fact About How India, Pakistan, and Britain Responded to the Killings</div>
+</div>
+
+<div class="section-body">
+  <p>Despite between 4,000 and 8,000 people killed in Calcutta and thousands more in Noakhali — despite the forced conversion of thousands of Hindus documented by a judicial officer — no formal judicial inquiry was ever ordered into either event.</p>
+
+  <p>Not by the British government. Not by the Bengal provincial government. Not by the subsequent governments of India or Pakistan.</p>
+
+  <p>This is not an oversight. Ordering a formal inquiry was a standard tool of colonial governance. The British had ordered inquiries into far smaller incidents. The Amritsar massacre of 1919, where 379 people were killed, produced the Hunter Commission within months. The Calcutta killings of 1946 — where ten times as many people died — produced nothing.</p>
+
+  <p>What a formal inquiry would have required:</p>
+</div>
+
+<div class="findings-box">
+  <div class="findings-title">What an Inquiry Would Have Demanded — and Why It Was Never Held</div>
+  <div class="finding-item">
+    <span class="finding-num">01</span>
+    <span>Suhrawardy would have testified under oath about his decisions in the Police Control Room — specifically about police deployment orders, which calls were responded to, which were not, and what instructions were given regarding Muslim-majority vs Hindu-majority areas.</span>
+  </div>
+  <div class="finding-item">
+    <span class="finding-num">02</span>
+    <span>The British military's August 14 decision — "we will not interfere" — would have been formally examined, the officers involved identified, and their rationale placed on the public record.</span>
+  </div>
+  <div class="finding-item">
+    <span class="finding-num">03</span>
+    <span>An official death toll would have been established — community by community, area by area — making it impossible to dispute or minimise.</span>
+  </div>
+  <div class="finding-item">
+    <span class="finding-num">04</span>
+    <span>The 22 of 24 Hindu police transfers would have been formally examined, and their timing relative to August 16 would have been placed in the public record under sworn testimony.</span>
+  </div>
+  <div class="finding-item">
+    <span class="finding-num">05</span>
+    <span>Potential prosecution of specific individuals — Husseini (for Noakhali), possibly Suhrawardy (for Calcutta) — might have followed from an inquiry's findings.</span>
+  </div>
+</div>
+
+<div class="no-inquiry-box">
+  <div class="no-inquiry-title">⬛ The Postmortem Finding — The Cover-Up Was Institutional</div>
+  <p>The absence of any inquiry is not explained by administrative oversight. It is explained by the interests of every party that had a stake in not having one.</p>
+  <p><strong>Britain:</strong> Was exiting India. An inquiry into British administrative failure — specifically the August 14 military decision, Wavell's inaction, Burrows' negligence — would have been an embarrassment during the most sensitive phase of the transfer of power. Britain's interest was a quiet exit.</p>
+  <p><strong>Congress/India:</strong> Nehru's July 10 press conference was the trigger for the political chain that produced the killings. A formal inquiry might have examined this causation. Additionally, Congress had its own Hindu majoritarian wing that had its own accounts in the violence ledger. An inquiry that named everyone would have named them too.</p>
+  <p><strong>Muslim League/Pakistan:</strong> Suhrawardy, Jinnah, Nazimuddin, and the Muslim National Guard's role in the initial violence were the most directly documented findings in the available evidence. A formal inquiry would have been devastating to the political legacy of every Muslim League leader involved.</p>
+  <p>All three parties — Britain, Congress-India, and League-Pakistan — had strong institutional interests in ensuring that no formal inquiry was ever ordered. None ever was. Every party got what it wanted: silence.</p>
+  <p><strong>No perpetrator of the Calcutta killings or the Noakhali massacres was ever prosecuted. In eight decades, this has not changed.</strong></p>
+</div>
+
+<hr class="section-divider">
+
+<!-- ════════════════════════════════════════════════
+     FINAL VERDICT
+════════════════════════════════════════════════ -->
+<div class="part-separator">
+  <div class="part-separator-line"></div>
+</div>
+
+<div class="part-header">
+  <div class="part-label">Final Verdict</div>
+  <h2 class="part-title">Who Is Accountable</h2>
+  <div class="part-subtitle">What the Evidence Shows. What Was Never Prosecuted. What No Party Wanted to Say.</div>
+</div>
+
+<div class="section-body">
+  <p>This investigation has followed documented evidence. It has named everyone the evidence names. It has stated clearly what is verified, what is disputed, and what cannot be established from available sources. The following is the verdict the evidence supports.</p>
+</div>
+
+<div class="verdict-section">
+  <div class="verdict-title">The Reckoning</div>
+
+  <div class="verdict-item">
+    <div class="verdict-name">
+      Huseyn Shaheed Suhrawardy
+      <span class="verdict-tag primary">Primary — Documented</span>
+    </div>
+    <div class="verdict-text">
+      Chief Minister of Bengal and Home Minister (police authority). The documented evidence against Suhrawardy is the most extensive of any single individual in this investigation. He requested the public holiday declaration. He told the Maidan rally that police and army were "restrained" (confirmed by Banglapedia — Bangladesh's own encyclopedia). He transferred 22 of 24 Hindu police officers from key Calcutta posts before August 16. He occupied the Police Control Room during the killings. He demonstrably did not use his position to protect Hindu-majority areas from attack. He is described by the British Military Report WO 216/662 as "fully anticipated what was going to happen, and allowed it to work itself up, and probably organised the disturbance with his goonda gangs." He is described by the British Army Commander as having a "completely communal attitude." He pressed Gandhi to leave Noakhali. Whether he planned the violence or simply let it happen remains disputed — but the documented facts are damning enough either way. He was never charged with any offence related to the Calcutta killings.
+    </div>
+  </div>
+
+  <div class="verdict-item">
+    <div class="verdict-name">
+      Sir Frederick Burrows
+      <span class="verdict-tag primary">Primary — Documented Negligence</span>
+    </div>
+    <div class="verdict-text">
+      Governor of Bengal. He declared the public holiday. He received intelligence warnings August 15 and took no preemptive action. He did not invoke reserve powers to override Suhrawardy during the violence. He did not call the army until six days after the killings began, despite the Viceroy's subsequent admission that more troops were available and should have been called earlier. Whether he was actively complicit or catastrophically negligent cannot be established from available documents. The minimum established is negligence that enabled mass killing. He was never subject to inquiry or accountability for his role.
+    </div>
+  </div>
+
+  <div class="verdict-item">
+    <div class="verdict-name">
+      Jawaharlal Nehru
+      <span class="verdict-tag secondary">Secondary — Trigger</span>
+    </div>
+    <div class="verdict-text">
+      Congress President; future Prime Minister of India. His July 10, 1946 Bombay press conference destroyed the Cabinet Mission Plan — the last realistic mechanism for preventing Partition — and directly triggered the Muslim League's withdrawal and Direct Action Day declaration. Academic consensus holds this causation. He did not visit Calcutta during the killings. He described the violence accurately from a safe distance but took no action that matched his political power or his standing as a leader. His intent — that he did not intend to destroy the plan — does not alter the documented consequence of his statement.
+    </div>
+  </div>
+
+  <div class="verdict-item">
+    <div class="verdict-name">
+      Muhammad Ali Jinnah
+      <span class="verdict-tag secondary">Secondary — Rhetoric and Mobilisation</span>
+    </div>
+    <div class="verdict-text">
+      All-India Muslim League President. He declared Direct Action Day with rhetoric that invoked violence as a political possibility: "divided India or destroyed India"; "forged a pistol." He permitted and enabled the mobilisation of the Muslim National Guard — an armed paramilitary — in the weeks before August 16. He did not visit Calcutta during the carnage. He sent telegrams urging order only after the violence was underway. Whether he intended mass violence — most likely he did not — is disputed. What is not disputed is that his rhetoric and his mobilisation created the conditions that organised violent actors exploited. He cannot escape responsibility for what his words set in motion.
+    </div>
+  </div>
+
+  <div class="verdict-item">
+    <div class="verdict-name">
+      Lord Archibald Wavell
+      <span class="verdict-tag secondary">Secondary — Systemic Failure</span>
+    </div>
+    <div class="verdict-text">
+      Viceroy of India. Supreme British authority. Did not issue any preemptive action against Direct Action Day. Did not override Burrows' inaction in the first five days. Placed Bengal under his own rule only on August 21 — five days after the violence began. Subsequently admitted, in his own words, that more troops should have been called earlier and were available. His accountability is systemic: the institutional culture of non-intervention that allowed Calcutta to burn was the culture he presided over. He was never held accountable for any of this.
+    </div>
+  </div>
+
+  <div class="verdict-item">
+    <div class="verdict-name">
+      Gholam Sarwar Husseini
+      <span class="verdict-tag primary">Primary — Noakhali</span>
+    </div>
+    <div class="verdict-text">
+      The architect of the Noakhali massacres. Documented by Governor Burrows himself as the person who delivered a "provocative speech" at a mass meeting immediately before the violence began. Organised the Miyar Fauz, a private militia. Directed the attack on the Roychowdhury family on October 11. His reasons included anger over Calcutta, the sting of losing an election, and using communal tension to rebuild his own power. He was eventually arrested. The subsequent judicial record of his prosecution, if any, is outside this investigation's primary source documentation.
+    </div>
+  </div>
+
+  <div class="verdict-item">
+    <div class="verdict-name">
+      The British Military — The Officers of August 14
+      <span class="verdict-tag primary">Primary — Decision to Non-Intervene</span>
+    </div>
+    <div class="verdict-text">
+      The officers who met at Barrackpore on August 14, 1946, and formally decided "when the riot begins, we will not interfere." Their names are not in the available public documents. Their decision is documented in the historical record. It was the single most consequential enabling decision in the administrative failure of the Calcutta killings. Without it — if the military had been deployed on August 16, as it could have been — the violence might have lasted hours rather than days, and the death toll might have been measured in dozens rather than thousands. No officer was ever identified publicly. No officer was ever disciplined.
+    </div>
+  </div>
+
+  <div class="verdict-item">
+    <div class="verdict-name">
+      Khawaja Nazimuddin and Syed Mohammed Usman
+      <span class="verdict-tag enabler">Secondary Enablers</span>
+    </div>
+    <div class="verdict-text">
+      Nazimuddin: his Maidan speech, which began with calls for peace and ended by claiming Muslims were the victims and the attackers had been acting in self-defence, was incendiary in its context and timing. Usman: his pre-August 16 pamphlet calling on Muslims to "take swords" and telling Hindus "your doom is not far" was direct, documented incitement to violence. Neither was ever prosecuted. Usman's pamphlet was the most nakedly violent documented act of pre-riot incitement by a named public official.
+    </div>
+  </div>
+
+  <div class="verdict-item">
+    <div class="verdict-name">
+      The Bengal Famine and British Colonial Policy (1943 and Earlier)
+      <span class="verdict-tag enabler">Structural — Upstream Cause</span>
+    </div>
+    <div class="verdict-text">
+      The British policy failure that killed 2–3 million Bengalis in 1943 — documented as a "complete policy failure" and not a natural disaster by peer-reviewed scientific research — created the brutalised, traumatised, economically devastated social landscape in which communal violence could take hold so rapidly and so thoroughly. The decades of separate-electorate policy created the political system in which religious identity equalled political survival. These structural facts do not excuse any individual decision made in 1946. They are the context without which no individual decision makes full sense.
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ════════════════════════════════════════════════
+     QUICK FACTS
+════════════════════════════════════════════════ -->
+<div class="quick-facts">
+  <div class="qf-header">Quick Facts — The Great Calcutta Killings &amp; Noakhali, 1946</div>
+  <div class="qf-row">
+    <div class="qf-label">Date (Calcutta)</div>
+    <div class="qf-value"><strong>August 16–20, 1946</strong> — Five days of mass killing, with the worst violence in the first 48 hours</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Date (Noakhali)</div>
+    <div class="qf-value"><strong>October 10 – December 1946</strong> — Beginning on Kojagari Lakshmi Puja; continuing for over two months</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Calcutta Deaths</div>
+    <div class="qf-value"><strong>4,000–8,000+</strong> — Documented range. Philip Talbot (British Library): "more than 4,000 died." Upper estimates reach 10,000.</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Calcutta Injured</div>
+    <div class="qf-value"><strong>11,000+</strong> (Philip Talbot, British Library Archives)</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Fires Documented</div>
+    <div class="qf-value"><strong>1,200</strong> fires (Philip Talbot) — 900 fire brigade calls in the first two days alone (The Statesman)</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Noakhali Deaths</div>
+    <div class="qf-value"><strong>Disputed: 200–5,000</strong> — Official estimate 200–300 (widely held to be severe undercount); Hindu community accounts and some academic sources suggest much higher</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Noakhali Displaced</div>
+    <div class="qf-value"><strong>~50,000 Hindus marooned</strong> in villages (Wikipedia, Noakhali riots)</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Forced Conversions</div>
+    <div class="qf-value"><strong>2,000+</strong> documented (Ashoka Gupta's report); pattern confirmed by Judge Simpson's judicial report</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Days Before Army Deployed</div>
+    <div class="qf-value"><strong>6 days</strong> — Five battalions deployed August 22; violence reduced within 48 hours of deployment</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Days Before Viceroy's Rule</div>
+    <div class="qf-value"><strong>5 days</strong> — Bengal placed under Viceroy's rule August 21; five days after mass killing began</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Hindu Police Transferred</div>
+    <div class="qf-value"><strong>22 of 24</strong> key Hindu police officers transferred from Calcutta posts before August 16 (NBU Journal of History)</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Political Trigger</div>
+    <div class="qf-value"><strong>July 10, 1946</strong> — Nehru's Bombay press conference destroys Cabinet Mission Plan; Muslim League declares Direct Action Day on July 29–30</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Judicial Inquiry Ordered</div>
+    <div class="qf-value"><strong>None.</strong> Not by Britain. Not by India. Not by Pakistan. Ever.</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Prosecutions</div>
+    <div class="qf-value"><strong>Zero</strong> — No perpetrator of the Calcutta killings was ever prosecuted. Gholam Sarwar Husseini was arrested for Noakhali; subsequent proceedings unclear from primary sources.</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">Leaders Who Visited During Violence</div>
+    <div class="qf-value">Neither Nehru nor Jinnah visited Calcutta during the killings. (Britannica.) Gandhi did not either. Gandhi arrived in Noakhali on November 7 — nearly a month after the violence started.</div>
+  </div>
+  <div class="qf-row">
+    <div class="qf-label">British Military Report</div>
+    <div class="qf-value"><strong>WO 216/662</strong> — dated August 24, 1946; held at National Archives UK; describes Suhrawardy as "king of the goondas" who "fully anticipated" the violence</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     SOURCES
+════════════════════════════════════════════════ -->
+<div class="sources-section">
+  <div class="sources-title">Sources &amp; References</div>
+
+  <div class="source-category">
+    <div class="source-category-label">A. British Government Primary Documents</div>
+    <div class="source-item">
+      <span class="source-num">01</span>
+      <span><strong>British Military Report, WO 216/662</strong>, August 24, 1946. National Archives, UK (discovery.nationalarchives.gov.uk). Contains street-level violence accounts, troop deployment timeline, and British military assessment of Suhrawardy. Key educational excerpt available at nationalarchives.gov.uk/education/resources/indian-independence/calcutta-riots/</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">02</span>
+      <span><strong>Governor Burrows' Report to Lord Wavell</strong>. National Archives, UK (Transfer of Power documents). Contains his defence of the holiday declaration and his account of the violence. Cited in Wikipedia (Direct Action Day) and in the Transfer of Power volumes edited by Nicholas Mansergh.</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">03</span>
+      <span><strong>Viceroy Wavell's Diary, August 1946</strong>. India Office Records, British Library / National Archives. Contains the August 26 entry recording Bucher's report on Suhrawardy; August 27 entry recording Gandhi meeting. Cited in Wikipedia; multiple academic sources.</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">04</span>
+      <span><strong>Governor Burrows' Report on Noakhali</strong>. Cited in: "Communalism in Bengal: From Famine To Noakhali, 1943–47" by Rakesh Batabyal, p.277; and The Transfer of Power 1942-7, edited by Nicholas Mansergh, p.98.</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">05</span>
+      <span><strong>Philip Talbot's Letter</strong>, British Library Archives, London. Contemporary eyewitness account. Contains the key casualty estimates: "3,500 bodies collected; reasonable guess more than 4,000 died; 11,000 injured; 1,200 fires." British Library reading room.</span>
+    </div>
+  </div>
+
+  <div class="source-category">
+    <div class="source-category-label">B. Legislative Assembly Records</div>
+    <div class="source-item">
+      <span class="source-num">06</span>
+      <span><strong>AK Fazlul Huq Speech</strong>, Bengal Legislative Assembly, September 19, 1946. Former Chief Minister of Bengal (1937–43); eyewitness. Contains his documented account of being referred to the Control Room during the riots. Cited in multiple academic papers and Wikiquote (Direct Action Day).</span>
+    </div>
+  </div>
+
+  <div class="source-category">
+    <div class="source-category-label">C. Academic Peer-Reviewed Sources</div>
+    <div class="source-item">
+      <span class="source-num">07</span>
+      <span><strong>"Suhrawardy and the Great Calcutta Killing"</strong> — Karatoya: NBU Journal of History, Vol. 11, ISSN 2229-4880. North Bengal University repository (ir.nbu.ac.in). Comprehensive documented analysis of Suhrawardy's role; cites primary British sources. Source for the 22-of-24 Hindu police transfer finding.</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">08</span>
+      <span><strong>"Making Peace, Making Riots," Chapter 5: Noakhali Riots October 1946</strong>. Cambridge University Press, 2018. Available via Cambridge Core. Academic analysis of Noakhali as both Calcutta spillover and independent-cause event; covers land-dispute background.</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">09</span>
+      <span><strong>Joya Chatterji</strong> — Assessment cited in Wikipedia (Direct Action Day): "allocates much of the responsibility to Suhrawardy, for setting up the confrontation and failing to stop the rioting, but points out that Hindu leaders were also culpable."</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">10</span>
+      <span><strong>Bengal Famine Study</strong>, IIT Gandhinagar and UC Los Angeles. Published in Geophysical Research Letters (peer-reviewed). Finding: 1943 Bengal famine was "the only famine in modern Indian history not linked to drought or crop failure — result of complete policy failure." Cited in Al Jazeera report.</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">11</span>
+      <span><strong>"Communalism in Bengal: From Famine To Noakhali, 1943–47"</strong> by Rakesh Batabyal. Cites primary sources including Governor Burrows' Noakhali report.</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">12</span>
+      <span><strong>The Transfer of Power 1942–7</strong>, edited by Nicholas Mansergh. The definitive compiled archive of British government documents on the transfer of power. Contains multiple primary documents cited in this investigation.</span>
+    </div>
+  </div>
+
+  <div class="source-category">
+    <div class="source-category-label">D. Reference Works</div>
+    <div class="source-item">
+      <span class="source-num">13</span>
+      <span><strong>Banglapedia</strong> (Bangladesh National Encyclopedia) — en.banglapedia.org. Bangladesh government source, where Suhrawardy is a revered national figure. Confirms he told the Maidan rally that "police and army had been restrained." Significance: this is a pro-Suhrawardy source making a damning confirmation.</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">14</span>
+      <span><strong>Wikipedia: Direct Action Day</strong> — en.wikipedia.org/wiki/Direct_Action_Day. Comprehensive, well-cited. Contains Burrows' Report quote, Military Report quote, AK Fazlul Huq quote, Nazimuddin speech documentation, Mayor's pamphlet quote.</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">15</span>
+      <span><strong>Britannica: Direct Action Day</strong> — britannica.com/event/Direct-Action-Day-India-1946. Notes on Burrows' "complicity" questions; confirms neither Jinnah nor Nehru visited Calcutta.</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">16</span>
+      <span><strong>Wikipedia: 1946 Cabinet Mission to India</strong>. Full timeline of Nehru's July 10 press conference and consequences. Academic consensus quoted: "Nehru's speech squashed the mission's plan and the chance to keep India united."</span>
+    </div>
+    <div class="source-item">
+      <span class="source-num">17</span>
+      <span><strong>Wikipedia: Noakhali Riots</strong>. Contains Burrows' quote on Gholam Sarwar Husseini; Judge Simpson's report reference; figures for displaced Hindus.</span>
+    </div>
+  </div>
+
+  <div class="source-category">
+    <div class="source-category-label">E. Contemporary Newspaper</div>
+    <div class="source-item">
+      <span class="source-num">18</span>
+      <span><strong>The Statesman, Calcutta, August 1946</strong>. Contemporary English-language daily (British-owned). "The primary blame lies with the Muslim League cabinet and particularly CM Suhrawardy." Also documented: petrol and vehicles obtained by rioters; 900 fire brigade calls. Cited in The Australia Today article and multiple secondary sources.</span>
+    </div>
+  </div>
+
+  <div class="source-category">
+    <div class="source-category-label">F. Photographic Evidence</div>
+    <div class="source-item">
+      <span class="source-num">19</span>
+      <span><strong>Margaret Bourke-White Photographs</strong>, Life Magazine, 1946. Syracuse University Archives; LIFE Picture Collection / Getty Images. Corpses in streets, cremation pyres, vultures. Published in LIFE magazine; some images in public domain. For licensed use: Getty Images.</span>
+    </div>
+  </div>
+
+  <div class="source-category">
+    <div class="source-category-label">G. Judicial Report (Noakhali)</div>
+    <div class="source-item">
+      <span class="source-num">20</span>
+      <span><strong>Judge Simpson's Report on the Noakhali Riots</strong>. Judicial investigation. Finding: "large-scale conversion of Hindus to Islam by application of force in village after village." Referenced in Wikipedia (Noakhali riots) and multiple academic sources. Original: West Bengal State Archives or National Archives India.</span>
+    </div>
+  </div>
+</div>
+
+
+<hr class="section-divider">
+
+<!-- CLOSING PEACE QUOTE -->
+<div style="margin: 60px 0 20px; padding: 48px 0; text-align: center; border-top: 1px solid #2A2A2A; border-bottom: 1px solid #2A2A2A;">
+
+  <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: #005E30; text-transform: uppercase; margin-bottom: 28px;">
+    A Final Word
+  </div>
+
+  <blockquote style="font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.2rem, 3vw, 1.9rem); font-style: italic; line-height: 1.55; color: #F5F2EC; max-width: 620px; margin: 0 auto 28px; font-weight: 400;">
+    "The dead of Calcutta and Noakhali were not statistics. They were fathers who did not come home for the harvest. They were daughters taken in the night. They were neighbours who had eaten at the same table until someone handed them a reason not to. They were the price paid for decisions made in rooms they were never allowed to enter. We remember them here, because no court ever did."
+  </blockquote>
+
+  <div style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: #00B85A; margin-bottom: 6px;">
+    — The Postmortems
+  </div>
+  <div style="font-family: var(--mono); font-size: 10px; color: #4A4A47; letter-spacing: 0.08em;">
+    thepostmortems.in
+  </div>
+
+</div>
+
+
+</main>
+
+</body>
+</html>

@@ -3,8 +3,8 @@ import styles from "./page.module.css";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
-  title: "Investigations | The Postmortem",
-  description: "Read the latest independent investigative reports from The Postmortem.",
+  title: "Investigations | The Postmortems",
+  description: "Read the latest independent investigative reports from The Postmortems.",
 };
 
 export const revalidate = 60; // Cache for 60 seconds (ISR) for instant load times

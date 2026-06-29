@@ -2,16 +2,16 @@ import styles from "@/styles/institutional.module.css";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Source Protection Protocol | The Postmortem",
+  title: "Source Protection Protocol | The Postmortems",
   description: "Strict institutional protocols for whistleblower protection, secure communications, and evidence verification.",
   alternates: {
     canonical: "https://the-postmortems.vercel.app/source-protection-protocol"
   },
   openGraph: {
-    title: "Source Protection Protocol | The Postmortem",
+    title: "Source Protection Protocol | The Postmortems",
     description: "Strict institutional protocols for whistleblower protection, secure communications, and evidence verification.",
     url: "https://the-postmortems.vercel.app/source-protection-protocol",
-    siteName: "The Postmortem",
+    siteName: "The Postmortems",
     type: "website"
   }
 };
@@ -52,7 +52,7 @@ export default function SourceProtectionProtocolPage() {
 
       <section className={styles.content}>
         <h2 id="why-sources-matter">1. Why Sources Matter</h2>
-        <p>Institutional accountability is rarely achieved through official press releases. The most critical investigations rely on the courage of insiders, whistleblowers, and sources who risk their livelihoods to expose systemic failures, corruption, and abuse of power. The Postmortem recognizes that our ability to investigate institutions is entirely dependent on our ability to protect the individuals who provide us with evidence.</p>
+        <p>Institutional accountability is rarely achieved through official press releases. The most critical investigations rely on the courage of insiders, whistleblowers, and sources who risk their livelihoods to expose systemic failures, corruption, and abuse of power. The Postmortems recognizes that our ability to investigate institutions is entirely dependent on our ability to protect the individuals who provide us with evidence.</p>
 
         <h2 id="protection-principles">2. Source Protection Principles</h2>
         <p>Protecting a source's identity is not a preference; it is a foundational journalistic obligation. We employ strict operational security protocols to shield our sources from legal, professional, and physical retaliation. However, we also enforce rigid verification standards to ensure that source protection is never used to launder unverified claims or personal grievances.</p>
@@ -70,7 +70,7 @@ export default function SourceProtectionProtocolPage() {
         <p>We treat whistleblowers—individuals exposing misconduct from within an organization—with the highest degree of operational security. We utilize encrypted communication channels, secure drop systems, and legal counsel to minimize their exposure. We work with whistleblowers to establish strict boundaries regarding what information can be published without inadvertently exposing their identity.</p>
 
         <h2 id="verification-requirements">7. Verification Requirements</h2>
-        <p>The burden of proof remains entirely on The Postmortem. We do not transfer the responsibility of verification to the reader. <strong>Evidence must be independently verified whenever possible.</strong> A source's credibility, while important, does not replace the necessity for hard documentation and independent verification of the facts they provide.</p>
+        <p>The burden of proof remains entirely on The Postmortems. We do not transfer the responsibility of verification to the reader. <strong>Evidence must be independently verified whenever possible.</strong> A source's credibility, while important, does not replace the necessity for hard documentation and independent verification of the facts they provide.</p>
 
         <h2 id="evidence-requirements">8. Evidence Requirements</h2>
         <p>We evaluate evidence based on its provenance, authenticity, and context. Acceptable evidence from sources includes internal communications, financial ledgers, legal filings, and technical data. We require sources to provide the rawest form of evidence available to prevent manipulation. Summaries or interpretations of documents provided by a source are not treated as primary evidence.</p>
@@ -112,7 +112,7 @@ export default function SourceProtectionProtocolPage() {
         <p>When relying on a confidential source, we explain to our readers, with as much detail as safely possible, why the source was granted anonymity and how they are in a position to know the information provided. We strive to maximize transparency without compromising the source's operational security.</p>
 
         <h2 id="source-responsibilities">19. Source Responsibilities</h2>
-        <p>We require our sources to be honest with our reporters. If a source is discovered to have intentionally misled our team, fabricated evidence, or concealed critical conflicts of interest, The Postmortem reserves the right to terminate the relationship and, in severe cases of manipulation, revoke the agreement of confidentiality.</p>
+        <p>We require our sources to be honest with our reporters. If a source is discovered to have intentionally misled our team, fabricated evidence, or concealed critical conflicts of interest, The Postmortems reserves the right to terminate the relationship and, in severe cases of manipulation, revoke the agreement of confidentiality.</p>
 
         <h2 id="risk-disclosure">20. Risk Disclosure</h2>
         <p>While we deploy state-of-the-art security protocols and rigorously train our staff in operational security, the reality of digital surveillance necessitates absolute honesty regarding the limits of protection.</p>

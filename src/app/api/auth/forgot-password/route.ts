@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     const { sendEmail, getOtpEmailTemplate } = await import("@/lib/email");
     await sendEmail({
       to: email,
-      subject: "The Postmortem Password Reset Code",
+      subject: "The Postmortems Password Reset Code",
       html: getOtpEmailTemplate(otp)
     });
 

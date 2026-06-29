@@ -2,16 +2,16 @@ import styles from "@/styles/institutional.module.css";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Corrections Policy | The Postmortem",
+  title: "Corrections Policy | The Postmortems",
   description: "Our institutional framework for accuracy, evidence reassessment, and public corrections.",
   alternates: {
     canonical: "https://the-postmortems.vercel.app/corrections-policy"
   },
   openGraph: {
-    title: "Corrections Policy | The Postmortem",
+    title: "Corrections Policy | The Postmortems",
     description: "Our institutional framework for accuracy, evidence reassessment, and public corrections.",
     url: "https://the-postmortems.vercel.app/corrections-policy",
-    siteName: "The Postmortem",
+    siteName: "The Postmortems",
     type: "website"
   }
 };
@@ -49,11 +49,11 @@ export default function CorrectionsPolicyPage() {
 
       <section className={styles.content}>
         <h2 id="why-corrections-matter">1. Why Corrections Matter</h2>
-        <p>In investigative journalism, the refusal to correct an error is a violation of the public trust. At The Postmortem, we recognize that no investigative process, regardless of how rigorous, is permanently immune to error. When new, verified evidence contradicts our published findings, acknowledging and correcting the record is our institutional obligation.</p>
+        <p>In investigative journalism, the refusal to correct an error is a violation of the public trust. At The Postmortems, we recognize that no investigative process, regardless of how rigorous, is permanently immune to error. When new, verified evidence contradicts our published findings, acknowledging and correcting the record is our institutional obligation.</p>
         <p>A correction is not a failure of journalism; it is the mechanism by which journalism maintains its integrity.</p>
 
         <h2 id="commitment-to-accuracy">2. Commitment to Accuracy</h2>
-        <p>The Postmortem is fundamentally committed to factual accuracy. We separate facts from interpretation and firmly distinguish evidence from opinion. We do not publish opinions masquerading as facts, nor do we ignore verified facts that challenge our reporting. Our loyalty is entirely to the truth, not to our original publication.</p>
+        <p>The Postmortems is fundamentally committed to factual accuracy. We separate facts from interpretation and firmly distinguish evidence from opinion. We do not publish opinions masquerading as facts, nor do we ignore verified facts that challenge our reporting. Our loyalty is entirely to the truth, not to our original publication.</p>
 
         <h2 id="reporting-an-error">3. Reporting an Error</h2>
         <p>We invite our readers, subjects of our investigations, and independent researchers to hold us accountable. If you identify a factual error, misrepresentation of data, or an omission that fundamentally alters the context of an investigation, you are encouraged to formally report it.</p>
@@ -64,7 +64,7 @@ export default function CorrectionsPolicyPage() {
         <p>Acceptable evidence submissions include official records, verified court filings, unedited audio/visual recordings, or documented data that directly refutes a specific published claim.</p>
 
         <h2 id="review-timeframe">5. Timeframe for Reviewing Requests</h2>
-        <p>The Postmortem commits to a prompt, structured response timeline for all formal correction requests.</p>
+        <p>The Postmortems commits to a prompt, structured response timeline for all formal correction requests.</p>
         <ul>
           <li><strong>Initial Assessment:</strong> All submissions accompanied by evidence are reviewed within 48 hours.</li>
           <li><strong>Investigation:</strong> Depending on the complexity of the data, the editorial team will conduct a thorough reassessment of the evidence within 7 to 14 days.</li>
@@ -98,7 +98,7 @@ export default function CorrectionsPolicyPage() {
         <p>In the event of a retraction, the original article is removed or heavily redacted, and a comprehensive explanation of the failure in our verification process is published in its place.</p>
 
         <h2 id="historical-archive">13. Historical Correction Archive Policy</h2>
-        <p>The Postmortem maintains a permanent public ledger of all major corrections and retractions. We do not stealth-edit our archives to hide past mistakes. Every significant editorial intervention remains permanently visible to the public as a matter of historical and institutional record.</p>
+        <p>The Postmortems maintains a permanent public ledger of all major corrections and retractions. We do not stealth-edit our archives to hide past mistakes. Every significant editorial intervention remains permanently visible to the public as a matter of historical and institutional record.</p>
 
         <h2 id="reader-challenges">14. Reader Challenges</h2>
         <p>We welcome rigorous challenges to our interpretation of facts. However, a disagreement over the interpretation of facts is not grounds for a correction. A correction is strictly reserved for the rectification of verified factual errors. We distinguish sharply between a disputed claim and an objective falsehood.</p>

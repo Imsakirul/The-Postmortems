@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "How to File an RTI | The Postmortem",
+  title: "How to File an RTI | The Postmortems",
   description: "A Citizen's Guide to the Right to Information Act, 2005. Learn how to legally request public records and hold the government accountable.",
 };
 
@@ -244,7 +244,7 @@ export default function RTIGuide() {
               <p>Procedures, fees, and filing methods may vary depending on the public authority and jurisdiction.</p>
               <p>Citizens should consult official government RTI portals and applicable regulations before filing requests.</p>
               <br/>
-              <p>Last Updated: June 2026<br/><strong style={{ color: "var(--text-primary)", fontStyle: "normal" }}>The Postmortem</strong><br/>Investigate. Verify. Reveal.</p>
+              <p>Last Updated: June 2026<br/><strong style={{ color: "var(--text-primary)", fontStyle: "normal" }}>The Postmortems</strong><br/>Investigate. Verify. Reveal.</p>
             </div>
 
           </div>

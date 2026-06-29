@@ -2,16 +2,16 @@ import styles from "@/styles/institutional.module.css";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Terms of Use | The Postmortem",
+  title: "Terms of Use | The Postmortems",
   description: "Legal terms, acceptable use policies, and intellectual property rights governing this platform.",
   alternates: {
     canonical: "https://the-postmortems.vercel.app/terms-of-use"
   },
   openGraph: {
-    title: "Terms of Use | The Postmortem",
+    title: "Terms of Use | The Postmortems",
     description: "Legal terms, acceptable use policies, and intellectual property rights governing this platform.",
     url: "https://the-postmortems.vercel.app/terms-of-use",
-    siteName: "The Postmortem",
+    siteName: "The Postmortems",
     type: "website"
   }
 };
@@ -52,16 +52,16 @@ export default function TermsOfUsePage() {
 
       <section className={styles.content}>
         <h2 id="acceptance">1. Acceptance of Terms</h2>
-        <p>By accessing, browsing, or utilizing The Postmortem platform, you acknowledge that you have read, understood, and agreed to be legally bound by these Terms of Use. If you do not agree to these terms in their entirety, you are expressly prohibited from using this platform and must discontinue access immediately.</p>
+        <p>By accessing, browsing, or utilizing The Postmortems platform, you acknowledge that you have read, understood, and agreed to be legally bound by these Terms of Use. If you do not agree to these terms in their entirety, you are expressly prohibited from using this platform and must discontinue access immediately.</p>
 
         <h2 id="purpose">2. Purpose of Platform</h2>
-        <p>The Postmortem is an independent investigative journalism institution. The sole purpose of this digital platform is to publish evidence-based investigations, host verifiable documentation in the public interest, and facilitate secure communication with sources reporting systemic misconduct.</p>
+        <p>The Postmortems is an independent investigative journalism institution. The sole purpose of this digital platform is to publish evidence-based investigations, host verifiable documentation in the public interest, and facilitate secure communication with sources reporting systemic misconduct.</p>
 
         <h2 id="intellectual-property">3. Intellectual Property</h2>
-        <p>All original investigations, textual content, analytical models, proprietary data sets, graphics, and interface designs published on this platform are the exclusive intellectual property of The Postmortem. We vigorously protect our intellectual property against uncredited commercial exploitation.</p>
+        <p>All original investigations, textual content, analytical models, proprietary data sets, graphics, and interface designs published on this platform are the exclusive intellectual property of The Postmortems. We vigorously protect our intellectual property against uncredited commercial exploitation.</p>
 
         <h2 id="copyright-policy">4. Copyright Policy</h2>
-        <p>Reproduction of our investigations for commercial purposes without explicit, written prior authorization is strictly prohibited. We permit non-commercial syndication and citation provided that The Postmortem is explicitly credited as the primary source, accompanied by a direct, un-altered hyperlink to the original publication on our platform.</p>
+        <p>Reproduction of our investigations for commercial purposes without explicit, written prior authorization is strictly prohibited. We permit non-commercial syndication and citation provided that The Postmortems is explicitly credited as the primary source, accompanied by a direct, un-altered hyperlink to the original publication on our platform.</p>
 
         <h2 id="fair-use">5. Fair-Use Policy</h2>
         <p>We respect and support the doctrine of fair use. Independent researchers, journalists, academics, and citizens are encouraged to quote, cite, and analyze our findings for the purposes of commentary, criticism, news reporting, and education. Fair use requires strict attribution and must not misrepresent the context of the original reporting.</p>
@@ -84,7 +84,7 @@ export default function TermsOfUsePage() {
         <p>Users must conduct themselves in a manner consistent with public discourse. Any attempt to weaponize our platform to organize coordinated harassment campaigns against individuals named in our investigations is a violation of these terms.</p>
 
         <h2 id="user-submissions">9. User-Generated Submissions</h2>
-        <p>If you submit comments, letters to the editor, or public feedback, you grant The Postmortem a non-exclusive, royalty-free license to publish, edit, or remove that content. We are not obligated to publish any user-generated submission and reserve the right to moderate communications that violate our standards.</p>
+        <p>If you submit comments, letters to the editor, or public feedback, you grant The Postmortems a non-exclusive, royalty-free license to publish, edit, or remove that content. We are not obligated to publish any user-generated submission and reserve the right to moderate communications that violate our standards.</p>
 
         <h2 id="source-submissions">10. Source Submissions</h2>
         <p>The submission of evidence via our secure whistleblower channels is governed by our <Link href="/source-protection-protocol">Source Protection Protocol</Link>. By submitting evidence, you assert that you are not doing so in violation of a binding legal obligation that would subject our journalists to criminal liability, though we recognize the complex legal protections afforded to whistleblowers acting in the public interest.</p>
@@ -93,7 +93,7 @@ export default function TermsOfUsePage() {
         <p>Readers are responsible for independently assessing the evidence we present. While we adhere to rigorous verification standards, readers must utilize their own critical judgment when evaluating the broader implications of our investigations on public policy or institutional integrity.</p>
 
         <h2 id="investigative-content">12. Investigative Content</h2>
-        <p>The Postmortem frequently publishes raw, primary-source documentation as evidence. This documentation may occasionally contain explicit language, descriptions of violence, or sensitive corporate data relevant to exposing corruption. We publish such material unedited when it is fundamentally necessary to document the truth.</p>
+        <p>The Postmortems frequently publishes raw, primary-source documentation as evidence. This documentation may occasionally contain explicit language, descriptions of violence, or sensitive corporate data relevant to exposing corruption. We publish such material unedited when it is fundamentally necessary to document the truth.</p>
 
         <h2 id="investigative-disclaimer">13. Investigative Material Disclaimer</h2>
         <p>The investigations published on this platform reflect the facts known and verified at the specific time of publication. As situations evolve and new evidence emerges, historical context may shift. While we actively issue corrections and updates in accordance with our <Link href="/corrections-policy">Corrections Policy</Link>, we do not guarantee that older archives reflect the absolute present-day status of ongoing events.</p>
@@ -105,19 +105,19 @@ export default function TermsOfUsePage() {
         <p>Investigations detailing corporate malfeasance, market manipulation, or financial irregularities are acts of journalism, not financial advisory services. The information provided must not be construed as investment advice, trading recommendations, or a directive to buy or sell securities.</p>
 
         <h2 id="limitation-of-liability">16. Limitation of Liability</h2>
-        <p>To the maximum extent permitted by applicable law, The Postmortem, its editors, reporters, and administrative staff shall not be liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of, or inability to use, this platform, or any actions you take based on the journalism published herein.</p>
+        <p>To the maximum extent permitted by applicable law, The Postmortems, its editors, reporters, and administrative staff shall not be liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of, or inability to use, this platform, or any actions you take based on the journalism published herein.</p>
 
         <h2 id="platform-security">17. Platform Security</h2>
         <p>We deploy robust digital defenses to ensure the uninterrupted availability of our journalism. However, we cannot guarantee that the platform will be entirely immune from state-sponsored cyber-attacks, distributed denial of service (DDoS) campaigns, or temporary technical outages.</p>
 
         <h2 id="enforcement">18. Enforcement</h2>
-        <p>The Postmortem reserves the absolute right to investigate suspected violations of these Terms of Use and to execute any action we deem appropriate, including blocking IP addresses, reporting malicious cyber-activity to relevant authorities, and pursuing civil litigation against entities attempting to sabotage our operations.</p>
+        <p>The Postmortems reserves the absolute right to investigate suspected violations of these Terms of Use and to execute any action we deem appropriate, including blocking IP addresses, reporting malicious cyber-activity to relevant authorities, and pursuing civil litigation against entities attempting to sabotage our operations.</p>
 
         <h2 id="jurisdiction">19. Jurisdiction</h2>
         <p>These Terms of Use are governed by the laws of India. Any legal action or proceeding relating to your access to, or use of, the platform shall be instituted exclusively in a competent court of jurisdiction located in India.</p>
 
         <h2 id="changes">20. Changes to Terms</h2>
-        <p>The Postmortem reserves the right, at our sole discretion, to modify or replace these Terms of Use at any time to reflect changes in our operational requirements or legal obligations. Continued use of the platform after any such modifications constitutes your formal acceptance of the revised terms.</p>
+        <p>The Postmortems reserves the right, at our sole discretion, to modify or replace these Terms of Use at any time to reflect changes in our operational requirements or legal obligations. Continued use of the platform after any such modifications constitutes your formal acceptance of the revised terms.</p>
       </section>
     </main>
   );

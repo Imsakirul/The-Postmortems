@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     const titleMatch = htmlContent.match(/<title>([\s\S]*?)<\/title>/i) || htmlContent.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
     let title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '').trim() : "Untitled Investigation";
     
-    // Remove the trailing parts like " — The Postmortem"
+    // Remove the trailing parts like " — The Postmortems"
     title = title.split('—')[0].trim();
     if (!title) title = "Untitled Investigation";
 

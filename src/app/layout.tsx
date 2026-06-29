@@ -28,12 +28,41 @@ const cinzel = Cinzel({
 });
 
 export const metadata: Metadata = {
-  title: "The Postmortem | Investigate. Verify. Reveal.",
+  title: "The Postmortems | Investigate. Verify. Reveal.",
   description: "India's Independent Investigative Journalism Platform",
+  applicationName: "The Postmortems",
+  appleWebApp: {
+    title: "The Postmortems",
+  },
+  openGraph: {
+    siteName: "The Postmortems",
+    title: "The Postmortems",
+  },
+  twitter: {
+    title: "The Postmortems",
+  },
 };
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "The Postmortems",
+      "url": "https://www.thepostmortems.in",
+      "logo": "https://www.thepostmortems.in/favicon.png"
+    },
+    {
+      "@type": "WebSite",
+      "name": "The Postmortems",
+      "alternateName": "The Postmortems",
+      "url": "https://www.thepostmortems.in"
+    }
+  ]
+};
 
 export default function RootLayout({
   children,
@@ -42,6 +71,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${ibmPlexSans.variable} ${ibmPlexSerif.variable} ${ebGaramond.variable} ${cinzel.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body style={{ fontFamily: "var(--font-eb-garamond), Georgia, 'Times New Roman', serif" }}>
         <Header />
         <main>{children}</main>

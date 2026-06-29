@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
-const fromEmail = process.env.EMAIL_FROM || "The Postmortem <noreply@thepostmortem.com>";
+const fromEmail = process.env.EMAIL_FROM || "The Postmortems <noreply@thepostmortem.com>";
 
 export async function sendEmail({ to, subject, html }: { to: string, subject: string, html: string }) {
   if (!resend) {
@@ -49,7 +49,7 @@ export function getOtpEmailTemplate(otp: string) {
   
   <div style="border-top: 1px solid #eaeaea; padding-top: 1.5rem; margin-top: 1.5rem;">
     <strong style="color: #d50000; font-size: 0.85rem; text-transform: uppercase; display: block; margin-bottom: 0.5rem;">Security Notice:</strong>
-    <p style="font-size: 0.85rem; color: #666; margin: 0 0 0.5rem 0;">The Postmortem will never ask for your password by email.</p>
+    <p style="font-size: 0.85rem; color: #666; margin: 0 0 0.5rem 0;">The Postmortems will never ask for your password by email.</p>
     <p style="font-size: 0.85rem; color: #666; margin: 0;">Do not share this code with anyone.</p>
   </div>
 </div>

@@ -82,7 +82,7 @@ export default function SubmitTipPage() {
       <header className={styles.header}>
         <h1 className={styles.title}>Secure Submission</h1>
         <p className={styles.subtitle}>
-          Use this form to securely send evidence, documents, or tips to The Postmortem.
+          Use this form to securely send evidence, documents, or tips to The Postmortems.
         </p>
       </header>
 

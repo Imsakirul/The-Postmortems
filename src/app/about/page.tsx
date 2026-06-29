@@ -2,16 +2,16 @@ import styles from "@/styles/institutional.module.css";
 import Link from "next/link";
 
 export const metadata = {
-  title: "About | The Postmortem",
+  title: "About | The Postmortems",
   description: "Learn about our core principles, evidence standards, and institutional commitment to public accountability.",
   alternates: {
     canonical: "https://the-postmortems.vercel.app/about"
   },
   openGraph: {
-    title: "About | The Postmortem",
+    title: "About | The Postmortems",
     description: "Learn about our core principles, evidence standards, and institutional commitment to public accountability.",
     url: "https://the-postmortems.vercel.app/about",
-    siteName: "The Postmortem",
+    siteName: "The Postmortems",
     type: "website"
   }
 };
@@ -20,7 +20,7 @@ export default function AboutPage() {
   return (
     <main className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>About The Postmortem</h1>
+        <h1 className={styles.title}>About The Postmortems</h1>
         <span className={styles.lastUpdated}>Last Updated: June 24, 2026</span>
       </header>
 
@@ -28,7 +28,7 @@ export default function AboutPage() {
         <h2 className={styles.tocTitle}>Contents</h2>
         <ol className={styles.tocList}>
           <li><a href="#introduction">Introduction</a></li>
-          <li><a href="#why-we-exist">Why The Postmortem Exists</a></li>
+          <li><a href="#why-we-exist">Why The Postmortems Exists</a></li>
           <li><a href="#mission">Mission</a></li>
           <li><a href="#core-principles">Our Core Principles</a></li>
           <li><a href="#editorial-philosophy">Editorial Philosophy</a></li>
@@ -54,14 +54,14 @@ export default function AboutPage() {
 
       <section className={styles.content}>
         <h2 id="introduction">1. Introduction</h2>
-        <p>The Postmortem is an independent investigative journalism institution dedicated to evidence-based reporting, rigorous public accountability, and factual transparency.</p>
+        <p>The Postmortems is an independent investigative journalism institution dedicated to evidence-based reporting, rigorous public accountability, and factual transparency.</p>
         <p>We believe that public and private institutions become stronger, more efficient, and more accountable when they are subjected to examination based on verifiable facts rather than speculation, corroborated evidence rather than rumor, and rigorous verification rather than unchallenged assumptions.</p>
-        <p>The sole purpose of The Postmortem is to investigate matters of substantial public interest and present those findings fully supported by examined evidence.</p>
+        <p>The sole purpose of The Postmortems is to investigate matters of substantial public interest and present those findings fully supported by examined evidence.</p>
 
-        <h2 id="why-we-exist">2. Why The Postmortem Exists</h2>
+        <h2 id="why-we-exist">2. Why The Postmortems Exists</h2>
         <p>Modern information infrastructure moves far faster than the process of verification.</p>
         <p>Rumors spread instantaneously. Public narratives solidify long before underlying facts emerge. Public and civic debate frequently begins long before substantive evidence is gathered, examined, and contextualized.</p>
-        <p>The Postmortem exists specifically to slow that process down.</p>
+        <p>The Postmortems exists specifically to slow that process down.</p>
         <p>We believe that serious investigative work requires comprehensive documentation, meticulous verification, institutional patience, and contextual integrity.</p>
         <p>Our objective is not to be the first to publish.</p>
         <p>Our objective is to be accurate.</p>
@@ -78,7 +78,7 @@ export default function AboutPage() {
         </ul>
 
         <h2 id="editorial-philosophy">5. Editorial Philosophy</h2>
-        <p>Every investigation published by The Postmortem is expected to satisfy fundamental, unyielding editorial standards prior to publication.</p>
+        <p>Every investigation published by The Postmortems is expected to satisfy fundamental, unyielding editorial standards prior to publication.</p>
         <p>Publication is never considered the beginning of the verification process. Verification must entirely precede publication. We are comfortable delaying or abandoning a story if the evidence does not meet our threshold for absolute confidence.</p>
 
         <h2 id="why-verification-matters">6. Why Verification Matters</h2>
@@ -90,7 +90,7 @@ export default function AboutPage() {
         <p>If the evidence contradicts an initial hypothesis, the hypothesis is discarded. The evidence dictates the reporting.</p>
 
         <h2 id="what-we-investigate">8. What We Investigate</h2>
-        <p>The Postmortem investigates matters of legitimate, documented public interest, including but not limited to:</p>
+        <p>The Postmortems investigates matters of legitimate, documented public interest, including but not limited to:</p>
         <ul>
           <li>Conduct within public institutions and government bodies.</li>
           <li>Efficacy and integrity of government programs and policies.</li>
@@ -107,7 +107,7 @@ export default function AboutPage() {
         <p>Our investigations typically involve months of research, extensive document review, source interviews, data analysis, and multi-layered evidence verification.</p>
 
         <h2 id="what-we-do-not-investigate">9. What We Do Not Investigate</h2>
-        <p>The Postmortem strictly prohibits targeting individuals or entities based on:</p>
+        <p>The Postmortems strictly prohibits targeting individuals or entities based on:</p>
         <ul>
           <li>Religion</li>
           <li>Race</li>
@@ -120,7 +120,7 @@ export default function AboutPage() {
         <p>We investigate conduct, decisions, actions, systemic failures, and verifiable evidence. We do not investigate private citizens simply because they hold office, possess influence, or attract transient public attention. Matters of pure personal gossip or private disputes fall completely outside our mandate.</p>
 
         <h2 id="evidence-standards">10. Evidence Standards</h2>
-        <p>The Postmortem prioritizes primary evidence that can be independently examined, verified, or corroborated by our editorial team.</p>
+        <p>The Postmortems prioritizes primary evidence that can be independently examined, verified, or corroborated by our editorial team.</p>
         <p>Acceptable evidence includes:</p>
         <ul>
           <li>Official government records and filings.</li>
@@ -153,7 +153,7 @@ export default function AboutPage() {
         <p>Not every controversy qualifies as a matter of public interest. We focus our resources exclusively on issues that have systemic, meaningful consequences beyond individual or private disputes.</p>
 
         <h2 id="independence">14. Independence Statement</h2>
-        <p>The Postmortem operates entirely independently. Our investigative findings are determined solely by evidence, journalistic ethics, and editorial review.</p>
+        <p>The Postmortems operates entirely independently. Our investigative findings are determined solely by evidence, journalistic ethics, and editorial review.</p>
         <p>No external party—regardless of their financial, political, or social standing—receives authority, oversight, or preview capabilities over our conclusions, publication decisions, or reporting outcomes.</p>
 
         <h2 id="editorial-independence">15. Editorial Independence</h2>
@@ -173,7 +173,7 @@ export default function AboutPage() {
         <p>These constitutional principles inform every aspect of our editorial approach and reporting standards.</p>
 
         <h2 id="reporting-methodology">17. Reporting Methodology</h2>
-        <p>A standard investigation at The Postmortem adheres to the following workflow:</p>
+        <p>A standard investigation at The Postmortems adheres to the following workflow:</p>
         <ol>
           <li><strong>Initial Lead Assessment:</strong> Evaluating the public interest and feasibility of the claim.</li>
           <li><strong>Evidence Collection:</strong> Securing primary documents and data.</li>
@@ -188,12 +188,12 @@ export default function AboutPage() {
 
         <h2 id="reader-trust">18. Reader Trust Commitment</h2>
         <p>Trust cannot be demanded; it must be consistently earned.</p>
-        <p>The Postmortem seeks to earn the public's trust through the meticulous presentation of evidence, absolute transparency in our methods, accountability for our errors, and a steadfast willingness to correct mistakes.</p>
+        <p>The Postmortems seeks to earn the public's trust through the meticulous presentation of evidence, absolute transparency in our methods, accountability for our errors, and a steadfast willingness to correct mistakes.</p>
         <p>We do not ask our readers to believe us simply because of our institutional name. We ask our readers to examine the evidence we provide. Our work must always stand entirely on its own merits.</p>
 
         <h2 id="corrections">19. Corrections and Accountability</h2>
         <p>Accuracy is not a one-time goal; it is a continuous, institutional obligation.</p>
-        <p>If credible evidence demonstrates that a publication contains a factual error, The Postmortem will immediately review the information and issue corrections where appropriate. Transparency regarding our mistakes strengthens our credibility.</p>
+        <p>If credible evidence demonstrates that a publication contains a factual error, The Postmortems will immediately review the information and issue corrections where appropriate. Transparency regarding our mistakes strengthens our credibility.</p>
         <p>Correcting an error is never viewed as a failure. Ignoring one is.</p>
 
         <h2 id="public-accountability">20. Public Accountability</h2>

@@ -93,7 +93,7 @@ export default function Footer() {
         </div>
 
         <div className={styles.copyright}>
-          <p>© The Postmortem.</p>
+          <p>© The Postmortems.</p>
           <p>Independent investigative journalism.</p>
           <p>All rights reserved.</p>
         </div>
