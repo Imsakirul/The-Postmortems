@@ -71,13 +71,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${ibmPlexSans.variable} ${ibmPlexSerif.variable} ${ebGaramond.variable} ${cinzel.variable}`}>
-      <head>
+      <body style={{ fontFamily: "var(--font-eb-garamond), Georgia, 'Times New Roman', serif" }}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-      </head>
-      <body style={{ fontFamily: "var(--font-eb-garamond), Georgia, 'Times New Roman', serif" }}>
         <Header />
         <main>{children}</main>
         <Footer />
